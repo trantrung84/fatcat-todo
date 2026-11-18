@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_large_label">Fat Cat Todo – Hôm nay</string>
+    <string name="widget_small_label">Fat Cat Todo – Nhỏ</string>
+    <string name="widget_desc">Việc cần làm hôm nay cùng mèo Mochi</string>
+</resources>

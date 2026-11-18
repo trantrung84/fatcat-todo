@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_large_label">Fat Cat Todo – Aujourd’hui</string>
+    <string name="widget_small_label">Fat Cat Todo – Petit</string>
+    <string name="widget_desc">Les tâches du jour avec Mochi</string>
+</resources>

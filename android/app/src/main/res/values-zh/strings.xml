@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_large_label">Fat Cat Todo – 今天</string>
+    <string name="widget_small_label">Fat Cat Todo – 小</string>
+    <string name="widget_desc">和 Mochi 一起看今天的待办</string>
+</resources>

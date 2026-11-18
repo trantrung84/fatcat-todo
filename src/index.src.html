@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
@@ -236,6 +236,17 @@ textarea.inp{min-height:84px;resize:vertical}
 .protag{position:absolute;right:9px;top:10px;display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:900;color:var(--primary-d);background:var(--primary-l);border-radius:8px;padding:2px 6px}
 .protag svg{width:12px;height:12px}
 .thc[aria-pressed="true"] .protag{display:none}
+.plans{display:flex;flex-direction:column;gap:10px;margin:0 0 14px}
+.plan{position:relative;display:flex;align-items:center;gap:12px;padding:14px 14px;border-radius:20px;border:2px solid var(--border);background:var(--card);text-align:left}
+.plan[aria-pressed="true"]{border-color:var(--primary-d);box-shadow:0 0 0 3px var(--primary-l)}
+.plan .pr{width:24px;height:24px;border-radius:50%;border:2.4px solid var(--border2);display:grid;place-items:center;flex:none}
+.plan[aria-pressed="true"] .pr{border-color:var(--primary-d)}.plan[aria-pressed="true"] .pr i{width:12px;height:12px;border-radius:50%;background:var(--primary-d)}
+.plan .pn{flex:1;min-width:0}.plan .pn b{display:block;font-family:var(--fh);font-size:18px;line-height:1.1}.plan .pn small{color:var(--ink2);font-weight:700;font-size:13px}
+.plan .pp{font-family:var(--fh);font-weight:800;font-size:19px}
+.pbadge{position:absolute;top:-11px;left:16px;background:var(--primary);color:var(--onp);font-size:11.5px;font-weight:900;border-radius:9px;padding:2px 8px}
+.legal{font-size:12px;color:var(--ink2);text-align:center;margin:10px 6px 14px;line-height:1.45}.legal a{color:var(--primary-d);font-weight:800}
+.consent{display:flex;gap:10px;align-items:flex-start;text-align:left;max-width:330px;margin:-10px 0 22px;font-size:14.5px;color:var(--ink2);cursor:pointer}
+.consent input{width:22px;height:22px;accent-color:var(--primary-d);flex:none;margin:0}
 .pro{display:grid;grid-template-columns:1fr 60px 60px;font-size:15px}
 .pro div{padding:10px 4px;border-bottom:1.5px solid var(--border)}
 .pro .h{font-weight:800;color:var(--ink2);font-size:13px}
@@ -369,7 +380,7 @@ wd:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],wdl:["Sunday","Monday","Tuesday",
 a_check:"Mark complete: {t}",a_more:"Options for {t}",a_drag:"Drag to move {t}",st_empty:"empty",st_pending:"pending",st_partial:"partly done",st_complete:"all done",close:"Close",back:"Back",themes:"Choose theme",t_addedN:"{n} added ✓",pv_on:"Previewing: {t}",pv_unlock:"Unlock Pro",pv_exit:"Exit preview",pv_locked:"This theme is part of Pro — you are previewing it.",pro_active:"You are using Fat Cat Pro. Thank you! ♡",pro_unlocked:"Pro unlocked (test mode)",pro_relocked:"Pro locked again",w_empty:"No tasks today 🐾",w_open:"Open the app to refresh",lockedTheme:"Pro"}};
 /*__I18N_EXTRA__*/
 const MONTHS_EN=["January","February","March","April","May","June","July","August","September","October","November","December"];
-function t(k,p){let s=(I18N[S.settings.lang]||I18N.vi)[k];if(s==null)s=I18N.en[k]??k;if(p)for(const x in p)s=s.split("{"+x+"}").join(p[x]);return s}
+function t(k,p){let s=(I18N[S.settings.lang]||I18N.en)[k];if(s==null)s=I18N.en[k]??k;if(p)for(const x in p)s=s.split("{"+x+"}").join(p[x]);return s}
 
 /* ============ dates ============ */
 const pad=n=>String(n).padStart(2,"0");
@@ -387,14 +398,15 @@ function monthTitle(s){const d=parse(s);const L=S.settings.lang;if(L!=="vi"&&L!=
 function relLabel(s){const td=todayStr();if(s===td)return t("todayL");if(s===addDays(td,1))return t("tomorrowL");return longDate(s)}
 
 /* ============ state ============ */
+function isNativeEarly(){const C=window.Capacitor;return !!(C&&C.isNativePlatform&&C.isNativePlatform())}
 const KEY="fatcat.todo.v1";
-const DEF_SETTINGS={somedayOpen:true,weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:false,showBadge:true,brief:true,briefTime:"08:00",
-  lang:(()=>{const n=(navigator.language||"vi").toLowerCase().slice(0,2);return ["vi","en","zh","ja","ko","fr","de"].includes(n)?n:"vi"})(),theme:"auto",palette:"mochi",sound:false,haptic:true,reduceMotion:false};
+const DEF_SETTINGS={analytics:true,somedayOpen:true,weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:false,showBadge:true,brief:true,briefTime:"08:00",
+  lang:(()=>{const n=(navigator.language||"vi").toLowerCase().slice(0,2);return ["vi","en","zh","ja","ko","fr","de"].includes(n)?n:"en"})(),theme:"auto",palette:"mochi",sound:false,haptic:true,reduceMotion:false};
 let S={tasks:[],settings:{...DEF_SETTINGS},onboarded:false,pro:false};
 try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);S={...S,...o,settings:{...DEF_SETTINGS,...(o.settings||{})}}}}catch(e){}
 if(!S.settings.v2){S.settings.v2=true;S.settings.somedayTop=false}
 const FREE_THEME="mochi";if(!THEMES.some(x=>x.id===S.settings.palette)||(!S.pro&&S.settings.palette!==FREE_THEME))S.settings.palette=FREE_THEME;
-const U={preview:null,verTaps:0,view:"home",sel:todayStr(),cursor:todayStr(),mode:"week",adding:null,tlFilter:"pending",tlDays:30,flash:null,stack:[]};
+const U={debug:!isNativeEarly(),products:null,plan:"yearly",buying:false,preview:null,verTaps:0,view:"home",sel:todayStr(),cursor:todayStr(),mode:"week",adding:null,tlFilter:"pending",tlDays:30,flash:null,stack:[]};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}scheduleNotifs()}
 const uid=()=>(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
 function newTask(o){const now=Date.now();return Object.assign({id:uid(),title:"",notes:"",date:null,pin:false,order:now,priority:"normal",
@@ -494,6 +506,14 @@ function confetti(){if(reduced())return;const box=document.createElement("div");
     p.style.setProperty("--dx",(Math.random()*120-60)+"px");p.style.setProperty("--r",(Math.random()*720-360)+"deg");p.style.animationDelay=Math.random()*.25+"s";box.appendChild(p)}
   $("#app").appendChild(box);setTimeout(()=>box.remove(),2000)}
 
+/* ============ analytics (Firebase, anonymous, opt-out in Settings) ============ */
+const FA=()=>P("FirebaseAnalytics");
+function track(name,params){if(!S.settings.analytics)return;const A=FA();if(!A)return;try{A.logEvent({name,params:params||{}}).catch(()=>{})}catch(e){}}
+function trackScreen(v){if(!S.settings.analytics)return;const A=FA();if(!A)return;try{A.setCurrentScreen({screenName:v,screenClassOverride:v}).catch(()=>{})}catch(e){}}
+function analyticsSync(){const A=FA();if(!A)return;try{A.setEnabled({enabled:!!S.settings.analytics}).catch(()=>{});if(!S.settings.analytics)return;
+  const props={app_language:S.settings.lang,app_theme:S.settings.palette,is_pro:S.pro?"yes":"no",dark_mode:S.settings.theme};
+  for(const k in props)A.setUserProperty({key:k,value:String(props[k])}).catch(()=>{})}catch(e){}}
+
 /* ============ mutations ============ */
 function touch(x){x.updatedAt=Date.now()}
 function toggleDone(id,ds){
@@ -501,8 +521,8 @@ function toggleDone(id,ds){
   if(isRep(x)){x.doneDates=x.doneDates||{};if(x.doneDates[ds])delete x.doneDates[ds];else x.doneDates[ds]=Date.now();nowDone=!!x.doneDates[ds]}
   else{x.done=!x.done;x.completedAt=x.done?Date.now():null;nowDone=x.done}
   touch(x);save();U.pop=id+"|"+(ds||"");
-  if(nowDone){haptic();const st=ds?dayStat(ds):null;
-    if(st&&st.status==="complete"&&before!=="complete"){U.flash="alldone";setTimeout(()=>{confetti();haptic("success");meow()},120)}
+  if(nowDone){haptic();const st=ds?dayStat(ds):null;track("task_complete",{repeat:isRep(x)?1:0,list:ds?"day":"someday"});
+    if(st&&st.status==="complete"&&before!=="complete"){U.flash="alldone";track("day_complete",{tasks:st.n});setTimeout(()=>{confetti();haptic("success");meow()},120)}
     else U.flash="single";
     clearTimeout(U.flashT);U.flashT=setTimeout(()=>{U.flash=null;renderHero()},3500);
     toast(t("t_done",{t:x.title}),()=>restore(snap))}
@@ -516,16 +536,16 @@ function moveTask(id,fromDs,toDs,opts={}){const x=byId(id);if(!x)return;
   if(isRep(x)&&fromDs){if(toDs===fromDs)return;detachOccurrence(x,fromDs,{date:toDs,reminder:toDs?x.reminder:null})}
   else{x.date=toDs;if(!toDs){x.reminder=null;x.repeat={type:"none",days:[],end:null}}if(opts.order!=null)x.order=opts.order;touch(x)}}
 function doMove(id,fromDs,toDs){const x=byId(id);if(!x)return;
-  const go=()=>{const snap=snapshot();moveTask(id,fromDs,toDs);save();render();toast(t("t_moved",{t:x.title}),()=>restore(snap))};
+  const go=()=>{const snap=snapshot();moveTask(id,fromDs,toDs);track("task_move",{to:toDs?(toDs===addDays(fromDs||todayStr(),1)?"tomorrow":"date"):"someday"});save();render();toast(t("t_moved",{t:x.title}),()=>restore(snap))};
   if(!toDs&&x.reminder)confirmSheet(t("confirmReminder"),go);else go()}
 function removeTask(id,ds){const x=byId(id);if(!x)return;
-  const doIt=scope=>{const snap=snapshot();if(scope==="one"){x.skip=x.skip||{};x.skip[ds]=true}else x.deletedAt=Date.now();touch(x);save();closeAll();render();toast(t("t_del",{t:x.title}),()=>restore(snap))};
+  const doIt=scope=>{const snap=snapshot();track("task_delete",{scope});if(scope==="one"){x.skip=x.skip||{};x.skip[ds]=true}else x.deletedAt=Date.now();touch(x);save();closeAll();render();toast(t("t_del",{t:x.title}),()=>restore(snap))};
   if(isRep(x)&&ds)choiceSheet(t("delScope"),[[t("onlyThis"),()=>doIt("one")],[t("allSeries"),()=>doIt("all"),"red"]]);else doIt("all")}
 let lastAdd={t:"",at:0};
 function addTask(title,where){title=title.trim().slice(0,160);if(!title)return false;
   if(title===lastAdd.t&&Date.now()-lastAdd.at<700)return false;lastAdd={t:title,at:Date.now()};
   const list=where==="someday"?somedayTasks():tasksOn(U.sel);const maxO=list.reduce((m,x)=>Math.max(m,x.order),0);
-  S.tasks.push(newTask({title,date:where==="someday"?null:U.sel,order:maxO+10}));save();return true}
+  S.tasks.push(newTask({title,date:where==="someday"?null:U.sel,order:maxO+10}));save();track("task_add",{list:where==="someday"?"someday":"day"});return true}
 
 /* ============ theme ============ */
 const curTheme=()=>THEMES.find(x=>x.id===(U.preview||S.settings.palette))||THEMES[0];
@@ -542,7 +562,7 @@ function render(){
   applyTheme();
   const scr=$("#screen");const main=scr.querySelector("main");const st=main?main.scrollTop:0;const prev=scr.dataset.view;
   const V={home:homeHTML,calendar:calendarViewHTML,timeline:timelineHTML,someday:somedayViewHTML,more:settingsHTML,premium:premiumHTML};
-  scr.innerHTML=(V[U.view]||homeHTML)();scr.dataset.view=U.view;
+  scr.innerHTML=(V[U.view]||homeHTML)();if(prev!==U.view){trackScreen(U.view);if(U.view==="premium")track("paywall_view",{from:prev||"start"})}scr.dataset.view=U.view;
   const m2=scr.querySelector("main");if(m2&&prev===U.view)m2.scrollTop=st;
   renderNav();$("#pvbar").innerHTML=pvbarHTML();
   renderComposer();
@@ -659,18 +679,30 @@ function settingsHTML(){const s=S.settings;
   <h4>${t("s_notif")}</h4><div class="card">${line("brief",t("s_brief"),t("s_briefSub"))}
    <div class="line"><div class="lt">${t("s_briefTime")}</div><input type="time" data-set="briefTime" value="${s.briefTime}" ${s.brief?"":"disabled"}></div>
    <div class="line"><div class="lt">${t("s_perm")}<small id="permState">…</small></div><button class="chip" data-act="askPerm">${t("perm_ask")}</button></div></div>
-  <h4>${t("s_data")}</h4><div class="card menu">
+  <h4>${t("s_data")}</h4><div class="card">${line("analytics",t("s_analytics"),t("s_analyticsSub"))}</div><div class="card menu">
    <button class="mi" data-act="export">${ic("next")}${t("s_export")}</button>
    <button class="mi" data-act="import">${ic("inbox")}${t("s_import")}</button>
    <button class="mi red" data-act="wipe">${ic("trash")}${t("s_wipe")}</button><input type="file" id="impFile" accept="application/json,.json" hidden></div>
   <h4>${t("s_pro")}</h4><div class="card menu"><button class="mi" data-act="view" data-v="premium">${ic("star")}${t("pro_title")}</button></div>
-  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.3.0${S.pro?" · Pro":""}</button></div></main>`}
-function premiumHTML(){const rows=[["pf1",1,1],["pf2",1,1],["pf3",1,1],["pf4",1,1],["pf5",0,1],["pf6",0,1],["pf7",0,1],["pf8",0,1]];
-  return `<div class="topbar">${backBtn("more")}<div class="grow"><h1>${t("pro_title")}</h1></div></div><main>
-  <div class="card" style="text-align:center">${spr("love","width:150px;margin:0 auto","bob")}<p style="margin:6px 4px 4px;color:var(--ink2)">${S.pro?t("pro_active"):t("pro_note")}</p></div>
+  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.0${S.pro?" · Pro":""}</button></div></main>`}
+const PRODUCTS={monthly:"fatcat_pro_monthly",yearly:"fatcat_pro_yearly",lifetime:"fatcat_pro_lifetime"};
+const FALLBACK_PRICE={monthly:"$1.90",yearly:"$15.00",lifetime:"$19.00"};
+const PRIVACY_URL="https://github.com/trantrung84/fatcat-todo/blob/main/PRIVACY.md",TERMS_URL="https://github.com/trantrung84/fatcat-todo/blob/main/TERMS.md";
+function priceOf(k){const p=U.products&&U.products[PRODUCTS[k]];return p&&p.price?p.price:FALLBACK_PRICE[k]}
+function yearlySave(){const P2=U.products||{};const m=P2[PRODUCTS.monthly],y=P2[PRODUCTS.yearly];if(m&&y&&m.micros&&y.micros)return Math.round((1-y.micros/(m.micros*12))*100);return 34}
+function premiumHTML(){const rows=[["pf1",1,1],["pf2",1,1],["pf3",1,1],["pf4",1,1],["pf6",1,1],["pf5",0,1],["pf7",0,1]];
+  const plan=(k,sub,badge)=>`<button class="plan" data-act="plan" data-k="${k}" aria-pressed="${U.plan===k}">${badge?`<span class="pbadge">${badge}</span>`:""}<span class="pr"><i></i></span><span class="pn"><b>${t("pw_"+k)}</b><small>${sub}</small></span><span class="pp">${esc(priceOf(k))}</span></button>`;
+  const body=S.pro?`<div class="card" style="text-align:center">${spr("party","width:150px;margin:0 auto","bob")}<h2 style="margin:6px 0 4px;font-size:20px">${t("pw_active")}</h2><p style="color:var(--ink2);margin:0 0 12px">${t("pro_note")}</p>
+     <a class="btn ghost block" style="display:grid;place-items:center;text-decoration:none" href="https://play.google.com/store/account/subscriptions?package=com.fatcat.todo" target="_blank" rel="noopener">${t("pw_manage")}</a></div>`
+   :`<div class="card" style="text-align:center;padding-top:6px">${spr("love","width:132px;margin:0 auto","bob")}<h2 style="margin:4px 0 4px;font-size:20px">${t("pw_head")}</h2><p style="margin:0 4px 4px;color:var(--ink2);font-size:14.5px">${t("pro_note")}</p></div>
+     <div class="plans">${plan("yearly",t("pw_perYear"),`${t("pw_best")} · ${t("pw_save",{p:yearlySave()})}`)}${plan("monthly",t("pw_perMonth"))}${plan("lifetime",t("pw_once"))}</div>
+     <button class="btn block" data-act="buy" ${U.buying?"disabled":""} style="height:56px;font-size:20px">${t("pw_continue")}</button>
+     <p class="legal">${t("pw_legal")}</p>`;
+  return `<div class="topbar">${backBtn("more")}<div class="grow"><h1>${t("pro_title")}</h1></div></div><main>${body}
   <div class="card"><div class="pro"><div class="h"></div><div class="h c">${t("free")}</div><div class="h c">${t("pro")}</div>
   ${rows.map(([k,a,b])=>`<div>${t(k)}</div><div class="c" style="color:var(--mint-d)">${a?"✓":"–"}</div><div class="c" style="color:var(--mint-d)">${b?"✓":"–"}</div>`).join("")}</div></div>
-  <button class="btn block" disabled>${t("pro_soon")}</button><button class="btn ghost block" style="margin-top:10px" disabled>${t("pro_restore")}</button></main>`}
+  <button class="btn ghost block" data-act="restore">${t("pw_restore")}</button>
+  <p class="legal"><a href="${PRIVACY_URL}" target="_blank" rel="noopener">${t("pw_privacy")}</a> · <a href="${TERMS_URL}" target="_blank" rel="noopener">${t("pw_terms")}</a></p></main>`}
 
 /* ============ sheets ============ */
 function openSheet(title,body,opts={}){
@@ -694,7 +726,7 @@ function choiceSheet(title,choices){const sh=openSheet(title,`<div class="menu">
   const e=U.stack[U.stack.length-1];sh.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{closeSheet(e,true);choices[+b.dataset.i][1]()})}
 function themeSheet(){const sh=openSheet(t("s_theme_c"),themeGrid(),{img:"love"});
   sh.addEventListener("click",ev=>{const b=ev.target.closest("[data-p]");if(!b)return;ev.stopPropagation();setPalette(b.dataset.p);sh.querySelector(".sb").innerHTML=themeGrid()})}
-function setPalette(id){if(!unlocked(id)){U.preview=id;render();toast(t("pv_locked"));return}U.preview=null;S.settings.palette=id;save();render();toast(t("t_theme",{t:themeName(curTheme())}))}
+function setPalette(id){if(!unlocked(id)){U.preview=id;track("theme_preview",{theme:id});render();toast(t("pv_locked"));return}U.preview=null;S.settings.palette=id;save();track("theme_change",{theme:id});analyticsSync();render();toast(t("t_theme",{t:themeName(curTheme())}))}
 function exitPreview(){U.preview=null;render()}
 function pvbarHTML(){if(!U.preview)return "";const th=curTheme();return `<div class="pvbar" role="status">${ic("eye")}<span>${esc(t("pv_on",{t:themeName(th)}))}</span><button class="chip" data-act="pvUnlock">${t("pv_unlock")}</button><button class="small" data-act="pvExit" aria-label="${t("pv_exit")}">${ic("close")}</button></div>`}
 function menuSheet(id,ds){const x=byId(id);if(!x)return;const inSome=!x.date;const items=[];
@@ -702,8 +734,8 @@ function menuSheet(id,ds){const x=byId(id);if(!x)return;const inSome=!x.date;con
   else items.push(["next",t("m_tomorrow"),()=>doMove(id,ds,addDays(ds||todayStr(),1)<todayStr()?addDays(todayStr(),1):addDays(ds,1))]);
   items.push(["cal",t("m_change"),()=>datePicker(ds||U.sel,d=>doMove(id,ds,d))]);
   if(!inSome)items.push(["inbox",t("m_toSomeday"),()=>doMove(id,ds,null)]);
-  items.push(["repeat",t("m_repeat"),()=>repeatSheet(x.date?x:{...x,date:U.sel},r=>{const snap=snapshot();if(!x.date)x.date=U.sel;x.repeat=r;touch(x);save();render();toast(t("t_saved"),()=>restore(snap))})]);
-  items.push(["bell",t("m_notif"),()=>reminderSheet(x,v=>{x.reminder=v;touch(x);save();render();toast(t("t_saved"))})]);
+  items.push(["repeat",t("m_repeat"),()=>repeatSheet(x.date?x:{...x,date:U.sel},r=>{const snap=snapshot();track("repeat_set",{type:r.type});if(!x.date)x.date=U.sel;x.repeat=r;touch(x);save();render();toast(t("t_saved"),()=>restore(snap))})]);
+  items.push(["bell",t("m_notif"),()=>reminderSheet(x,v=>{track("reminder_set",{on:v?1:0});x.reminder=v;touch(x);save();render();toast(t("t_saved"))})]);
   items.push(["pin",x.pin?t("m_unpin"):t("m_pin"),()=>{x.pin=!x.pin;touch(x);save();render()}]);
   items.push(["edit",t("m_edit"),()=>editor(id,ds)]);
   items.push(["trash",t("m_remove"),()=>removeTask(id,ds),"red"]);
@@ -773,7 +805,7 @@ function editor(id,ds,preset){
     const del=sb.querySelector("#eDel");if(del)del.onclick=()=>{closeSheet(e,true);removeTask(id,ds)};
     sb.querySelector("#eOk").onclick=()=>{pull();d.title=d.title.trim().slice(0,160);d.notes=(d.notes||"").slice(0,2000);
       if(!d.title){const i=sb.querySelector("#eT");i.focus();i.style.borderColor="var(--warn)";return}
-      const commitAll=()=>{const snap=snapshot();if(orig){Object.assign(orig,d);touch(orig)}else{const list=d.date?tasksOn(d.date):somedayTasks();d.order=list.reduce((m,x)=>Math.max(m,x.order),0)+10;S.tasks.push(d)}save();closeSheet(e,true);render();toast(t("t_saved"),()=>restore(snap))};
+      const commitAll=()=>{const snap=snapshot();track(orig?"task_edit":"task_add",{list:d.date?"day":"someday",repeat:isRep(d)?1:0,reminder:d.reminder?1:0,dday:d.dday?1:0,via:"editor"});if(orig){Object.assign(orig,d);touch(orig)}else{const list=d.date?tasksOn(d.date):somedayTasks();d.order=list.reduce((m,x)=>Math.max(m,x.order),0)+10;S.tasks.push(d)}save();closeSheet(e,true);render();toast(t("t_saved"),()=>restore(snap))};
       const commitOne=()=>{const snap=snapshot();detachOccurrence(orig,ds,{title:d.title,notes:d.notes,pin:d.pin,priority:d.priority,reminder:d.reminder,dday:d.dday,date:d.date});save();closeSheet(e,true);render();toast(t("t_saved"),()=>restore(snap))};
       const changed=orig&&JSON.stringify({...orig,updatedAt:0})!==JSON.stringify({...d,updatedAt:0});
       const repChanged=orig&&JSON.stringify(orig.repeat)!==JSON.stringify(d.repeat);
@@ -784,11 +816,12 @@ function editor(id,ds,preset){
 /* ============ onboarding ============ */
 function showOnboarding(){if($(".onb"))return;let i=0;const steps=[["peek","ob1t","ob1p"],["note","ob2t","ob2p"],["bell","ob3t","ob3p"]];
   const el=document.createElement("div");el.className="onb";
-  const draw=()=>{const[s,a,b]=steps[i];el.innerHTML=`<div class="skipw"><button class="skipb" data-skip>${t("skip")}</button></div>${spr(s,"","bob")}<h2>${t(a)}</h2><p>${t(b)}</p><div class="dots">${steps.map((_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div><button class="btn" style="min-width:240px;height:58px;font-size:21px" data-n>${i<2?t("next"):t("start")}</button>`;
+  const draw=()=>{const[s,a,b]=steps[i];el.innerHTML=`<div class="skipw"><button class="skipb" data-skip>${t("skip")}</button></div>${spr(s,"","bob")}<h2>${t(a)}</h2><p>${t(b)}</p>${i===2?`<label class="consent"><input type="checkbox" id="obConsent" ${S.settings.analytics?"checked":""}><span>${t("ob_consent")}</span></label>`:""}<div class="dots">${steps.map((_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div><button class="btn" style="min-width:240px;height:58px;font-size:21px" data-n>${i<2?t("next"):t("start")}</button>`;
+    const cb=el.querySelector("#obConsent");if(cb)cb.onchange=()=>{S.settings.analytics=cb.checked};
     el.querySelector("[data-n]").onclick=()=>{if(i<2){i++;draw()}else finish()};el.querySelector("[data-skip]").onclick=finish};
   const finish=()=>{S.onboarded=true;if(!S.tasks.length){const td=todayStr();
       S.tasks.push(newTask({title:t("seed1"),date:td,order:10}),newTask({title:t("seed2"),date:td,order:20}),newTask({title:t("seed3"),date:td,order:30}),newTask({title:t("seed4"),date:null,order:10}))}
-    save();el.remove();render()};
+    save();analyticsSync();track("onboarding_complete",{step:i+1,analytics:S.settings.analytics?1:0});el.remove();render()};
   draw();$("#app").appendChild(el)}
 
 /* ============ events ============ */
@@ -820,15 +853,19 @@ app.addEventListener("click",ev=>{
     case"palette":setPalette(b.dataset.p);break;
     case"themes":themeSheet();break;
     case"pvExit":exitPreview();break;
+    case"plan":U.plan=b.dataset.k;render();break;
+    case"buy":buyPro();break;
+    case"restore":refreshPro(true);break;
     case"pvUnlock":U.view="premium";render();break;
-    case"ver":if(++U.verTaps>=7){U.verTaps=0;S.pro=!S.pro;if(!S.pro){S.settings.palette=FREE_THEME;U.preview=null}else if(U.preview){S.settings.palette=U.preview;U.preview=null}save();render();toast(t(S.pro?"pro_unlocked":"pro_relocked"))}break;
+    case"ver":if(U.debug&&++U.verTaps>=7){U.verTaps=0;S.pro=!S.pro;if(!S.pro){S.settings.palette=FREE_THEME;U.preview=null}else if(U.preview){S.settings.palette=U.preview;U.preview=null}save();render();toast(t(S.pro?"pro_unlocked":"pro_relocked"))}break;
     case"askPerm":ensurePermission(true).then(()=>updatePermState());break;
     case"export":exportData();break;
     case"import":$("#impFile").click();break;
     case"wipe":confirmSheet(t("wipeQ"),()=>{const lang=S.settings.lang,palette=S.settings.palette;S={tasks:[],settings:{...DEF_SETTINGS,lang,palette},onboarded:true};save();U.view="home";render()});break;
   }});
 app.addEventListener("change",ev=>{const el=ev.target;
-  if(el.dataset&&el.dataset.set){const k=el.dataset.set;S.settings[k]=el.type==="checkbox"?el.checked:el.value;save();if(k==="brief"&&el.checked)ensurePermission(true);render()}
+  if(el.dataset&&el.dataset.set){const k=el.dataset.set;S.settings[k]=el.type==="checkbox"?el.checked:el.value;save();
+    if(k==="analytics"){if(el.checked){analyticsSync();track("analytics_opt_in")}else{track("analytics_opt_out");S.settings.analytics=false;analyticsSync()}}else{track("setting_change",{key:k,value:String(S.settings[k])});if(k==="lang")analyticsSync()}if(k==="brief"&&el.checked)ensurePermission(true);render()}
   if(el.id==="impFile"&&el.files[0])importData(el.files[0])});
 app.addEventListener("keydown",ev=>{if(ev.target.id==="addInput"&&ev.key==="Enter"){if(ev.isComposing||ev.keyCode===229)return;ev.preventDefault();
   const inp=ev.target;const v=inp.value;if(!v.trim()){U.adding=null;render();return}
@@ -918,6 +955,25 @@ async function doSchedule(){const list=upcoming();
   list.filter(n=>n.at-now<864e5).forEach(n=>webTimers.push(setTimeout(()=>{if(Notification.permission==="granted"){const no=new Notification(n.title,{body:n.body,tag:String(n.id)});no.onclick=()=>{window.focus();openFromNotif(n.extra)}}else toast(n.title+" "+n.body)},n.at-now)))}
 function openFromNotif(ex){if(!ex)return;closeAll();U.view="home";if(ex.date)U.sel=U.cursor=ex.date;render();if(ex.taskId&&byId(ex.taskId))setTimeout(()=>editor(ex.taskId,ex.date),300)}
 
+/* ============ Google Play Billing (native BillingPlugin) ============ */
+const BILL=()=>P("Billing");
+function setPro(v){const was=S.pro;S.pro=!!v;if(!S.pro&&!unlocked(S.settings.palette))S.settings.palette=FREE_THEME;if(S.pro&&U.preview){S.settings.palette=U.preview;U.preview=null}
+  save();if(was!==S.pro){analyticsSync();render()}}
+async function loadProducts(){const B=BILL();if(!B)return;try{U.products=await B.getProducts();if(U.view==="premium")render()}catch(e){console.warn("billing products",e)}}
+async function refreshPro(manual){const B=BILL();if(!B){if(manual)toast(t("pw_webonly"));return}
+  try{const r=await B.getEntitlement();setPro(r.pro);if(manual){toast(r.pro?t("pw_restored"):t("pw_none"));track("restore_purchases",{found:r.pro?1:0})}}
+  catch(e){if(manual)toast(t("pw_unavail"))}}
+async function buyPro(){const B=BILL();const plan=U.plan;if(!B){toast(t("pw_webonly"));return}
+  if(!U.products||!U.products[PRODUCTS[plan]])await loadProducts();
+  track("purchase_start",{plan});U.buying=true;render();
+  try{const r=await B.purchase({productId:PRODUCTS[plan]});
+    if(r.status==="purchased"||r.status==="owned"){await refreshPro();if(S.pro){toast(t("pw_thanks"));confetti();haptic("success");track("purchase_success",{plan})}}
+    else if(r.status==="pending"){toast(t("pw_pending"));track("purchase_pending",{plan})}
+    else if(r.status==="cancelled")track("purchase_cancel",{plan});
+    else{toast(t("pw_error"));track("purchase_error",{plan,code:String(r.message||"").slice(0,90)})}}
+  catch(e){toast(t("pw_unavail"));track("purchase_error",{plan,code:"unavailable"})}
+  U.buying=false;render()}
+
 /* ============ data ============ */
 async function exportData(){const data=JSON.stringify({app:"fatcat-todo",version:1,exportedAt:new Date().toISOString(),tasks:S.tasks,settings:S.settings},null,2);
   const name=`fatcat-todo-${todayStr()}.json`;const FS=P("Filesystem"),SH=P("Share");
@@ -936,7 +992,10 @@ async function boot(){
     const L=LN();if(L){try{await L.createChannel({id:"fatcat",name:"Fat Cat Todo",description:"Reminders & daily brief",importance:4,visibility:1,vibration:true})}catch(e){}
       L.addListener("localNotificationActionPerformed",a=>openFromNotif(a.notification&&a.notification.extra))}
     const SP=P("SplashScreen");if(SP)try{SP.hide()}catch(e){}
+    const WB=P("WidgetBridge");if(WB)WB.appInfo().then(r=>{U.debug=!!r.debug}).catch(()=>{});
+    loadProducts();refreshPro();if(A)A.addListener("resume",()=>refreshPro());
   }
+  analyticsSync();track("app_open_fatcat",{tasks:live().length,pro:S.pro?1:0});
   scheduleNotifs();
   let last=todayStr();setInterval(()=>{const n=todayStr();if(n!==last){if(U.sel===last)U.sel=U.cursor=n;last=n;render();scheduleNotifs()}},30000);
   const mq=matchMedia("(prefers-color-scheme: dark)");mq.addEventListener&&mq.addEventListener("change",()=>applyTheme());

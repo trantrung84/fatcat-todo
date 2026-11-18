@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
@@ -243,6 +243,17 @@ textarea.inp{min-height:84px;resize:vertical}
 .protag{position:absolute;right:9px;top:10px;display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:900;color:var(--primary-d);background:var(--primary-l);border-radius:8px;padding:2px 6px}
 .protag svg{width:12px;height:12px}
 .thc[aria-pressed="true"] .protag{display:none}
+.plans{display:flex;flex-direction:column;gap:10px;margin:0 0 14px}
+.plan{position:relative;display:flex;align-items:center;gap:12px;padding:14px 14px;border-radius:20px;border:2px solid var(--border);background:var(--card);text-align:left}
+.plan[aria-pressed="true"]{border-color:var(--primary-d);box-shadow:0 0 0 3px var(--primary-l)}
+.plan .pr{width:24px;height:24px;border-radius:50%;border:2.4px solid var(--border2);display:grid;place-items:center;flex:none}
+.plan[aria-pressed="true"] .pr{border-color:var(--primary-d)}.plan[aria-pressed="true"] .pr i{width:12px;height:12px;border-radius:50%;background:var(--primary-d)}
+.plan .pn{flex:1;min-width:0}.plan .pn b{display:block;font-family:var(--fh);font-size:18px;line-height:1.1}.plan .pn small{color:var(--ink2);font-weight:700;font-size:13px}
+.plan .pp{font-family:var(--fh);font-weight:800;font-size:19px}
+.pbadge{position:absolute;top:-11px;left:16px;background:var(--primary);color:var(--onp);font-size:11.5px;font-weight:900;border-radius:9px;padding:2px 8px}
+.legal{font-size:12px;color:var(--ink2);text-align:center;margin:10px 6px 14px;line-height:1.45}.legal a{color:var(--primary-d);font-weight:800}
+.consent{display:flex;gap:10px;align-items:flex-start;text-align:left;max-width:330px;margin:-10px 0 22px;font-size:14.5px;color:var(--ink2);cursor:pointer}
+.consent input{width:22px;height:22px;accent-color:var(--primary-d);flex:none;margin:0}
 .pro{display:grid;grid-template-columns:1fr 60px 60px;font-size:15px}
 .pro div{padding:10px 4px;border-bottom:1.5px solid var(--border)}
 .pro .h{font-weight:800;color:var(--ink2);font-size:13px}
@@ -525,8 +536,47 @@ th:{mochi:"Mochi Pfirsich",forest:"Sommerwald",sea:"Sand & Meer",sunset:"Sonnenu
 const LANGS=[["vi","Tiếng Việt"],["en","English"],["zh","中文"],["ja","日本語"],["ko","한국어"],["fr","Français"],["de","Deutsch"]];
 const LOCALE={vi:"vi-VN",en:"en-US",zh:"zh-CN",ja:"ja-JP",ko:"ko-KR",fr:"fr-FR",de:"de-DE"};
 
+/* v1.4 strings: analytics consent + paywall (all 7 languages) */
+const ADD={
+en:{s_analytics:"Share anonymous usage data",s_analyticsSub:"Helps improve Fat Cat Todo. Task text is never sent.",ob_consent:"Share anonymous usage data to help improve the app",
+privacy:"Your tasks stay on this device. With your permission, anonymous usage statistics (Google Firebase Analytics) help us improve the app — you can turn this off any time below. No ads.",
+pw_head:"Unlock every theme and support Mochi",pw_monthly:"Monthly",pw_yearly:"Yearly",pw_lifetime:"Lifetime",pw_perMonth:"/ month",pw_perYear:"/ year",pw_once:"one-time payment",pw_save:"Save {p}%",pw_best:"Best value",pw_continue:"Continue",pw_restore:"Restore purchases",pw_manage:"Manage subscription",
+pw_legal:"Subscriptions renew automatically until you cancel in Google Play. Cancel anytime. Lifetime is a one-time purchase.",pw_privacy:"Privacy policy",pw_terms:"Terms of use",pw_thanks:"Welcome to Pro! ♡",pw_pending:"Payment pending — Pro unlocks as soon as it completes.",pw_error:"The purchase didn't go through. Please try again.",pw_unavail:"Google Play billing isn't available right now.",pw_webonly:"Purchases work in the app installed from Google Play.",pw_restored:"Purchases restored ✓",pw_none:"No purchases found",
+pro_note:"Pro unlocks all 10 color themes, including Luxe. Thank you for supporting an indie app!",pf6:"Home-screen widgets",pf7:"Support future updates ♡"},
+vi:{s_analytics:"Chia sẻ dữ liệu sử dụng ẩn danh",s_analyticsSub:"Giúp cải thiện Fat Cat Todo. Nội dung việc không bao giờ được gửi đi.",ob_consent:"Chia sẻ dữ liệu sử dụng ẩn danh để giúp cải thiện app",
+privacy:"Việc của bạn chỉ lưu trên máy này. Nếu bạn đồng ý, thống kê sử dụng ẩn danh (Google Firebase Analytics) giúp chúng tôi cải thiện app — bạn có thể tắt bất cứ lúc nào bên dưới. Không quảng cáo.",
+pw_head:"Mở khóa mọi theme và ủng hộ Mochi",pw_monthly:"Hằng tháng",pw_yearly:"Hằng năm",pw_lifetime:"Trọn đời",pw_perMonth:"/ tháng",pw_perYear:"/ năm",pw_once:"trả một lần",pw_save:"Tiết kiệm {p}%",pw_best:"Đáng giá nhất",pw_continue:"Tiếp tục",pw_restore:"Khôi phục giao dịch",pw_manage:"Quản lý gói đăng ký",
+pw_legal:"Gói đăng ký tự động gia hạn cho đến khi bạn hủy trong Google Play. Hủy bất cứ lúc nào. Gói Trọn đời chỉ thanh toán một lần.",pw_privacy:"Chính sách quyền riêng tư",pw_terms:"Điều khoản sử dụng",pw_thanks:"Chào mừng đến với Pro! ♡",pw_pending:"Thanh toán đang chờ xử lý — Pro sẽ mở khi hoàn tất.",pw_error:"Thanh toán chưa thành công. Vui lòng thử lại.",pw_unavail:"Hiện chưa kết nối được thanh toán Google Play.",pw_webonly:"Chỉ mua được trong app cài từ Google Play.",pw_restored:"Đã khôi phục giao dịch ✓",pw_none:"Không tìm thấy giao dịch nào",
+pro_note:"Pro mở khóa cả 10 theme màu, gồm cả Sang trọng. Cảm ơn bạn đã ủng hộ app độc lập!",pf6:"Widget màn hình chính",pf7:"Ủng hộ các bản cập nhật ♡"},
+zh:{s_analytics:"分享匿名使用数据",s_analyticsSub:"帮助改进 Fat Cat Todo，绝不发送任务内容。",ob_consent:"分享匿名使用数据，帮助改进应用",
+privacy:"你的任务只保存在本机。经你同意后，匿名使用统计（Google Firebase Analytics）帮助我们改进应用——你可以随时在下方关闭。无广告。",
+pw_head:"解锁所有主题，支持 Mochi",pw_monthly:"月度",pw_yearly:"年度",pw_lifetime:"永久",pw_perMonth:"/ 月",pw_perYear:"/ 年",pw_once:"一次性付款",pw_save:"省 {p}%",pw_best:"最划算",pw_continue:"继续",pw_restore:"恢复购买",pw_manage:"管理订阅",
+pw_legal:"订阅会自动续订，直到你在 Google Play 中取消。可随时取消。永久版为一次性购买。",pw_privacy:"隐私政策",pw_terms:"使用条款",pw_thanks:"欢迎加入 Pro！♡",pw_pending:"付款处理中——完成后即解锁 Pro。",pw_error:"购买未成功，请重试。",pw_unavail:"暂时无法使用 Google Play 结算。",pw_webonly:"仅可在从 Google Play 安装的应用中购买。",pw_restored:"已恢复购买 ✓",pw_none:"未找到购买记录",
+pro_note:"Pro 解锁全部 10 个颜色主题，包括“奢华”。感谢你支持独立应用！",pf6:"桌面小组件",pf7:"支持后续更新 ♡"},
+ja:{s_analytics:"匿名の利用データを共有",s_analyticsSub:"Fat Cat Todo の改善に役立ちます。タスクの内容は送信しません。",ob_consent:"アプリ改善のため匿名の利用データを共有する",
+privacy:"タスクはこの端末にのみ保存されます。同意いただいた場合、匿名の利用統計（Google Firebase Analytics）をアプリ改善に使います。下でいつでもオフにできます。広告なし。",
+pw_head:"すべてのテーマを解放して Mochi を応援",pw_monthly:"月額",pw_yearly:"年額",pw_lifetime:"買い切り",pw_perMonth:"/ 月",pw_perYear:"/ 年",pw_once:"一回払い",pw_save:"{p}% お得",pw_best:"いちばんお得",pw_continue:"続ける",pw_restore:"購入を復元",pw_manage:"サブスクリプションを管理",
+pw_legal:"サブスクリプションは Google Play で解約するまで自動更新されます。いつでも解約できます。買い切りは一回のみのお支払いです。",pw_privacy:"プライバシーポリシー",pw_terms:"利用規約",pw_thanks:"Pro へようこそ！♡",pw_pending:"支払い処理中です。完了すると Pro が有効になります。",pw_error:"購入できませんでした。もう一度お試しください。",pw_unavail:"現在 Google Play の決済を利用できません。",pw_webonly:"購入は Google Play からインストールしたアプリでのみ可能です。",pw_restored:"購入を復元しました ✓",pw_none:"購入履歴が見つかりません",
+pro_note:"Pro ではラグジュアリーを含む全 10 カラーテーマが使えます。個人開発アプリへの応援ありがとう！",pf6:"ホーム画面ウィジェット",pf7:"今後のアップデートを応援 ♡"},
+ko:{s_analytics:"익명 사용 데이터 공유",s_analyticsSub:"Fat Cat Todo 개선에 도움이 돼요. 할 일 내용은 절대 전송하지 않아요.",ob_consent:"앱 개선을 위해 익명 사용 데이터 공유",
+privacy:"할 일은 이 기기에만 저장돼요. 동의하시면 익명 사용 통계(Google Firebase Analytics)로 앱을 개선해요 — 아래에서 언제든 끌 수 있어요. 광고 없음.",
+pw_head:"모든 테마 잠금 해제하고 Mochi 응원하기",pw_monthly:"월간",pw_yearly:"연간",pw_lifetime:"평생",pw_perMonth:"/ 월",pw_perYear:"/ 년",pw_once:"1회 결제",pw_save:"{p}% 절약",pw_best:"가장 알뜰",pw_continue:"계속",pw_restore:"구매 복원",pw_manage:"구독 관리",
+pw_legal:"구독은 Google Play에서 해지할 때까지 자동 갱신돼요. 언제든 해지할 수 있어요. 평생 이용권은 1회 결제예요.",pw_privacy:"개인정보처리방침",pw_terms:"이용약관",pw_thanks:"Pro에 오신 걸 환영해요! ♡",pw_pending:"결제 대기 중 — 완료되면 Pro가 열려요.",pw_error:"결제가 완료되지 않았어요. 다시 시도해 주세요.",pw_unavail:"지금은 Google Play 결제를 사용할 수 없어요.",pw_webonly:"Google Play에서 설치한 앱에서만 구매할 수 있어요.",pw_restored:"구매가 복원됐어요 ✓",pw_none:"구매 내역이 없어요",
+pro_note:"Pro는 럭셔리를 포함한 10가지 컬러 테마를 모두 열어 줘요. 인디 앱을 응원해 줘서 고마워요!",pf6:"홈 화면 위젯",pf7:"앞으로의 업데이트 응원 ♡"},
+fr:{s_analytics:"Partager des données d’usage anonymes",s_analyticsSub:"Aide à améliorer Fat Cat Todo. Le texte des tâches n’est jamais envoyé.",ob_consent:"Partager des données d’usage anonymes pour améliorer l’app",
+privacy:"Vos tâches restent sur cet appareil. Avec votre accord, des statistiques d’usage anonymes (Google Firebase Analytics) nous aident à améliorer l’app — désactivable à tout moment ci-dessous. Sans pub.",
+pw_head:"Débloquez tous les thèmes et soutenez Mochi",pw_monthly:"Mensuel",pw_yearly:"Annuel",pw_lifetime:"À vie",pw_perMonth:"/ mois",pw_perYear:"/ an",pw_once:"paiement unique",pw_save:"−{p} %",pw_best:"Meilleur prix",pw_continue:"Continuer",pw_restore:"Restaurer les achats",pw_manage:"Gérer l’abonnement",
+pw_legal:"Les abonnements se renouvellent automatiquement jusqu’à résiliation dans Google Play. Résiliable à tout moment. L’offre À vie est un achat unique.",pw_privacy:"Politique de confidentialité",pw_terms:"Conditions d’utilisation",pw_thanks:"Bienvenue dans Pro ! ♡",pw_pending:"Paiement en attente — Pro s’activera dès sa validation.",pw_error:"L’achat n’a pas abouti. Réessayez.",pw_unavail:"La facturation Google Play n’est pas disponible pour le moment.",pw_webonly:"Les achats se font dans l’app installée depuis Google Play.",pw_restored:"Achats restaurés ✓",pw_none:"Aucun achat trouvé",
+pro_note:"Pro débloque les 10 thèmes de couleur, dont Luxe. Merci de soutenir une app indépendante !",pf6:"Widgets d’écran d’accueil",pf7:"Soutenir les prochaines mises à jour ♡"},
+de:{s_analytics:"Anonyme Nutzungsdaten teilen",s_analyticsSub:"Hilft, Fat Cat Todo zu verbessern. Aufgabentexte werden nie gesendet.",ob_consent:"Anonyme Nutzungsdaten teilen, um die App zu verbessern",
+privacy:"Deine Aufgaben bleiben auf diesem Gerät. Mit deiner Zustimmung helfen anonyme Nutzungsstatistiken (Google Firebase Analytics), die App zu verbessern — unten jederzeit abschaltbar. Keine Werbung.",
+pw_head:"Alle Designs freischalten und Mochi unterstützen",pw_monthly:"Monatlich",pw_yearly:"Jährlich",pw_lifetime:"Lebenslang",pw_perMonth:"/ Monat",pw_perYear:"/ Jahr",pw_once:"Einmalzahlung",pw_save:"{p} % sparen",pw_best:"Bester Preis",pw_continue:"Weiter",pw_restore:"Käufe wiederherstellen",pw_manage:"Abo verwalten",
+pw_legal:"Abos verlängern sich automatisch, bis du sie in Google Play kündigst. Jederzeit kündbar. Lebenslang ist ein Einmalkauf.",pw_privacy:"Datenschutzerklärung",pw_terms:"Nutzungsbedingungen",pw_thanks:"Willkommen bei Pro! ♡",pw_pending:"Zahlung ausstehend — Pro wird freigeschaltet, sobald sie abgeschlossen ist.",pw_error:"Der Kauf hat nicht geklappt. Bitte erneut versuchen.",pw_unavail:"Google-Play-Abrechnung ist gerade nicht verfügbar.",pw_webonly:"Käufe funktionieren in der App aus Google Play.",pw_restored:"Käufe wiederhergestellt ✓",pw_none:"Keine Käufe gefunden",
+pro_note:"Pro schaltet alle 10 Farbdesigns frei, auch Luxus. Danke, dass du eine Indie-App unterstützt!",pf6:"Startbildschirm-Widgets",pf7:"Künftige Updates unterstützen ♡"}};
+for(const l in ADD)Object.assign(I18N[l],ADD[l]);
+
 const MONTHS_EN=["January","February","March","April","May","June","July","August","September","October","November","December"];
-function t(k,p){let s=(I18N[S.settings.lang]||I18N.vi)[k];if(s==null)s=I18N.en[k]??k;if(p)for(const x in p)s=s.split("{"+x+"}").join(p[x]);return s}
+function t(k,p){let s=(I18N[S.settings.lang]||I18N.en)[k];if(s==null)s=I18N.en[k]??k;if(p)for(const x in p)s=s.split("{"+x+"}").join(p[x]);return s}
 
 /* ============ dates ============ */
 const pad=n=>String(n).padStart(2,"0");
@@ -544,14 +594,15 @@ function monthTitle(s){const d=parse(s);const L=S.settings.lang;if(L!=="vi"&&L!=
 function relLabel(s){const td=todayStr();if(s===td)return t("todayL");if(s===addDays(td,1))return t("tomorrowL");return longDate(s)}
 
 /* ============ state ============ */
+function isNativeEarly(){const C=window.Capacitor;return !!(C&&C.isNativePlatform&&C.isNativePlatform())}
 const KEY="fatcat.todo.v1";
-const DEF_SETTINGS={somedayOpen:true,weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:false,showBadge:true,brief:true,briefTime:"08:00",
-  lang:(()=>{const n=(navigator.language||"vi").toLowerCase().slice(0,2);return ["vi","en","zh","ja","ko","fr","de"].includes(n)?n:"vi"})(),theme:"auto",palette:"mochi",sound:false,haptic:true,reduceMotion:false};
+const DEF_SETTINGS={analytics:true,somedayOpen:true,weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:false,showBadge:true,brief:true,briefTime:"08:00",
+  lang:(()=>{const n=(navigator.language||"vi").toLowerCase().slice(0,2);return ["vi","en","zh","ja","ko","fr","de"].includes(n)?n:"en"})(),theme:"auto",palette:"mochi",sound:false,haptic:true,reduceMotion:false};
 let S={tasks:[],settings:{...DEF_SETTINGS},onboarded:false,pro:false};
 try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);S={...S,...o,settings:{...DEF_SETTINGS,...(o.settings||{})}}}}catch(e){}
 if(!S.settings.v2){S.settings.v2=true;S.settings.somedayTop=false}
 const FREE_THEME="mochi";if(!THEMES.some(x=>x.id===S.settings.palette)||(!S.pro&&S.settings.palette!==FREE_THEME))S.settings.palette=FREE_THEME;
-const U={preview:null,verTaps:0,view:"home",sel:todayStr(),cursor:todayStr(),mode:"week",adding:null,tlFilter:"pending",tlDays:30,flash:null,stack:[]};
+const U={debug:!isNativeEarly(),products:null,plan:"yearly",buying:false,preview:null,verTaps:0,view:"home",sel:todayStr(),cursor:todayStr(),mode:"week",adding:null,tlFilter:"pending",tlDays:30,flash:null,stack:[]};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}scheduleNotifs()}
 const uid=()=>(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
 function newTask(o){const now=Date.now();return Object.assign({id:uid(),title:"",notes:"",date:null,pin:false,order:now,priority:"normal",
@@ -651,6 +702,14 @@ function confetti(){if(reduced())return;const box=document.createElement("div");
     p.style.setProperty("--dx",(Math.random()*120-60)+"px");p.style.setProperty("--r",(Math.random()*720-360)+"deg");p.style.animationDelay=Math.random()*.25+"s";box.appendChild(p)}
   $("#app").appendChild(box);setTimeout(()=>box.remove(),2000)}
 
+/* ============ analytics (Firebase, anonymous, opt-out in Settings) ============ */
+const FA=()=>P("FirebaseAnalytics");
+function track(name,params){if(!S.settings.analytics)return;const A=FA();if(!A)return;try{A.logEvent({name,params:params||{}}).catch(()=>{})}catch(e){}}
+function trackScreen(v){if(!S.settings.analytics)return;const A=FA();if(!A)return;try{A.setCurrentScreen({screenName:v,screenClassOverride:v}).catch(()=>{})}catch(e){}}
+function analyticsSync(){const A=FA();if(!A)return;try{A.setEnabled({enabled:!!S.settings.analytics}).catch(()=>{});if(!S.settings.analytics)return;
+  const props={app_language:S.settings.lang,app_theme:S.settings.palette,is_pro:S.pro?"yes":"no",dark_mode:S.settings.theme};
+  for(const k in props)A.setUserProperty({key:k,value:String(props[k])}).catch(()=>{})}catch(e){}}
+
 /* ============ mutations ============ */
 function touch(x){x.updatedAt=Date.now()}
 function toggleDone(id,ds){
@@ -658,8 +717,8 @@ function toggleDone(id,ds){
   if(isRep(x)){x.doneDates=x.doneDates||{};if(x.doneDates[ds])delete x.doneDates[ds];else x.doneDates[ds]=Date.now();nowDone=!!x.doneDates[ds]}
   else{x.done=!x.done;x.completedAt=x.done?Date.now():null;nowDone=x.done}
   touch(x);save();U.pop=id+"|"+(ds||"");
-  if(nowDone){haptic();const st=ds?dayStat(ds):null;
-    if(st&&st.status==="complete"&&before!=="complete"){U.flash="alldone";setTimeout(()=>{confetti();haptic("success");meow()},120)}
+  if(nowDone){haptic();const st=ds?dayStat(ds):null;track("task_complete",{repeat:isRep(x)?1:0,list:ds?"day":"someday"});
+    if(st&&st.status==="complete"&&before!=="complete"){U.flash="alldone";track("day_complete",{tasks:st.n});setTimeout(()=>{confetti();haptic("success");meow()},120)}
     else U.flash="single";
     clearTimeout(U.flashT);U.flashT=setTimeout(()=>{U.flash=null;renderHero()},3500);
     toast(t("t_done",{t:x.title}),()=>restore(snap))}
@@ -673,16 +732,16 @@ function moveTask(id,fromDs,toDs,opts={}){const x=byId(id);if(!x)return;
   if(isRep(x)&&fromDs){if(toDs===fromDs)return;detachOccurrence(x,fromDs,{date:toDs,reminder:toDs?x.reminder:null})}
   else{x.date=toDs;if(!toDs){x.reminder=null;x.repeat={type:"none",days:[],end:null}}if(opts.order!=null)x.order=opts.order;touch(x)}}
 function doMove(id,fromDs,toDs){const x=byId(id);if(!x)return;
-  const go=()=>{const snap=snapshot();moveTask(id,fromDs,toDs);save();render();toast(t("t_moved",{t:x.title}),()=>restore(snap))};
+  const go=()=>{const snap=snapshot();moveTask(id,fromDs,toDs);track("task_move",{to:toDs?(toDs===addDays(fromDs||todayStr(),1)?"tomorrow":"date"):"someday"});save();render();toast(t("t_moved",{t:x.title}),()=>restore(snap))};
   if(!toDs&&x.reminder)confirmSheet(t("confirmReminder"),go);else go()}
 function removeTask(id,ds){const x=byId(id);if(!x)return;
-  const doIt=scope=>{const snap=snapshot();if(scope==="one"){x.skip=x.skip||{};x.skip[ds]=true}else x.deletedAt=Date.now();touch(x);save();closeAll();render();toast(t("t_del",{t:x.title}),()=>restore(snap))};
+  const doIt=scope=>{const snap=snapshot();track("task_delete",{scope});if(scope==="one"){x.skip=x.skip||{};x.skip[ds]=true}else x.deletedAt=Date.now();touch(x);save();closeAll();render();toast(t("t_del",{t:x.title}),()=>restore(snap))};
   if(isRep(x)&&ds)choiceSheet(t("delScope"),[[t("onlyThis"),()=>doIt("one")],[t("allSeries"),()=>doIt("all"),"red"]]);else doIt("all")}
 let lastAdd={t:"",at:0};
 function addTask(title,where){title=title.trim().slice(0,160);if(!title)return false;
   if(title===lastAdd.t&&Date.now()-lastAdd.at<700)return false;lastAdd={t:title,at:Date.now()};
   const list=where==="someday"?somedayTasks():tasksOn(U.sel);const maxO=list.reduce((m,x)=>Math.max(m,x.order),0);
-  S.tasks.push(newTask({title,date:where==="someday"?null:U.sel,order:maxO+10}));save();return true}
+  S.tasks.push(newTask({title,date:where==="someday"?null:U.sel,order:maxO+10}));save();track("task_add",{list:where==="someday"?"someday":"day"});return true}
 
 /* ============ theme ============ */
 const curTheme=()=>THEMES.find(x=>x.id===(U.preview||S.settings.palette))||THEMES[0];
@@ -699,7 +758,7 @@ function render(){
   applyTheme();
   const scr=$("#screen");const main=scr.querySelector("main");const st=main?main.scrollTop:0;const prev=scr.dataset.view;
   const V={home:homeHTML,calendar:calendarViewHTML,timeline:timelineHTML,someday:somedayViewHTML,more:settingsHTML,premium:premiumHTML};
-  scr.innerHTML=(V[U.view]||homeHTML)();scr.dataset.view=U.view;
+  scr.innerHTML=(V[U.view]||homeHTML)();if(prev!==U.view){trackScreen(U.view);if(U.view==="premium")track("paywall_view",{from:prev||"start"})}scr.dataset.view=U.view;
   const m2=scr.querySelector("main");if(m2&&prev===U.view)m2.scrollTop=st;
   renderNav();$("#pvbar").innerHTML=pvbarHTML();
   renderComposer();
@@ -816,18 +875,30 @@ function settingsHTML(){const s=S.settings;
   <h4>${t("s_notif")}</h4><div class="card">${line("brief",t("s_brief"),t("s_briefSub"))}
    <div class="line"><div class="lt">${t("s_briefTime")}</div><input type="time" data-set="briefTime" value="${s.briefTime}" ${s.brief?"":"disabled"}></div>
    <div class="line"><div class="lt">${t("s_perm")}<small id="permState">…</small></div><button class="chip" data-act="askPerm">${t("perm_ask")}</button></div></div>
-  <h4>${t("s_data")}</h4><div class="card menu">
+  <h4>${t("s_data")}</h4><div class="card">${line("analytics",t("s_analytics"),t("s_analyticsSub"))}</div><div class="card menu">
    <button class="mi" data-act="export">${ic("next")}${t("s_export")}</button>
    <button class="mi" data-act="import">${ic("inbox")}${t("s_import")}</button>
    <button class="mi red" data-act="wipe">${ic("trash")}${t("s_wipe")}</button><input type="file" id="impFile" accept="application/json,.json" hidden></div>
   <h4>${t("s_pro")}</h4><div class="card menu"><button class="mi" data-act="view" data-v="premium">${ic("star")}${t("pro_title")}</button></div>
-  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.3.0${S.pro?" · Pro":""}</button></div></main>`}
-function premiumHTML(){const rows=[["pf1",1,1],["pf2",1,1],["pf3",1,1],["pf4",1,1],["pf5",0,1],["pf6",0,1],["pf7",0,1],["pf8",0,1]];
-  return `<div class="topbar">${backBtn("more")}<div class="grow"><h1>${t("pro_title")}</h1></div></div><main>
-  <div class="card" style="text-align:center">${spr("love","width:150px;margin:0 auto","bob")}<p style="margin:6px 4px 4px;color:var(--ink2)">${S.pro?t("pro_active"):t("pro_note")}</p></div>
+  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.0${S.pro?" · Pro":""}</button></div></main>`}
+const PRODUCTS={monthly:"fatcat_pro_monthly",yearly:"fatcat_pro_yearly",lifetime:"fatcat_pro_lifetime"};
+const FALLBACK_PRICE={monthly:"$1.90",yearly:"$15.00",lifetime:"$19.00"};
+const PRIVACY_URL="https://github.com/trantrung84/fatcat-todo/blob/main/PRIVACY.md",TERMS_URL="https://github.com/trantrung84/fatcat-todo/blob/main/TERMS.md";
+function priceOf(k){const p=U.products&&U.products[PRODUCTS[k]];return p&&p.price?p.price:FALLBACK_PRICE[k]}
+function yearlySave(){const P2=U.products||{};const m=P2[PRODUCTS.monthly],y=P2[PRODUCTS.yearly];if(m&&y&&m.micros&&y.micros)return Math.round((1-y.micros/(m.micros*12))*100);return 34}
+function premiumHTML(){const rows=[["pf1",1,1],["pf2",1,1],["pf3",1,1],["pf4",1,1],["pf6",1,1],["pf5",0,1],["pf7",0,1]];
+  const plan=(k,sub,badge)=>`<button class="plan" data-act="plan" data-k="${k}" aria-pressed="${U.plan===k}">${badge?`<span class="pbadge">${badge}</span>`:""}<span class="pr"><i></i></span><span class="pn"><b>${t("pw_"+k)}</b><small>${sub}</small></span><span class="pp">${esc(priceOf(k))}</span></button>`;
+  const body=S.pro?`<div class="card" style="text-align:center">${spr("party","width:150px;margin:0 auto","bob")}<h2 style="margin:6px 0 4px;font-size:20px">${t("pw_active")}</h2><p style="color:var(--ink2);margin:0 0 12px">${t("pro_note")}</p>
+     <a class="btn ghost block" style="display:grid;place-items:center;text-decoration:none" href="https://play.google.com/store/account/subscriptions?package=com.fatcat.todo" target="_blank" rel="noopener">${t("pw_manage")}</a></div>`
+   :`<div class="card" style="text-align:center;padding-top:6px">${spr("love","width:132px;margin:0 auto","bob")}<h2 style="margin:4px 0 4px;font-size:20px">${t("pw_head")}</h2><p style="margin:0 4px 4px;color:var(--ink2);font-size:14.5px">${t("pro_note")}</p></div>
+     <div class="plans">${plan("yearly",t("pw_perYear"),`${t("pw_best")} · ${t("pw_save",{p:yearlySave()})}`)}${plan("monthly",t("pw_perMonth"))}${plan("lifetime",t("pw_once"))}</div>
+     <button class="btn block" data-act="buy" ${U.buying?"disabled":""} style="height:56px;font-size:20px">${t("pw_continue")}</button>
+     <p class="legal">${t("pw_legal")}</p>`;
+  return `<div class="topbar">${backBtn("more")}<div class="grow"><h1>${t("pro_title")}</h1></div></div><main>${body}
   <div class="card"><div class="pro"><div class="h"></div><div class="h c">${t("free")}</div><div class="h c">${t("pro")}</div>
   ${rows.map(([k,a,b])=>`<div>${t(k)}</div><div class="c" style="color:var(--mint-d)">${a?"✓":"–"}</div><div class="c" style="color:var(--mint-d)">${b?"✓":"–"}</div>`).join("")}</div></div>
-  <button class="btn block" disabled>${t("pro_soon")}</button><button class="btn ghost block" style="margin-top:10px" disabled>${t("pro_restore")}</button></main>`}
+  <button class="btn ghost block" data-act="restore">${t("pw_restore")}</button>
+  <p class="legal"><a href="${PRIVACY_URL}" target="_blank" rel="noopener">${t("pw_privacy")}</a> · <a href="${TERMS_URL}" target="_blank" rel="noopener">${t("pw_terms")}</a></p></main>`}
 
 /* ============ sheets ============ */
 function openSheet(title,body,opts={}){
@@ -851,7 +922,7 @@ function choiceSheet(title,choices){const sh=openSheet(title,`<div class="menu">
   const e=U.stack[U.stack.length-1];sh.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{closeSheet(e,true);choices[+b.dataset.i][1]()})}
 function themeSheet(){const sh=openSheet(t("s_theme_c"),themeGrid(),{img:"love"});
   sh.addEventListener("click",ev=>{const b=ev.target.closest("[data-p]");if(!b)return;ev.stopPropagation();setPalette(b.dataset.p);sh.querySelector(".sb").innerHTML=themeGrid()})}
-function setPalette(id){if(!unlocked(id)){U.preview=id;render();toast(t("pv_locked"));return}U.preview=null;S.settings.palette=id;save();render();toast(t("t_theme",{t:themeName(curTheme())}))}
+function setPalette(id){if(!unlocked(id)){U.preview=id;track("theme_preview",{theme:id});render();toast(t("pv_locked"));return}U.preview=null;S.settings.palette=id;save();track("theme_change",{theme:id});analyticsSync();render();toast(t("t_theme",{t:themeName(curTheme())}))}
 function exitPreview(){U.preview=null;render()}
 function pvbarHTML(){if(!U.preview)return "";const th=curTheme();return `<div class="pvbar" role="status">${ic("eye")}<span>${esc(t("pv_on",{t:themeName(th)}))}</span><button class="chip" data-act="pvUnlock">${t("pv_unlock")}</button><button class="small" data-act="pvExit" aria-label="${t("pv_exit")}">${ic("close")}</button></div>`}
 function menuSheet(id,ds){const x=byId(id);if(!x)return;const inSome=!x.date;const items=[];
@@ -859,8 +930,8 @@ function menuSheet(id,ds){const x=byId(id);if(!x)return;const inSome=!x.date;con
   else items.push(["next",t("m_tomorrow"),()=>doMove(id,ds,addDays(ds||todayStr(),1)<todayStr()?addDays(todayStr(),1):addDays(ds,1))]);
   items.push(["cal",t("m_change"),()=>datePicker(ds||U.sel,d=>doMove(id,ds,d))]);
   if(!inSome)items.push(["inbox",t("m_toSomeday"),()=>doMove(id,ds,null)]);
-  items.push(["repeat",t("m_repeat"),()=>repeatSheet(x.date?x:{...x,date:U.sel},r=>{const snap=snapshot();if(!x.date)x.date=U.sel;x.repeat=r;touch(x);save();render();toast(t("t_saved"),()=>restore(snap))})]);
-  items.push(["bell",t("m_notif"),()=>reminderSheet(x,v=>{x.reminder=v;touch(x);save();render();toast(t("t_saved"))})]);
+  items.push(["repeat",t("m_repeat"),()=>repeatSheet(x.date?x:{...x,date:U.sel},r=>{const snap=snapshot();track("repeat_set",{type:r.type});if(!x.date)x.date=U.sel;x.repeat=r;touch(x);save();render();toast(t("t_saved"),()=>restore(snap))})]);
+  items.push(["bell",t("m_notif"),()=>reminderSheet(x,v=>{track("reminder_set",{on:v?1:0});x.reminder=v;touch(x);save();render();toast(t("t_saved"))})]);
   items.push(["pin",x.pin?t("m_unpin"):t("m_pin"),()=>{x.pin=!x.pin;touch(x);save();render()}]);
   items.push(["edit",t("m_edit"),()=>editor(id,ds)]);
   items.push(["trash",t("m_remove"),()=>removeTask(id,ds),"red"]);
@@ -930,7 +1001,7 @@ function editor(id,ds,preset){
     const del=sb.querySelector("#eDel");if(del)del.onclick=()=>{closeSheet(e,true);removeTask(id,ds)};
     sb.querySelector("#eOk").onclick=()=>{pull();d.title=d.title.trim().slice(0,160);d.notes=(d.notes||"").slice(0,2000);
       if(!d.title){const i=sb.querySelector("#eT");i.focus();i.style.borderColor="var(--warn)";return}
-      const commitAll=()=>{const snap=snapshot();if(orig){Object.assign(orig,d);touch(orig)}else{const list=d.date?tasksOn(d.date):somedayTasks();d.order=list.reduce((m,x)=>Math.max(m,x.order),0)+10;S.tasks.push(d)}save();closeSheet(e,true);render();toast(t("t_saved"),()=>restore(snap))};
+      const commitAll=()=>{const snap=snapshot();track(orig?"task_edit":"task_add",{list:d.date?"day":"someday",repeat:isRep(d)?1:0,reminder:d.reminder?1:0,dday:d.dday?1:0,via:"editor"});if(orig){Object.assign(orig,d);touch(orig)}else{const list=d.date?tasksOn(d.date):somedayTasks();d.order=list.reduce((m,x)=>Math.max(m,x.order),0)+10;S.tasks.push(d)}save();closeSheet(e,true);render();toast(t("t_saved"),()=>restore(snap))};
       const commitOne=()=>{const snap=snapshot();detachOccurrence(orig,ds,{title:d.title,notes:d.notes,pin:d.pin,priority:d.priority,reminder:d.reminder,dday:d.dday,date:d.date});save();closeSheet(e,true);render();toast(t("t_saved"),()=>restore(snap))};
       const changed=orig&&JSON.stringify({...orig,updatedAt:0})!==JSON.stringify({...d,updatedAt:0});
       const repChanged=orig&&JSON.stringify(orig.repeat)!==JSON.stringify(d.repeat);
@@ -941,11 +1012,12 @@ function editor(id,ds,preset){
 /* ============ onboarding ============ */
 function showOnboarding(){if($(".onb"))return;let i=0;const steps=[["peek","ob1t","ob1p"],["note","ob2t","ob2p"],["bell","ob3t","ob3p"]];
   const el=document.createElement("div");el.className="onb";
-  const draw=()=>{const[s,a,b]=steps[i];el.innerHTML=`<div class="skipw"><button class="skipb" data-skip>${t("skip")}</button></div>${spr(s,"","bob")}<h2>${t(a)}</h2><p>${t(b)}</p><div class="dots">${steps.map((_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div><button class="btn" style="min-width:240px;height:58px;font-size:21px" data-n>${i<2?t("next"):t("start")}</button>`;
+  const draw=()=>{const[s,a,b]=steps[i];el.innerHTML=`<div class="skipw"><button class="skipb" data-skip>${t("skip")}</button></div>${spr(s,"","bob")}<h2>${t(a)}</h2><p>${t(b)}</p>${i===2?`<label class="consent"><input type="checkbox" id="obConsent" ${S.settings.analytics?"checked":""}><span>${t("ob_consent")}</span></label>`:""}<div class="dots">${steps.map((_,k)=>`<i class="${k===i?"on":""}"></i>`).join("")}</div><button class="btn" style="min-width:240px;height:58px;font-size:21px" data-n>${i<2?t("next"):t("start")}</button>`;
+    const cb=el.querySelector("#obConsent");if(cb)cb.onchange=()=>{S.settings.analytics=cb.checked};
     el.querySelector("[data-n]").onclick=()=>{if(i<2){i++;draw()}else finish()};el.querySelector("[data-skip]").onclick=finish};
   const finish=()=>{S.onboarded=true;if(!S.tasks.length){const td=todayStr();
       S.tasks.push(newTask({title:t("seed1"),date:td,order:10}),newTask({title:t("seed2"),date:td,order:20}),newTask({title:t("seed3"),date:td,order:30}),newTask({title:t("seed4"),date:null,order:10}))}
-    save();el.remove();render()};
+    save();analyticsSync();track("onboarding_complete",{step:i+1,analytics:S.settings.analytics?1:0});el.remove();render()};
   draw();$("#app").appendChild(el)}
 
 /* ============ events ============ */
@@ -977,15 +1049,19 @@ app.addEventListener("click",ev=>{
     case"palette":setPalette(b.dataset.p);break;
     case"themes":themeSheet();break;
     case"pvExit":exitPreview();break;
+    case"plan":U.plan=b.dataset.k;render();break;
+    case"buy":buyPro();break;
+    case"restore":refreshPro(true);break;
     case"pvUnlock":U.view="premium";render();break;
-    case"ver":if(++U.verTaps>=7){U.verTaps=0;S.pro=!S.pro;if(!S.pro){S.settings.palette=FREE_THEME;U.preview=null}else if(U.preview){S.settings.palette=U.preview;U.preview=null}save();render();toast(t(S.pro?"pro_unlocked":"pro_relocked"))}break;
+    case"ver":if(U.debug&&++U.verTaps>=7){U.verTaps=0;S.pro=!S.pro;if(!S.pro){S.settings.palette=FREE_THEME;U.preview=null}else if(U.preview){S.settings.palette=U.preview;U.preview=null}save();render();toast(t(S.pro?"pro_unlocked":"pro_relocked"))}break;
     case"askPerm":ensurePermission(true).then(()=>updatePermState());break;
     case"export":exportData();break;
     case"import":$("#impFile").click();break;
     case"wipe":confirmSheet(t("wipeQ"),()=>{const lang=S.settings.lang,palette=S.settings.palette;S={tasks:[],settings:{...DEF_SETTINGS,lang,palette},onboarded:true};save();U.view="home";render()});break;
   }});
 app.addEventListener("change",ev=>{const el=ev.target;
-  if(el.dataset&&el.dataset.set){const k=el.dataset.set;S.settings[k]=el.type==="checkbox"?el.checked:el.value;save();if(k==="brief"&&el.checked)ensurePermission(true);render()}
+  if(el.dataset&&el.dataset.set){const k=el.dataset.set;S.settings[k]=el.type==="checkbox"?el.checked:el.value;save();
+    if(k==="analytics"){if(el.checked){analyticsSync();track("analytics_opt_in")}else{track("analytics_opt_out");S.settings.analytics=false;analyticsSync()}}else{track("setting_change",{key:k,value:String(S.settings[k])});if(k==="lang")analyticsSync()}if(k==="brief"&&el.checked)ensurePermission(true);render()}
   if(el.id==="impFile"&&el.files[0])importData(el.files[0])});
 app.addEventListener("keydown",ev=>{if(ev.target.id==="addInput"&&ev.key==="Enter"){if(ev.isComposing||ev.keyCode===229)return;ev.preventDefault();
   const inp=ev.target;const v=inp.value;if(!v.trim()){U.adding=null;render();return}
@@ -1075,6 +1151,25 @@ async function doSchedule(){const list=upcoming();
   list.filter(n=>n.at-now<864e5).forEach(n=>webTimers.push(setTimeout(()=>{if(Notification.permission==="granted"){const no=new Notification(n.title,{body:n.body,tag:String(n.id)});no.onclick=()=>{window.focus();openFromNotif(n.extra)}}else toast(n.title+" "+n.body)},n.at-now)))}
 function openFromNotif(ex){if(!ex)return;closeAll();U.view="home";if(ex.date)U.sel=U.cursor=ex.date;render();if(ex.taskId&&byId(ex.taskId))setTimeout(()=>editor(ex.taskId,ex.date),300)}
 
+/* ============ Google Play Billing (native BillingPlugin) ============ */
+const BILL=()=>P("Billing");
+function setPro(v){const was=S.pro;S.pro=!!v;if(!S.pro&&!unlocked(S.settings.palette))S.settings.palette=FREE_THEME;if(S.pro&&U.preview){S.settings.palette=U.preview;U.preview=null}
+  save();if(was!==S.pro){analyticsSync();render()}}
+async function loadProducts(){const B=BILL();if(!B)return;try{U.products=await B.getProducts();if(U.view==="premium")render()}catch(e){console.warn("billing products",e)}}
+async function refreshPro(manual){const B=BILL();if(!B){if(manual)toast(t("pw_webonly"));return}
+  try{const r=await B.getEntitlement();setPro(r.pro);if(manual){toast(r.pro?t("pw_restored"):t("pw_none"));track("restore_purchases",{found:r.pro?1:0})}}
+  catch(e){if(manual)toast(t("pw_unavail"))}}
+async function buyPro(){const B=BILL();const plan=U.plan;if(!B){toast(t("pw_webonly"));return}
+  if(!U.products||!U.products[PRODUCTS[plan]])await loadProducts();
+  track("purchase_start",{plan});U.buying=true;render();
+  try{const r=await B.purchase({productId:PRODUCTS[plan]});
+    if(r.status==="purchased"||r.status==="owned"){await refreshPro();if(S.pro){toast(t("pw_thanks"));confetti();haptic("success");track("purchase_success",{plan})}}
+    else if(r.status==="pending"){toast(t("pw_pending"));track("purchase_pending",{plan})}
+    else if(r.status==="cancelled")track("purchase_cancel",{plan});
+    else{toast(t("pw_error"));track("purchase_error",{plan,code:String(r.message||"").slice(0,90)})}}
+  catch(e){toast(t("pw_unavail"));track("purchase_error",{plan,code:"unavailable"})}
+  U.buying=false;render()}
+
 /* ============ data ============ */
 async function exportData(){const data=JSON.stringify({app:"fatcat-todo",version:1,exportedAt:new Date().toISOString(),tasks:S.tasks,settings:S.settings},null,2);
   const name=`fatcat-todo-${todayStr()}.json`;const FS=P("Filesystem"),SH=P("Share");
@@ -1093,7 +1188,10 @@ async function boot(){
     const L=LN();if(L){try{await L.createChannel({id:"fatcat",name:"Fat Cat Todo",description:"Reminders & daily brief",importance:4,visibility:1,vibration:true})}catch(e){}
       L.addListener("localNotificationActionPerformed",a=>openFromNotif(a.notification&&a.notification.extra))}
     const SP=P("SplashScreen");if(SP)try{SP.hide()}catch(e){}
+    const WB=P("WidgetBridge");if(WB)WB.appInfo().then(r=>{U.debug=!!r.debug}).catch(()=>{});
+    loadProducts();refreshPro();if(A)A.addListener("resume",()=>refreshPro());
   }
+  analyticsSync();track("app_open_fatcat",{tasks:live().length,pro:S.pro?1:0});
   scheduleNotifs();
   let last=todayStr();setInterval(()=>{const n=todayStr();if(n!==last){if(U.sel===last)U.sel=U.cursor=n;last=n;render();scheduleNotifs()}},30000);
   const mq=matchMedia("(prefers-color-scheme: dark)");mq.addEventListener&&mq.addEventListener("change",()=>applyTheme());
