@@ -54,3 +54,12 @@ Support email: nabana84@gmail.com · Website: https://toonred.com (Toon App Stud
 
 ## E. Each new version
 Bump `versionCode` (+1) and `versionName` in `android/app/build.gradle`, push to `main`, upload the new `.aab` from the GitHub Release.
+
+## In-app products (created 2026-11-18, all Active)
+| Product ID | Type | Base plan / option | Price (USD base, auto-converted) |
+|---|---|---|---|
+| fatcat_pro_monthly | Subscription | `monthly` auto-renew, 7-day grace | $1.89 (VN 49,000₫) |
+| fatcat_pro_yearly | Subscription | `yearly` auto-renew, 14-day grace | $14.99 (VN 386,000₫) |
+| fatcat_pro_lifetime | One-time | `lifetime` (Buy) | $18.99 (VN 488,000₫) |
+
+Still to do by owner: add bank payout method (Payments profile → How you get paid).
