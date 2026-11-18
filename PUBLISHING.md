@@ -29,7 +29,9 @@ After adding secrets, push any commit to `main` → the GitHub Release contains 
 ## Status (18 Nov 2026)
 Done in the ToonRed Studio Play Console: app **Fat Cat Todo** created (package `com.fatcat.todo`, English US, App, Free), store listing text saved as draft, category Productivity, contact email/website, privacy policy URL, Ads = No.
 Done in Firebase: project **fat-cat-todo** (Analytics account "Toon App Studio", location Vietnam), Android app `com.fatcat.todo` registered.
-Still to do: GitHub secrets, google-services.json, upload graphics, Sign-in details (answer **Yes**: "No login. Pro color themes need a purchase; reviewers can preview every theme in More → Settings → Color theme"), content rating, target audience, data safety, first AAB upload, products, closed test.
+Done later the same day: GitHub signing secrets, google-services.json (Firebase active), internal testing release **5 (1.4.0)** published to lists new_trung + Test 20Testers — join link https://play.google.com/apps/internaltest/4698891626908468616 .
+Blocked on: **Google Payments merchant account** (Play Console → Monetize → set up merchant account) before the 3 Pro products can be created.
+Still to do: upload graphics, Sign-in details (answer **Yes**: "No login. Pro color themes need a purchase; reviewers can preview every theme in More → Settings → Color theme"), content rating, target audience, data safety, first AAB upload, products, closed test.
 
 ## C. Google Play Console
 1. Use the existing **Toon App Studio** developer account (the one that publishes ComicVerse). If it is a *personal* account created after Nov 2023, Google requires a **closed test with ≥12 testers for 14 days** before production; organization accounts are exempt.
