@@ -1,0 +1,11 @@
+{
+  "appId": "com.fatcat.todo",
+  "appName": "Fat Cat Todo",
+  "webDir": "www",
+  "android": { "backgroundColor": "#FFF3EC" },
+  "plugins": {
+    "SplashScreen": { "launchShowDuration": 800, "launchAutoHide": true, "backgroundColor": "#FFF3EC", "showSpinner": false },
+    "LocalNotifications": { "smallIcon": "ic_stat_cat", "iconColor": "#E89D86" },
+    "SystemBars": { "insetsHandling": "native" }
+  }
+}

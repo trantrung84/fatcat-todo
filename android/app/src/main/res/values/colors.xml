@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#E89D86</color>
+    <color name="colorPrimaryDark">#C9725B</color>
+    <color name="colorAccent">#75C7A5</color>
+    <color name="fatcat_cream">#FFF3EC</color>
+</resources>
