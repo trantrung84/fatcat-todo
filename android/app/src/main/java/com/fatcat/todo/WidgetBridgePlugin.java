@@ -1,6 +1,8 @@
 package com.fatcat.todo;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
@@ -16,5 +18,13 @@ public class WidgetBridgePlugin extends Plugin {
         ctx.getSharedPreferences(FatCatWidget.PREFS, Context.MODE_PRIVATE).edit().putString(FatCatWidget.KEY, data).apply();
         FatCatWidget.updateAll(ctx);
         call.resolve();
+    }
+
+    /** Lets the web layer know whether this is a debug (test) build. */
+    @PluginMethod
+    public void appInfo(PluginCall call) {
+        JSObject o = new JSObject();
+        o.put("debug", (getContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
+        call.resolve(o);
     }
 }

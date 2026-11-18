@@ -2,7 +2,7 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
   workflow_dispatch:
 
 permissions:
@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
     steps:
       - uses: actions/checkout@v4
 
@@ -35,13 +36,18 @@ jobs:
       - name: Sync web assets into Android project
         run: npx cap sync android
 
-      - name: Build debug APK
+      - name: Firebase config (optional – analytics stays off without it)
+        if: ${{ env.GOOGLE_SERVICES_JSON != '' }}
+        run: echo "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
+
+      - name: Build debug APK (for testing)
         working-directory: android
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
+          cp app/build/outputs/apk/debug/app-debug.apk ../FatCatTodo-debug.apk
 
-      - name: Build signed release APK (only if signing secrets exist)
+      - name: Build signed release AAB + APK (only if signing secrets exist)
         if: ${{ env.KEYSTORE_BASE64 != '' }}
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
@@ -50,30 +56,33 @@ jobs:
         working-directory: android
         run: |
           echo "$KEYSTORE_BASE64" | base64 -d > release.jks
-          ./gradlew assembleRelease --no-daemon \
-            -Pandroid.injected.signing.store.file=$PWD/release.jks \
-            -Pandroid.injected.signing.store.password="$KEYSTORE_PASSWORD" \
-            -Pandroid.injected.signing.key.alias="$KEY_ALIAS" \
-            -Pandroid.injected.signing.key.password="$KEY_PASSWORD"
+          SIGN="-Pandroid.injected.signing.store.file=$PWD/release.jks -Pandroid.injected.signing.store.password=$KEYSTORE_PASSWORD -Pandroid.injected.signing.key.alias=$KEY_ALIAS -Pandroid.injected.signing.key.password=$KEY_PASSWORD"
+          ./gradlew bundleRelease assembleRelease --no-daemon $SIGN
+          cp app/build/outputs/bundle/release/app-release.aab ../FatCatTodo-release.aab
+          cp app/build/outputs/apk/release/app-release.apk ../FatCatTodo-release.apk
+          rm -f release.jks
 
       - uses: actions/upload-artifact@v4
         with:
-          name: fatcat-todo-apk
+          name: fatcat-todo-build
           path: |
-            android/app/build/outputs/apk/debug/*.apk
-            android/app/build/outputs/apk/release/*.apk
+            FatCatTodo-debug.apk
+            FatCatTodo-release.aab
+            FatCatTodo-release.apk
           if-no-files-found: warn
 
-      - name: Rename debug APK
-        run: cp android/app/build/outputs/apk/debug/app-debug.apk FatCatTodo-debug.apk
-
       - name: Publish GitHub Release (download APK straight to your phone)
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: softprops/action-gh-release@v2
         with:
           tag_name: build-${{ github.run_number }}
           name: Fat Cat Todo – build ${{ github.run_number }}
           body: |
-            APK debug để cài thử (Android 7+). Tải **FatCatTodo-debug.apk** bên dưới, mở file và cho phép "Cài ứng dụng không rõ nguồn gốc".
+            Debug APK for testing (Android 7+). Download **FatCatTodo-debug.apk**, open it and allow "Install unknown apps".
+            The signed **FatCatTodo-release.aab** (when present) is the file to upload to Google Play Console.
             Commit: ${{ github.sha }}
-          files: FatCatTodo-debug.apk
+          files: |
+            FatCatTodo-debug.apk
+            FatCatTodo-release.aab
+          fail_on_unmatched_files: false
           make_latest: true
