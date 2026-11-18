@@ -27,7 +27,7 @@ After adding secrets, push any commit to `main` → the GitHub Release contains 
 5. Tip: in Firebase → Analytics → Custom definitions, register `list`, `plan`, `theme` as custom dimensions to break reports down by them.
 
 ## C. Google Play Console
-1. Developer account (US$25 one-time): https://play.google.com/console/signup — personal accounts created after Nov 2023 must run a **closed test with ≥12 testers for 14 days** before production.
+1. Use the existing **Toon App Studio** developer account (the one that publishes ComicVerse). If it is a *personal* account created after Nov 2023, Google requires a **closed test with ≥12 testers for 14 days** before production; organization accounts are exempt.
 2. **Create app**: name “Fat Cat Todo”, default language **English (United States)**, App, Free (with in-app purchases).
 3. **Setup → App integrity**: use Play App Signing (default).
 4. **Testing → Internal testing → Create release** → upload `FatCatTodo-release.aab` → add yourself as tester → install from the opt-in link. (Billing products can only be created after the first AAB with the BILLING permission is uploaded.)
@@ -38,7 +38,7 @@ After adding secrets, push any commit to `main` → the GitHub Release contains 
 
 Privacy policy: https://github.com/trantrung84/fatcat-todo/blob/main/PRIVACY.md
 Terms: https://github.com/trantrung84/fatcat-todo/blob/main/TERMS.md
-→ Edit `PRIVACY.md` section 8 and put your real support email before submitting.
+Support email: nabana84@gmail.com · Website: https://toonred.com (Toon App Studio). Tip: you can also host the policy at toonred.com/fatcat-todo/privacy.html next to ComicVerse's.
 
 ## D. Testing purchases
 - Debug APK (from GitHub Release) can't buy — billing only works for apps installed **from Play** (internal/closed test track) and signed with the upload key.

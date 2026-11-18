@@ -53,6 +53,11 @@ Mở khóa thêm 9 theme màu — gồm cả Sang trọng (đen, trắng, vàng 
 🔒 RIÊNG TƯ
 Việc của bạn chỉ lưu trên điện thoại. Không quảng cáo. Thống kê ẩn danh là tùy chọn, tắt được trong Cài đặt.
 
+## Developer contact (Play Console → Store settings)
+- Developer name: Toon App Studio
+- Email: nabana84@gmail.com
+- Website: https://toonred.com
+
 ## Category / tags
 Productivity · Tags: To-do list, Planner, Habit tracker
 

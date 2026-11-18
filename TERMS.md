@@ -2,7 +2,7 @@
 
 _Last updated: 18 November 2026_
 
-1. **The app.** Fat Cat Todo is provided "as is". We work hard to keep it reliable, but we can't guarantee it will be error-free. Please keep exports of anything important (Settings → Data → Export).
+1. **The app.** Fat Cat Todo is made by Toon App Studio (Hanoi, Vietnam) and is provided "as is". We work hard to keep it reliable, but we can't guarantee it will be error-free. Please keep exports of anything important (Settings → Data → Export).
 2. **Fat Cat Pro.** Pro is offered as:
    - **Monthly** subscription (US$1.90 / month, or local equivalent),
    - **Yearly** subscription (US$15.00 / year, or local equivalent),
@@ -13,4 +13,4 @@ _Last updated: 18 November 2026_
 5. **What Pro includes.** Pro currently unlocks the 9 additional color themes. Features listed as free remain free. We may add Pro features over time.
 6. **Acceptable use.** Don't misuse, reverse engineer for abuse, or attempt to circumvent purchases.
 7. **Privacy.** See the [Privacy Policy](PRIVACY.md).
-8. **Contact.** https://github.com/trantrung84/fatcat-todo/issues
+8. **Contact.** nabana84@gmail.com · https://toonred.com

@@ -2,7 +2,7 @@
 
 _Last updated: 18 November 2026_
 
-Fat Cat Todo ("the app") is a to-do and habit app made by an independent developer (GitHub: **trantrung84**). This policy explains what data the app handles.
+Fat Cat Todo ("the app") is a to-do and habit app made by **Toon App Studio** (Hanoi, Vietnam – https://toonred.com). This policy explains what data the app handles.
 
 ## 1. Your tasks stay on your device
 Task titles, notes, dates, reminders, settings and everything else you type are stored **only on your device** (in the app's local storage). They are not uploaded to any server. The home-screen widget reads the same local data. If you uninstall the app, this data is deleted. You can export or delete it at any time in **More → Settings → Data**.
@@ -34,7 +34,8 @@ The app is not directed at children under 13 and does not knowingly collect pers
 If this policy changes, the new version will be published at this address with a new date.
 
 ## 8. Contact
-Open an issue at https://github.com/trantrung84/fatcat-todo/issues or email: **[SUPPORT EMAIL – the developer must fill this in before publishing]**.
+Toon App Studio, Hanoi, Vietnam
+Email: **nabana84@gmail.com** · Website: https://toonred.com
 
 ---
 
@@ -43,4 +44,4 @@ Open an issue at https://github.com/trantrung84/fatcat-todo/issues or email: **[
 - **Thống kê sử dụng ẩn danh (tùy chọn)** qua Google Firebase Analytics: màn hình đã mở, các thao tác như thêm/hoàn thành việc, đổi theme, xem/mua Pro; thông tin thiết bị và phiên bản app. **Không gửi nội dung việc**, không thu thập ID quảng cáo, không quảng cáo. Tắt bất cứ lúc nào trong Cài đặt.
 - **Thanh toán** do Google Play xử lý; app chỉ nhận xác nhận bạn đã sở hữu gói Pro nào.
 - **Thông báo** được lên lịch ngay trên máy.
-- Liên hệ: GitHub issues hoặc email hỗ trợ ở trên.
+- Nhà phát triển: Toon App Studio (Hà Nội) · Email: nabana84@gmail.com · https://toonred.com
