@@ -1,6 +1,8 @@
 # Fat Cat Todo – Android (Capacitor)
 
-**v1.1.0** — giao diện mới theo bộ mockup Mochi Cat (viền nâu, mèo tam thể), thanh điều hướng dưới (Hôm nay · Lịch · Timeline · Someday · Khác), nút + nổi, và **10 theme màu** (Mochi đào + 9 bảng màu) chọn trong *Khác ▸ Theme màu* hoặc nút bảng màu trên đầu trang.
+**v1.4.0** — giao diện mới theo bộ mockup Mochi Cat (viền nâu, mèo tam thể), thanh điều hướng dưới (Hôm nay · Lịch · Timeline · Someday · Khác), nút + nổi, và **10 theme màu** (Mochi đào + 9 bảng màu) chọn trong *Khác ▸ Theme màu* hoặc nút bảng màu trên đầu trang.
+
+**Publish lên Google Play:** xem [PUBLISHING.md](PUBLISHING.md) · [PRIVACY.md](PRIVACY.md) · [TERMS.md](TERMS.md) · ảnh & mô tả Store trong `store/`.
 
 ## Cấu trúc
 - `src/index.src.html` – mã nguồn giao diện + logic (một file).
