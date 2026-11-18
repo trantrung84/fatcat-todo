@@ -42,7 +42,7 @@ img.spr{display:block;pointer-events:none;user-select:none;-webkit-user-drag:non
 .obtn{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;color:var(--line);border:1.8px solid var(--border2);background:var(--card);box-shadow:0 2px 0 var(--border)}
 .obtn:active{transform:translateY(1px);box-shadow:none}
 .obtn svg{width:23px;height:23px}
-main{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 14px calc(150px + var(--sab));-webkit-overflow-scrolling:touch}
+main{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 14px calc(140px + var(--sab));-webkit-overflow-scrolling:touch}
 .card{background:var(--card);border-radius:var(--r);border:1.8px solid var(--border);box-shadow:var(--shadow);padding:12px;margin-bottom:14px;position:relative}
 /* hero */
 .hero{display:flex;align-items:center;gap:8px;padding:10px 14px 10px 6px;margin-top:4px}
@@ -56,11 +56,13 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 14px calc(150px + var(
 .calhead{display:flex;align-items:center;gap:4px;margin-bottom:6px}
 .calhead .title{font-family:var(--fh);font-weight:800;font-size:18px;flex:1;padding-left:2px;white-space:nowrap}
 .seg{display:inline-flex;background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:2px}
-.seg button{min-width:44px;height:32px;border-radius:11px;font-size:13.5px;font-weight:800;color:var(--ink2);padding:0 10px;font-family:var(--fb)}
+.seg button{min-width:36px;height:32px;border-radius:11px;font-size:13.5px;font-weight:800;color:var(--ink2);padding:0 10px;font-family:var(--fb)}
 .seg button[aria-pressed="true"]{background:var(--primary);color:var(--onp)}
 .chip{height:32px;border-radius:12px;padding:0 11px;font-size:13.5px;font-weight:800;background:var(--primary-l);color:var(--primary-d);border:1.5px solid transparent}
 .small{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;color:var(--line)}
 .small svg{width:20px;height:20px}
+.calhead .chip{height:28px;font-size:12px;padding:0 8px;border-radius:10px}
+.calhead .seg button{font-family:var(--fh);font-size:15px;height:30px;padding:0 9px}
 .week,.month{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;touch-action:pan-y}
 .dcell{display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 0 6px;border-radius:16px;position:relative;min-height:44px;border:1.8px solid transparent}
 .dcell .wd{font-size:12px;color:var(--ink2);font-weight:800}
@@ -76,14 +78,20 @@ main{flex:1;overflow-y:auto;overflow-x:hidden;padding:6px 14px calc(150px + var(
 .dcell.drop{background:var(--primary-l);border-color:var(--primary)}
 /* sections */
 .sec{padding-top:0;margin-top:22px}
-.sechead{display:flex;align-items:center;gap:6px;margin:0 -12px 8px;padding:0 12px 0 0;min-height:48px}
-.tabpill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-l);border:1.8px solid var(--border);border-left:0;border-top:0;border-radius:var(--r) 0 22px 0;padding:8px 16px 8px 14px;margin-top:-1.8px}
-.tabpill svg{width:24px;height:24px;color:var(--primary-d)}
-.tabpill h2{margin:0;font-size:21px;line-height:1}
-.tabpill .cnt{font-family:var(--fh);font-size:15px;font-weight:800;color:var(--ink2);background:var(--card);border-radius:10px;min-width:26px;padding:1px 7px;text-align:center}
+.sechead{display:flex;align-items:center;gap:6px;margin:0 -12px 8px;padding:0 12px 0 0;min-height:44px}
+.tabpill{display:inline-flex;align-items:center;gap:7px;background:var(--accent-l);border:1.8px solid var(--border);border-left:0;border-top:0;border-radius:var(--r) 0 20px 0;padding:7px 14px 7px 13px;margin-top:-1.8px;color:var(--ink);text-align:left}
+.tabpill svg{width:19px;height:19px;color:var(--primary-d)}
+.tabpill h2{margin:0;font-size:16.5px;line-height:1.1}
+.tabpill .chev{width:16px;height:16px;color:var(--ink2);transition:transform .25s}
+.tabpill[aria-expanded="false"] .chev{transform:rotate(-90deg)}
+.collapse{display:grid;grid-template-rows:1fr;transition:grid-template-rows .28s ease}
+.collapse.shut{grid-template-rows:0fr}
+.collapse>.cin{overflow:hidden;min-height:0}
+.sec.shut .sechead{margin-bottom:-4px}
+.tabpill .cnt{font-family:var(--fh);font-size:13px;font-weight:800;color:var(--ink2);background:var(--card);border-radius:10px;min-width:26px;padding:1px 7px;text-align:center}
 .sechead .sp{flex:1}
 .deco{position:absolute;pointer-events:none;z-index:1}
-.addbtn{height:40px;border-radius:16px;padding:0 14px 0 10px;display:inline-flex;align-items:center;gap:3px;font-family:var(--fh);font-weight:800;font-size:16px;color:var(--primary-d);background:var(--primary-l);border:1.8px solid var(--border2);position:relative;z-index:2}
+.addbtn{height:36px;border-radius:14px;padding:0 12px 0 8px;display:inline-flex;align-items:center;gap:3px;font-family:var(--fh);font-weight:800;font-size:15px;color:var(--primary-d);background:var(--primary-l);border:1.8px solid var(--border2);position:relative;z-index:2}
 .addbtn svg{width:20px;height:20px}
 ul.list{list-style:none;margin:0;padding:0;min-height:4px;border-radius:14px;transition:background .15s}
 ul.list.dz{min-height:56px;outline:2px dashed var(--border2);outline-offset:-2px}
@@ -123,7 +131,7 @@ ul.list.dz.over{background:var(--primary-l);outline-color:var(--primary)}
 .btn.block{width:100%}
 .btn:disabled{opacity:.45;box-shadow:none}
 .subhead{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:2px 0 4px;flex-wrap:wrap}
-.pillred{display:inline-flex;align-items:center;gap:5px;font-size:13.5px;font-weight:800;color:var(--warn-d);background:var(--warn-l);border-radius:12px;padding:5px 10px;white-space:nowrap}
+.pillred{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;font-weight:800;color:var(--warn-d);background:var(--warn-l);border-radius:11px;padding:4px 9px;white-space:nowrap}
 .pillred svg{width:15px;height:15px}
 .overbox{border-bottom:1.5px dashed var(--border2);margin-bottom:6px;padding-bottom:4px}
 /* drag */
@@ -131,15 +139,25 @@ ul.list.dz.over{background:var(--primary-l);outline-color:var(--primary)}
 .row.dragging{opacity:.35}
 /* bottom nav + fab */
 .nav{position:absolute;left:12px;right:12px;bottom:calc(10px + var(--sab));z-index:50;display:flex;background:var(--card);border:1.8px solid var(--border);border-radius:26px;padding:6px;box-shadow:0 8px 24px rgba(120,60,40,.12)}
-.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 0 5px;border-radius:19px;color:var(--ink2);font-size:12.5px;font-weight:800;min-height:56px;justify-content:center}
-.nav button svg{width:25px;height:25px}
+.nav button{flex:1;display:flex;align-items:center;justify-content:center;border-radius:19px;color:var(--ink2);min-height:52px}
+.nav button svg{width:27px;height:27px}
 .nav button span{max-width:100%;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}
 .nav button[aria-current="page"]{background:var(--primary-l);color:var(--primary-d)}
-.fab{position:absolute;right:14px;bottom:calc(94px + var(--sab));z-index:51;width:80px;height:74px;color:var(--primary);filter:drop-shadow(0 3px 0 var(--primary-d)) drop-shadow(0 8px 12px rgba(120,60,40,.22))}
+.fab{position:absolute;right:14px;bottom:calc(88px + var(--sab));z-index:51;width:80px;height:74px;color:var(--primary);filter:drop-shadow(0 3px 0 var(--primary-d)) drop-shadow(0 8px 12px rgba(120,60,40,.22))}
 .fab svg.pawbg{position:absolute;inset:0;width:100%;height:100%}
 .fab svg.plus{position:absolute;width:28px;height:28px;left:50%;top:67%;transform:translate(-50%,-50%);color:var(--onp)}
 .fab:active{transform:translateY(2px)}
 /* toast */
+#composer .cscrim{position:absolute;inset:0;background:rgba(18,10,8,.9);z-index:90;animation:fade .18s ease-out}
+#composer .cbox{position:absolute;left:14px;right:14px;top:calc(var(--sat) + 70px);z-index:91;background:var(--card);border:2px solid var(--primary);border-radius:26px;padding:12px 14px 14px;box-shadow:0 18px 40px rgba(0,0,0,.35);animation:rise .22s cubic-bezier(.2,.8,.2,1)}
+#composer .chead{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+#composer .chead img{width:58px;margin:-26px 0 -4px}
+#composer .ct{flex:1;min-width:0}#composer .ct b{display:block;font-family:var(--fh);font-size:17px}#composer .ct small{color:var(--mint-d);font-weight:800;font-size:13px}
+#composer .crow{display:flex;gap:8px}
+#composer input{flex:1;min-width:0;height:56px;border-radius:18px;border:2px solid var(--primary);background:var(--accent-l);padding:0 16px;outline:none;font-size:17.5px;font-weight:700}
+#composer .cadd{width:56px;height:56px;border-radius:18px;background:var(--primary);color:var(--onp);display:grid;place-items:center;flex:none;box-shadow:0 3px 0 var(--primary-d)}
+#composer .cadd svg{width:28px;height:28px}
+@keyframes fade{from{opacity:0}}@keyframes rise{from{opacity:0;transform:translateY(-14px) scale(.98)}}
 #toast{position:absolute;left:14px;right:14px;bottom:calc(96px + var(--sab));z-index:300;display:flex;align-items:center;gap:10px;background:#4A2C24;color:#fff;border-radius:18px;padding:6px 6px 6px 16px;min-height:52px;transform:translateY(30px);opacity:0;pointer-events:none;transition:transform .25s,opacity .2s;font-size:15px;font-weight:700}
 #toast.show{transform:none;opacity:1;pointer-events:auto}
 #toast span{flex:1}
@@ -246,6 +264,7 @@ textarea.inp{min-height:84px;resize:vertical}
 </head>
 <body>
 <div id="app" class="anim">
+  <div id="composer"></div>
   <div id="pvbar"></div>
   <div id="screen"></div>
   <button class="fab" id="fab" data-act="fab" aria-label="Add"></button>
@@ -266,7 +285,9 @@ const THEMES=[
  {id:"candy", vi:"Kẹo bông",    en:"Cotton Candy", p:"#FDBFBA",a:"#C1DCD8",d:"#FFF898"},
  {id:"lime",  vi:"Chanh tím",   en:"Lime Lilac",   p:"#A9CD30",a:"#C8BADD",d:"#FFF188"},
  {id:"moss",  vi:"Rêu xanh",    en:"Moss",         p:"#57785E",a:"#EADA96",d:"#D3B78D"},
- {id:"lagoon",vi:"Ngọc lam",    en:"Lagoon",       p:"#42BAB7",a:"#FFEB66",d:"#F3E4D1"}];
+ {id:"luxe",  vi:"Sang trọng",  en:"Luxe",         p:"#111111",a:"#D4AF37",d:"#FFFFFF",
+   light:{bg:"#F6F4EF",card:"#FFFFFF",card2:"#F3EEDF",primary:"#151515","primary-d":"#151515","primary-l":"#F1E8CF",accent:"#C9A227","accent-l":"#F8F3E4",border:"#E6DCC2",border2:"#C9A227",onp:"#E3C04D",deco:"#C9A227"},
+   dark:{bg:"#0B0B0B",card:"#171717",card2:"#26221A",primary:"#D4AF37","primary-d":"#E3C04D","primary-l":"#2E2716",accent:"#C9A227","accent-l":"#1F1B12",border:"#3A3220",border2:"#8C7329",onp:"#111111",ink:"#F5F1E6",ink2:"#BDB49C",line:"#E3C04D"}}];
 const hx=h=>{h=h.replace("#","");return[0,2,4].map(i=>parseInt(h.substr(i,2),16))};
 const toHex=c=>"#"+c.map(v=>Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2,"0")).join("");
 const mix=(a,b,t)=>{const A=hx(a),B=hx(b);return toHex(A.map((v,i)=>v+(B[i]-v)*t))};
@@ -282,13 +303,13 @@ function themeVars(th,dark){
   }else{const card="#2A2321";
     v={bg:"#1E1917",card,card2:mix(a,card,.82),"primary-l":mix(p,card,.74),accent:a,"accent-l":mix(a,card,.88),border:mix(p,card,.8),border2:mix(p,card,.62),
       ink:"#F6ECE6",ink2:"#C9B5AB",line:"#F0DCD2","warn-d":"#F7A493","primary-d":towards(p,"#FFFFFF",card,4.6),"warn-l":"#4A2620",mint:"#5CC08F","mint-d":"#8EE0B6"};}
-  v.primary=p;v.deco=th.d;v.onp=contrast("#FFFFFF",p)>=2.6?"#FFFFFF":INK;return v;
+  v.primary=p;v.deco=th.d;v.onp=contrast("#FFFFFF",p)>=2.6?"#FFFFFF":INK;Object.assign(v,(dark?th.dark:th.light)||{});return v;
 }
 /* ============ i18n ============ */
 const I18N={
 vi:{app:"Fat Cat Todo",someday:"Someday",somedayHint:"Để dành những việc chưa có ngày ở đây",today:"Việc hôm nay",dayTasks:"Việc ngày {d}",add:"Thêm",done:"Xong",
 todayEmpty:"Chưa có việc nào. Chạm Thêm để bắt đầu nhé.",addPh:"Nhập việc cần làm…",addSomePh:"Việc để một ngày nào đó…",
-week:"Tuần",month:"Tháng",goToday:"Hôm nay",
+week:"W",month:"M",goToday:"Hôm nay",
 n_today:"Hôm nay",n_cal:"Lịch",n_tl:"Timeline",n_some:"Someday",n_more:"Khác",calendar:"Lịch",
 c_empty:"Hôm nay nhẹ nhàng ghê. Muốn thêm việc không?",c_emptyOther:"Ngày này còn trống. Thêm việc không?",c_pending:"Có vài việc nhỏ đang chờ mình nè.",c_single:"Meow! Xong thêm một việc rồi!",c_partial:"Xong {d}/{n} rồi, giỏi ghê!",c_all:"Tuyệt! Giờ nghỉ một chút nhé. ♡",c_overdue:"Mình chuyển lịch lại cho dễ thở nha?",
 fromBefore:"Từ hôm trước ({n})",moveAllToday:"Chuyển hết sang hôm nay",overdue:"Quá hạn",
@@ -315,10 +336,10 @@ next:"Tiếp",start:"Bắt đầu",skip:"Bỏ qua",
 seed1:"Chạm vào vòng tròn để hoàn thành",seed2:"Kéo ⋮⋮ để sắp xếp hoặc đổi ngày",seed3:"Chạm ••• để xem thêm tùy chọn",seed4:"Đọc một cuốn sách mới",
 brief:"Chào buổi sáng! Hôm nay có {n} việc{p}.",briefPin:", {p} việc ghim",remindTitle:"Đến giờ rồi nè 🐾",
 wd:["CN","T2","T3","T4","T5","T6","T7"],wdl:["Chủ nhật","Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7"],monthT:"Tháng {m}, {y}",
-a_check:"Đánh dấu hoàn thành: {t}",a_more:"Tùy chọn cho {t}",a_drag:"Kéo để di chuyển {t}",st_empty:"trống",st_pending:"còn việc",st_partial:"xong một phần",st_complete:"xong hết",close:"Đóng",back:"Quay lại",themes:"Chọn theme",pv_on:"Đang xem trước: {t}",pv_unlock:"Mở khóa Pro",pv_exit:"Thoát xem trước",pv_locked:"Theme này thuộc bản Pro — bạn đang xem trước.",pro_active:"Bạn đang dùng Fat Cat Pro. Cảm ơn bạn! ♡",pro_unlocked:"Đã mở khóa Pro (chế độ thử nghiệm)",pro_relocked:"Đã khóa lại Pro",w_empty:"Hôm nay chưa có việc nào 🐾",w_open:"Mở app để cập nhật",lockedTheme:"Pro"},
+a_check:"Đánh dấu hoàn thành: {t}",a_more:"Tùy chọn cho {t}",a_drag:"Kéo để di chuyển {t}",st_empty:"trống",st_pending:"còn việc",st_partial:"xong một phần",st_complete:"xong hết",close:"Đóng",back:"Quay lại",themes:"Chọn theme",t_addedN:"Đã thêm {n} việc ✓",pv_on:"Đang xem trước: {t}",pv_unlock:"Mở khóa Pro",pv_exit:"Thoát xem trước",pv_locked:"Theme này thuộc bản Pro — bạn đang xem trước.",pro_active:"Bạn đang dùng Fat Cat Pro. Cảm ơn bạn! ♡",pro_unlocked:"Đã mở khóa Pro (chế độ thử nghiệm)",pro_relocked:"Đã khóa lại Pro",w_empty:"Hôm nay chưa có việc nào 🐾",w_open:"Mở app để cập nhật",lockedTheme:"Pro"},
 en:{app:"Fat Cat Todo",someday:"Someday",somedayHint:"Park tasks without a date here",today:"Today",dayTasks:"Tasks on {d}",add:"Add",done:"Done",
 todayEmpty:"Nothing here yet. Tap Add to start.",addPh:"What needs doing…",addSomePh:"Something for someday…",
-week:"Week",month:"Month",goToday:"Today",
+week:"W",month:"M",goToday:"Today",
 n_today:"Today",n_cal:"Calendar",n_tl:"Timeline",n_some:"Someday",n_more:"More",calendar:"Calendar",
 c_empty:"A light day. Want to add something?",c_emptyOther:"This day is free. Add something?",c_pending:"A few little things are waiting for us.",c_single:"Meow! One more done!",c_partial:"{d}/{n} done, nice!",c_all:"Amazing! Time for a little break. ♡",c_overdue:"Shall we reschedule to breathe easier?",
 fromBefore:"From earlier ({n})",moveAllToday:"Move all to today",overdue:"Overdue",
@@ -345,7 +366,7 @@ next:"Next",start:"Get started",skip:"Skip",
 seed1:"Tap the circle to complete",seed2:"Drag ⋮⋮ to reorder or reschedule",seed3:"Tap ••• for more options",seed4:"Read a new book",
 brief:"Good morning! {n} tasks today{p}.",briefPin:", {p} pinned",remindTitle:"It's time 🐾",
 wd:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],wdl:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],monthT:"{M} {y}",
-a_check:"Mark complete: {t}",a_more:"Options for {t}",a_drag:"Drag to move {t}",st_empty:"empty",st_pending:"pending",st_partial:"partly done",st_complete:"all done",close:"Close",back:"Back",themes:"Choose theme",pv_on:"Previewing: {t}",pv_unlock:"Unlock Pro",pv_exit:"Exit preview",pv_locked:"This theme is part of Pro — you are previewing it.",pro_active:"You are using Fat Cat Pro. Thank you! ♡",pro_unlocked:"Pro unlocked (test mode)",pro_relocked:"Pro locked again",w_empty:"No tasks today 🐾",w_open:"Open the app to refresh",lockedTheme:"Pro"}};
+a_check:"Mark complete: {t}",a_more:"Options for {t}",a_drag:"Drag to move {t}",st_empty:"empty",st_pending:"pending",st_partial:"partly done",st_complete:"all done",close:"Close",back:"Back",themes:"Choose theme",t_addedN:"{n} added ✓",pv_on:"Previewing: {t}",pv_unlock:"Unlock Pro",pv_exit:"Exit preview",pv_locked:"This theme is part of Pro — you are previewing it.",pro_active:"You are using Fat Cat Pro. Thank you! ♡",pro_unlocked:"Pro unlocked (test mode)",pro_relocked:"Pro locked again",w_empty:"No tasks today 🐾",w_open:"Open the app to refresh",lockedTheme:"Pro"}};
 /*__I18N_EXTRA__*/
 const MONTHS_EN=["January","February","March","April","May","June","July","August","September","October","November","December"];
 function t(k,p){let s=(I18N[S.settings.lang]||I18N.vi)[k];if(s==null)s=I18N.en[k]??k;if(p)for(const x in p)s=s.split("{"+x+"}").join(p[x]);return s}
@@ -367,11 +388,12 @@ function relLabel(s){const td=todayStr();if(s===td)return t("todayL");if(s===add
 
 /* ============ state ============ */
 const KEY="fatcat.todo.v1";
-const DEF_SETTINGS={weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:true,showBadge:true,brief:true,briefTime:"08:00",
+const DEF_SETTINGS={somedayOpen:true,weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:false,showBadge:true,brief:true,briefTime:"08:00",
   lang:(()=>{const n=(navigator.language||"vi").toLowerCase().slice(0,2);return ["vi","en","zh","ja","ko","fr","de"].includes(n)?n:"vi"})(),theme:"auto",palette:"mochi",sound:false,haptic:true,reduceMotion:false};
 let S={tasks:[],settings:{...DEF_SETTINGS},onboarded:false,pro:false};
 try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);S={...S,...o,settings:{...DEF_SETTINGS,...(o.settings||{})}}}}catch(e){}
-const FREE_THEME="mochi";if(!S.pro&&S.settings.palette!==FREE_THEME)S.settings.palette=FREE_THEME;
+if(!S.settings.v2){S.settings.v2=true;S.settings.somedayTop=false}
+const FREE_THEME="mochi";if(!THEMES.some(x=>x.id===S.settings.palette)||(!S.pro&&S.settings.palette!==FREE_THEME))S.settings.palette=FREE_THEME;
 const U={preview:null,verTaps:0,view:"home",sel:todayStr(),cursor:todayStr(),mode:"week",adding:null,tlFilter:"pending",tlDays:30,flash:null,stack:[]};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}scheduleNotifs()}
 const uid=()=>(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
@@ -429,6 +451,7 @@ trash:`<g ${SW}><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/></g>`,
 edit:`<g ${SW}><path d="M4 20h4L19 9l-4-4L4 16z"/></g>`,
 note:`<g ${SW}><path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h4"/></g>`,
 next:`<g ${SW}><path d="M4 12h14M13 6l6 6-6 6"/></g>`,
+down:`<path d="M6 9l6 6 6-6" ${SW} stroke-width="2.6"/>`,
 eye:`<g ${SW}><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></g>`,
 lock:`<g ${SW}><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/></g>`,
 star:'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z" fill="currentColor"/>',
@@ -522,7 +545,7 @@ function render(){
   scr.innerHTML=(V[U.view]||homeHTML)();scr.dataset.view=U.view;
   const m2=scr.querySelector("main");if(m2&&prev===U.view)m2.scrollTop=st;
   renderNav();$("#pvbar").innerHTML=pvbarHTML();
-  if(U.adding){const inp=$("#addInput");if(inp)inp.focus({preventScroll:false})}
+  renderComposer();
   if(U.pop){const r=scr.querySelector(`.row[data-key="${CSS.escape(U.pop)}"]`);if(r&&!reduced())r.classList.add("pop");U.pop=null}
   document.title=S.settings.showBadge&&remainingToday()>0?`(${remainingToday()}) Fat Cat Todo`:"Fat Cat Todo";
   if(U.view==="more")updatePermState();
@@ -530,8 +553,8 @@ function render(){
 }
 function renderNav(){const items=[["home","home","n_today"],["calendar","calm","n_cal"],["timeline","tl2","n_tl"],["someday","folder","n_some"],["more","grid","n_more"]];
   const cur=U.view==="premium"?"more":U.view;
-  $("#nav").innerHTML=items.map(([v,i,l])=>`<button data-act="view" data-v="${v}" ${cur===v?'aria-current="page"':""}>${ic(i)}<span>${t(l)}</span></button>`).join("");
-  const f=$("#fab");f.style.display=(U.view==="more"||U.view==="premium")?"none":"";
+  $("#nav").innerHTML=items.map(([v,i,l])=>`<button data-act="view" data-v="${v}" aria-label="${esc(t(l))}" title="${esc(t(l))}" ${cur===v?'aria-current="page"':""}>${ic(i)}</button>`).join("");
+  const f=$("#fab");f.style.display=(U.view==="more"||U.view==="premium"||U.adding)?"none":"";
   f.innerHTML=`<svg class="pawbg" viewBox="0 0 26 24" aria-hidden="true">${IC.paw}</svg>${ic("plus","plus")}`;f.setAttribute("aria-label",t("add"))}
 function remainingToday(){const s=dayStat(todayStr());return s.n-s.d}
 function heroState(){const ds=U.sel,st=dayStat(ds),td=todayStr();const od=ds===td?overdueTasks().length:0;
@@ -589,17 +612,26 @@ function rowHTML(x,ds){
    <button class="ck" data-act="check" role="checkbox" aria-checked="${done}" aria-label="${esc(t("a_check",{t:x.title}))}"><span class="box">${ic("check")}</span></button>
    <div class="tbody" data-act="edit"><div class="ttl">${esc(x.title)}</div>${tags.length?`<div class="meta">${tags.join("")}</div>`:""}</div>
    <button class="more" data-act="menu" aria-label="${esc(t("a_more",{t:x.title}))}">${ic("more")}</button></li>`}
+function renderComposer(){const c=$("#composer");if(!U.adding){if(c.innerHTML){c.innerHTML="";c.dataset.w=""}return}
+  const where=U.adding;const target=where==="someday"?t("someday"):(U.sel===todayStr()?t("today"):t("dayTasks",{d:shortDate(U.sel)}));
+  if(c.dataset.w!==where){c.dataset.w=where;
+    c.innerHTML=`<div class="cscrim" data-act="addDone"></div><div class="cbox" role="dialog" aria-modal="true" aria-label="${esc(t("add"))}">
+     <div class="chead">${spr("note","","")}<div class="ct"><b>${t("add")} · ${esc(target)}</b><small id="cAdded"></small></div><button class="iconbtn" data-act="addDone" aria-label="${t("done")}">${ic("close")}</button></div>
+     <div class="crow"><input id="addInput" data-where="${where}" maxlength="160" enterkeyhint="send" autocomplete="off" placeholder="${where==="someday"?t("addSomePh"):t("addPh")}"><button class="cadd" data-act="addGo" aria-label="${t("add")}">${ic("plus")}</button></div>
+     <button class="btn block" data-act="addDone" style="margin-top:10px">${t("done")}</button></div>`;
+    const i=$("#addInput");setTimeout(()=>i&&i.focus(),30)}
+  const a=$("#cAdded");if(a)a.textContent=U.addedN?t("t_addedN",{n:U.addedN}):""}
 function addRowHTML(where){return `<div class="addrow"><input id="addInput" data-where="${where}" maxlength="160" enterkeyhint="done" autocomplete="off" placeholder="${where==="someday"?t("addSomePh"):t("addPh")}"><button class="btn" data-act="addDone">${t("done")}</button></div>`}
-function secHead(icon,title,cnt,where,deco){return `<div class="sechead"><div class="tabpill">${ic(icon)}<h2>${title}</h2>${cnt!==""?`<span class="cnt">${cnt}</span>`:""}</div><div class="sp"></div>${deco||""}<button class="addbtn" data-act="add" data-where="${where}">${ic("plus")}${t("add")}</button></div>`}
-function somedaySection(compact){const l=somedayTasks();const n=l.filter(x=>!x.done).length;
-  return `<section class="card sec" id="secSomeday" aria-label="${t("someday")}">${secHead("folder",t("someday"),n||"","someday")}
-  <ul class="list" data-list="someday">${l.map(x=>rowHTML(x,null)).join("")}</ul>
-  ${U.adding==="someday"?addRowHTML("someday"):l.length?"":`<div class="empty">${t("somedayHint")}</div>`}</section>`}
+function secHead(icon,title,cnt,where,deco,toggle){const inner=`${ic(icon)}<h2>${title}</h2>${cnt!==""?`<span class="cnt">${cnt}</span>`:""}`;return `<div class="sechead">${toggle?`<button class="tabpill" data-act="toggleSome" aria-expanded="${toggle==="open"}">${inner}${ic("down","chev")}</button>`:`<div class="tabpill">${inner}</div>`}<div class="sp"></div>${deco||""}<button class="addbtn" data-act="add" data-where="${where}">${ic("plus")}${t("add")}</button></div>`}
+function somedaySection(compact){const l=somedayTasks();const n=l.filter(x=>!x.done).length;const open=!compact||S.settings.somedayOpen;
+  return `<section class="card sec${open?"":" shut"}" id="secSomeday" aria-label="${t("someday")}">${secHead("folder",t("someday"),n||"","someday","",compact?(open?"open":"shut"):"")}
+  <div class="collapse${open?"":" shut"}"><div class="cin"><ul class="list" data-list="someday">${l.map(x=>rowHTML(x,null)).join("")}</ul>
+  ${l.length?"":`<div class="empty">${t("somedayHint")}</div>`}</div></div></section>`}
 function daySection(){const ds=U.sel,td=todayStr();const l=tasksOn(ds);const st=dayStat(ds);
   let od="";if(ds===td){const o=overdueTasks();if(o.length)od=`<div class="overbox"><div class="subhead"><span class="pillred">${t("fromBefore",{n:o.length})}</span><button class="pillred" data-act="moveAllToday">${ic("swap")}${t("moveAllToday")}</button></div><ul class="list" data-list="overdue">${o.map(x=>rowHTML(x,x.date)).join("")}</ul></div>`}
   return `<section class="card sec" id="secDay" aria-label="${t("today")}">${secHead("checkc",ds===td?t("today"):t("dayTasks",{d:shortDate(ds)}),st.n?st.d+"/"+st.n:"","day")}
   ${od}<ul class="list" data-list="day">${l.map(x=>rowHTML(x,ds)).join("")}</ul>
-  ${U.adding==="day"?addRowHTML("day"):l.length?"":`<div class="empty">${t("todayEmpty")}</div>`}</section>`}
+  ${l.length?"":`<div class="empty">${t("todayEmpty")}</div>`}</section>`}
 function timelineHTML(){
   const td=todayStr();const f=U.tlFilter;const keep=(x,ds)=>f==="all"||(f==="done"?isDone(x,ds):!isDone(x,ds));
   let out="",lastM="",any=false;
@@ -632,7 +664,7 @@ function settingsHTML(){const s=S.settings;
    <button class="mi" data-act="import">${ic("inbox")}${t("s_import")}</button>
    <button class="mi red" data-act="wipe">${ic("trash")}${t("s_wipe")}</button><input type="file" id="impFile" accept="application/json,.json" hidden></div>
   <h4>${t("s_pro")}</h4><div class="card menu"><button class="mi" data-act="view" data-v="premium">${ic("star")}${t("pro_title")}</button></div>
-  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.2.0${S.pro?" · Pro":""}</button></div></main>`}
+  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.3.0${S.pro?" · Pro":""}</button></div></main>`}
 function premiumHTML(){const rows=[["pf1",1,1],["pf2",1,1],["pf3",1,1],["pf4",1,1],["pf5",0,1],["pf6",0,1],["pf7",0,1],["pf8",0,1]];
   return `<div class="topbar">${backBtn("more")}<div class="grow"><h1>${t("pro_title")}</h1></div></div><main>
   <div class="card" style="text-align:center">${spr("love","width:150px;margin:0 auto","bob")}<p style="margin:6px 4px 4px;color:var(--ink2)">${S.pro?t("pro_active"):t("pro_note")}</p></div>
@@ -772,9 +804,10 @@ app.addEventListener("click",ev=>{
     case"nav":navCal(+b.dataset.d,b.dataset.mode);break;
     case"goToday":U.sel=U.cursor=todayStr();render();break;
     case"mode":U.mode=b.dataset.m;U.cursor=U.sel;render();break;
-    case"add":U.adding=b.dataset.where;render();break;
-    case"fab":{if(U.view==="timeline"){U.view="home";U.sel=U.cursor=todayStr()}U.adding=U.view==="someday"?"someday":"day";render();
-      const inp=$("#addInput");if(inp)setTimeout(()=>inp.scrollIntoView({block:"center",behavior:reduced()?"auto":"smooth"}),30);break}
+    case"add":U.adding=b.dataset.where;U.addedN=0;render();break;
+    case"toggleSome":{S.settings.somedayOpen=!S.settings.somedayOpen;save();const sec=$("#secSomeday");if(sec){sec.classList.toggle("shut",!S.settings.somedayOpen);sec.querySelector(".collapse").classList.toggle("shut",!S.settings.somedayOpen);b.setAttribute("aria-expanded",S.settings.somedayOpen)}haptic();break}
+    case"addGo":{const inp=$("#addInput");if(inp&&inp.value.trim()&&addTask(inp.value,U.adding)){U.addedN=(U.addedN||0)+1;inp.value="";render()}inp&&inp.focus();break}
+    case"fab":{if(U.view==="timeline"){U.view="home";U.sel=U.cursor=todayStr()}U.adding=U.view==="someday"?"someday":"day";U.addedN=0;render();break}
     case"addDone":{U.addHandled=Date.now();const inp=$("#addInput");if(inp&&inp.value.trim())addTask(inp.value,U.adding);U.adding=null;render();break}
     case"check":toggleDone(id,ds);break;
     case"edit":editor(id,ds);break;
@@ -799,11 +832,8 @@ app.addEventListener("change",ev=>{const el=ev.target;
   if(el.id==="impFile"&&el.files[0])importData(el.files[0])});
 app.addEventListener("keydown",ev=>{if(ev.target.id==="addInput"&&ev.key==="Enter"){if(ev.isComposing||ev.keyCode===229)return;ev.preventDefault();
   const inp=ev.target;const v=inp.value;if(!v.trim()){U.adding=null;render();return}
-  if(addTask(v,inp.dataset.where)){U.suppressBlur=true;render();U.suppressBlur=false;const n=$("#addInput");if(n){n.value="";n.focus();n.scrollIntoView({block:"nearest"})}}}
+  if(addTask(v,inp.dataset.where)){U.addedN=(U.addedN||0)+1;inp.value="";render();inp.focus()}}
   if(ev.key==="Escape"){if(U.stack.length)closeSheet();else if(U.adding){U.adding=null;render()}}});
-app.addEventListener("focusout",ev=>{if(ev.target.id!=="addInput"||U.suppressBlur)return;const v=ev.target.value,w=ev.target.dataset.where;
-  setTimeout(()=>{if(U.suppressBlur||Date.now()-(U.addHandled||0)<600)return;const act=document.activeElement;if(act&&act.id==="addInput")return;if(act&&act.dataset&&(act.dataset.act==="addDone"||act.dataset.act==="fab"))return;
-    if(v.trim())addTask(v,w);U.adding=null;render()},120)});
 let sx=null,sy=null,smode=null;app.addEventListener("touchstart",e=>{const g=e.target.closest("#calgrid");if(!g||U.drag){sx=null;return}smode=g.closest("[data-mode]").dataset.mode;sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
 app.addEventListener("touchend",e=>{if(sx==null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;
   if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5)navCal(dx<0?1:-1,smode)},{passive:true});

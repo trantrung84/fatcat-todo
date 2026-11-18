@@ -27,8 +27,8 @@ next:"下一步",start:"开始",skip:"跳过",seed1:"点圆圈即可完成",seed
 brief:"早上好！今天有 {n} 个任务{p}。",briefPin:"，{p} 个置顶",remindTitle:"时间到啦 🐾",
 wd:["日","一","二","三","四","五","六"],wdl:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"],
 a_check:"标记完成：{t}",a_more:"{t} 的选项",a_drag:"拖动以移动 {t}",st_empty:"空",st_pending:"待完成",st_partial:"部分完成",st_complete:"全部完成",close:"关闭",back:"返回",themes:"选择主题",
-pv_on:"正在预览：{t}",pv_unlock:"解锁 Pro",pv_exit:"退出预览",pv_locked:"此主题属于 Pro——你正在预览。",pro_active:"你正在使用 Fat Cat Pro，谢谢！♡",pro_unlocked:"已解锁 Pro（测试模式）",pro_relocked:"已重新锁定 Pro",w_empty:"今天还没有任务 🐾",w_open:"打开应用以更新",
-th:{mochi:"Mochi 蜜桃",forest:"夏日森林",sea:"沙滩海洋",sunset:"日落",sky:"蓝天",citrus:"柑橘",candy:"棉花糖",lime:"青柠紫",moss:"苔绿",lagoon:"碧湖"}},
+t_addedN:"已添加 {n} 项 ✓",pv_on:"正在预览：{t}",pv_unlock:"解锁 Pro",pv_exit:"退出预览",pv_locked:"此主题属于 Pro——你正在预览。",pro_active:"你正在使用 Fat Cat Pro，谢谢！♡",pro_unlocked:"已解锁 Pro（测试模式）",pro_relocked:"已重新锁定 Pro",w_empty:"今天还没有任务 🐾",w_open:"打开应用以更新",
+th:{mochi:"Mochi 蜜桃",forest:"夏日森林",sea:"沙滩海洋",sunset:"日落",sky:"蓝天",citrus:"柑橘",candy:"棉花糖",lime:"青柠紫",moss:"苔绿",luxe:"奢华"}},
 
 ja:{app:"Fat Cat Todo",someday:"Someday",somedayHint:"日付が決まっていないタスクはここへ",today:"今日のタスク",dayTasks:"{d}のタスク",add:"追加",done:"完了",
 todayEmpty:"まだタスクがありません。「追加」から始めましょう。",addPh:"やることを入力…",addSomePh:"いつかやりたいこと…",week:"週",month:"月",goToday:"今日",
@@ -56,8 +56,8 @@ next:"次へ",start:"はじめる",skip:"スキップ",seed1:"丸をタップし
 brief:"おはよう！今日のタスクは {n} 件{p}。",briefPin:"、ピン留め {p} 件",remindTitle:"時間だよ 🐾",
 wd:["日","月","火","水","木","金","土"],wdl:["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
 a_check:"完了にする：{t}",a_more:"{t} のオプション",a_drag:"{t} をドラッグして移動",st_empty:"なし",st_pending:"未完了",st_partial:"一部完了",st_complete:"すべて完了",close:"閉じる",back:"戻る",themes:"テーマを選択",
-pv_on:"プレビュー中：{t}",pv_unlock:"Pro を解放",pv_exit:"プレビューを終了",pv_locked:"このテーマは Pro 専用です — プレビュー中です。",pro_active:"Fat Cat Pro をご利用中です。ありがとう！♡",pro_unlocked:"Pro を解放しました（テストモード）",pro_relocked:"Pro を再ロックしました",w_empty:"今日のタスクはありません 🐾",w_open:"アプリを開いて更新",
-th:{mochi:"Mochi ピーチ",forest:"夏の森",sea:"砂浜と海",sunset:"夕焼け",sky:"青空",citrus:"シトラス",candy:"わたあめ",lime:"ライム＆ライラック",moss:"モス",lagoon:"ラグーン"}},
+t_addedN:"{n} 件追加しました ✓",pv_on:"プレビュー中：{t}",pv_unlock:"Pro を解放",pv_exit:"プレビューを終了",pv_locked:"このテーマは Pro 専用です — プレビュー中です。",pro_active:"Fat Cat Pro をご利用中です。ありがとう！♡",pro_unlocked:"Pro を解放しました（テストモード）",pro_relocked:"Pro を再ロックしました",w_empty:"今日のタスクはありません 🐾",w_open:"アプリを開いて更新",
+th:{mochi:"Mochi ピーチ",forest:"夏の森",sea:"砂浜と海",sunset:"夕焼け",sky:"青空",citrus:"シトラス",candy:"わたあめ",lime:"ライム＆ライラック",moss:"モス",luxe:"ラグジュアリー"}},
 
 ko:{app:"Fat Cat Todo",someday:"Someday",somedayHint:"날짜가 없는 일은 여기에 보관하세요",today:"오늘 할 일",dayTasks:"{d} 할 일",add:"추가",done:"완료",
 todayEmpty:"아직 할 일이 없어요. ‘추가’를 눌러 시작해요.",addPh:"할 일을 입력하세요…",addSomePh:"언젠가 할 일…",week:"주",month:"월",goToday:"오늘",
@@ -85,11 +85,11 @@ next:"다음",start:"시작하기",skip:"건너뛰기",seed1:"동그라미를 �
 brief:"좋은 아침! 오늘 할 일은 {n}개{p}.",briefPin:", 고정 {p}개",remindTitle:"시간이 됐어요 🐾",
 wd:["일","월","화","수","목","금","토"],wdl:["일요일","월요일","화요일","수요일","목요일","금요일","토요일"],
 a_check:"완료로 표시: {t}",a_more:"{t} 옵션",a_drag:"{t} 끌어서 이동",st_empty:"비어 있음",st_pending:"미완료",st_partial:"일부 완료",st_complete:"모두 완료",close:"닫기",back:"뒤로",themes:"테마 선택",
-pv_on:"미리보기: {t}",pv_unlock:"Pro 잠금 해제",pv_exit:"미리보기 종료",pv_locked:"이 테마는 Pro 전용이에요 — 미리보기 중이에요.",pro_active:"Fat Cat Pro를 사용 중이에요. 고마워요! ♡",pro_unlocked:"Pro 잠금 해제됨 (테스트 모드)",pro_relocked:"Pro 다시 잠김",w_empty:"오늘 할 일이 없어요 🐾",w_open:"앱을 열어 새로고침",
-th:{mochi:"Mochi 피치",forest:"여름 숲",sea:"모래 바다",sunset:"노을",sky:"파란 하늘",citrus:"시트러스",candy:"솜사탕",lime:"라임 라일락",moss:"이끼",lagoon:"라군"}},
+t_addedN:"{n}개 추가됨 ✓",pv_on:"미리보기: {t}",pv_unlock:"Pro 잠금 해제",pv_exit:"미리보기 종료",pv_locked:"이 테마는 Pro 전용이에요 — 미리보기 중이에요.",pro_active:"Fat Cat Pro를 사용 중이에요. 고마워요! ♡",pro_unlocked:"Pro 잠금 해제됨 (테스트 모드)",pro_relocked:"Pro 다시 잠김",w_empty:"오늘 할 일이 없어요 🐾",w_open:"앱을 열어 새로고침",
+th:{mochi:"Mochi 피치",forest:"여름 숲",sea:"모래 바다",sunset:"노을",sky:"파란 하늘",citrus:"시트러스",candy:"솜사탕",lime:"라임 라일락",moss:"이끼",luxe:"럭셔리"}},
 
 fr:{app:"Fat Cat Todo",someday:"Someday",somedayHint:"Gardez ici les tâches sans date",today:"Aujourd’hui",dayTasks:"Tâches du {d}",add:"Ajouter",done:"OK",
-todayEmpty:"Rien pour l’instant. Touchez Ajouter pour commencer.",addPh:"Que faut-il faire…",addSomePh:"Pour un jour…",week:"Sem.",month:"Mois",goToday:"Aujourd’hui",
+todayEmpty:"Rien pour l’instant. Touchez Ajouter pour commencer.",addPh:"Que faut-il faire…",addSomePh:"Pour un jour…",week:"S",month:"M",goToday:"Aujourd’hui",
 n_today:"Aujourd’hui",n_cal:"Calendrier",n_tl:"Chronologie",n_some:"Someday",n_more:"Plus",calendar:"Calendrier",
 c_empty:"Journée tranquille. On ajoute quelque chose ?",c_emptyOther:"Ce jour est libre. Ajouter une tâche ?",c_pending:"Quelques petites choses nous attendent.",c_single:"Miaou ! Encore une de faite !",c_partial:"{d}/{n} faites, bravo !",c_all:"Génial ! Place à une petite pause. ♡",c_overdue:"On réorganise pour respirer un peu ?",
 fromBefore:"Des jours précédents ({n})",moveAllToday:"Tout déplacer à aujourd’hui",overdue:"En retard",
@@ -114,11 +114,11 @@ next:"Suivant",start:"Commencer",skip:"Passer",seed1:"Touchez le cercle pour ter
 brief:"Bonjour ! {n} tâches aujourd’hui{p}.",briefPin:", dont {p} épinglées",remindTitle:"C’est l’heure 🐾",
 wd:["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"],wdl:["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"],
 a_check:"Marquer comme faite : {t}",a_more:"Options pour {t}",a_drag:"Glisser pour déplacer {t}",st_empty:"vide",st_pending:"à faire",st_partial:"en partie fait",st_complete:"tout fait",close:"Fermer",back:"Retour",themes:"Choisir un thème",
-pv_on:"Aperçu : {t}",pv_unlock:"Débloquer Pro",pv_exit:"Quitter l’aperçu",pv_locked:"Ce thème fait partie de Pro — vous le prévisualisez.",pro_active:"Vous utilisez Fat Cat Pro. Merci ! ♡",pro_unlocked:"Pro débloqué (mode test)",pro_relocked:"Pro verrouillé",w_empty:"Aucune tâche aujourd’hui 🐾",w_open:"Ouvrez l’app pour actualiser",
-th:{mochi:"Mochi pêche",forest:"Forêt d’été",sea:"Mer et sable",sunset:"Coucher de soleil",sky:"Ciel bleu",citrus:"Agrumes",candy:"Barbe à papa",lime:"Citron vert & lilas",moss:"Mousse",lagoon:"Lagon"}},
+t_addedN:"{n} ajoutée(s) ✓",pv_on:"Aperçu : {t}",pv_unlock:"Débloquer Pro",pv_exit:"Quitter l’aperçu",pv_locked:"Ce thème fait partie de Pro — vous le prévisualisez.",pro_active:"Vous utilisez Fat Cat Pro. Merci ! ♡",pro_unlocked:"Pro débloqué (mode test)",pro_relocked:"Pro verrouillé",w_empty:"Aucune tâche aujourd’hui 🐾",w_open:"Ouvrez l’app pour actualiser",
+th:{mochi:"Mochi pêche",forest:"Forêt d’été",sea:"Mer et sable",sunset:"Coucher de soleil",sky:"Ciel bleu",citrus:"Agrumes",candy:"Barbe à papa",lime:"Citron vert & lilas",moss:"Mousse",luxe:"Luxe"}},
 
 de:{app:"Fat Cat Todo",someday:"Someday",somedayHint:"Aufgaben ohne Datum hier parken",today:"Heute",dayTasks:"Aufgaben am {d}",add:"Neu",done:"Fertig",
-todayEmpty:"Noch nichts geplant. Tippe auf Neu, um zu starten.",addPh:"Was ist zu tun…",addSomePh:"Irgendwann mal…",week:"Woche",month:"Monat",goToday:"Heute",
+todayEmpty:"Noch nichts geplant. Tippe auf Neu, um zu starten.",addPh:"Was ist zu tun…",addSomePh:"Irgendwann mal…",week:"W",month:"M",goToday:"Heute",
 n_today:"Heute",n_cal:"Kalender",n_tl:"Zeitleiste",n_some:"Someday",n_more:"Mehr",calendar:"Kalender",
 c_empty:"Ein ruhiger Tag. Etwas hinzufügen?",c_emptyOther:"Dieser Tag ist frei. Etwas hinzufügen?",c_pending:"Ein paar kleine Dinge warten auf uns.",c_single:"Miau! Wieder eins geschafft!",c_partial:"{d}/{n} erledigt, super!",c_all:"Klasse! Zeit für eine kleine Pause. ♡",c_overdue:"Wollen wir neu planen, damit es leichter wird?",
 fromBefore:"Von früher ({n})",moveAllToday:"Alle auf heute",overdue:"Überfällig",
@@ -143,8 +143,8 @@ next:"Weiter",start:"Los geht’s",skip:"Überspringen",seed1:"Tippe auf den Kre
 brief:"Guten Morgen! Heute stehen {n} Aufgaben an{p}.",briefPin:", {p} angeheftet",remindTitle:"Es ist so weit 🐾",
 wd:["So","Mo","Di","Mi","Do","Fr","Sa"],wdl:["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],
 a_check:"Als erledigt markieren: {t}",a_more:"Optionen für {t}",a_drag:"{t} ziehen zum Verschieben",st_empty:"leer",st_pending:"offen",st_partial:"teilweise erledigt",st_complete:"alles erledigt",close:"Schließen",back:"Zurück",themes:"Design wählen",
-pv_on:"Vorschau: {t}",pv_unlock:"Pro freischalten",pv_exit:"Vorschau beenden",pv_locked:"Dieses Design gehört zu Pro — du siehst eine Vorschau.",pro_active:"Du nutzt Fat Cat Pro. Danke! ♡",pro_unlocked:"Pro freigeschaltet (Testmodus)",pro_relocked:"Pro wieder gesperrt",w_empty:"Heute keine Aufgaben 🐾",w_open:"App öffnen zum Aktualisieren",
-th:{mochi:"Mochi Pfirsich",forest:"Sommerwald",sea:"Sand & Meer",sunset:"Sonnenuntergang",sky:"Blauer Himmel",citrus:"Zitrus",candy:"Zuckerwatte",lime:"Limette & Flieder",moss:"Moos",lagoon:"Lagune"}}
+t_addedN:"{n} hinzugefügt ✓",pv_on:"Vorschau: {t}",pv_unlock:"Pro freischalten",pv_exit:"Vorschau beenden",pv_locked:"Dieses Design gehört zu Pro — du siehst eine Vorschau.",pro_active:"Du nutzt Fat Cat Pro. Danke! ♡",pro_unlocked:"Pro freigeschaltet (Testmodus)",pro_relocked:"Pro wieder gesperrt",w_empty:"Heute keine Aufgaben 🐾",w_open:"App öffnen zum Aktualisieren",
+th:{mochi:"Mochi Pfirsich",forest:"Sommerwald",sea:"Sand & Meer",sunset:"Sonnenuntergang",sky:"Blauer Himmel",citrus:"Zitrus",candy:"Zuckerwatte",lime:"Limette & Flieder",moss:"Moos",luxe:"Luxus"}}
 });
 const LANGS=[["vi","Tiếng Việt"],["en","English"],["zh","中文"],["ja","日本語"],["ko","한국어"],["fr","Français"],["de","Deutsch"]];
 const LOCALE={vi:"vi-VN",en:"en-US",zh:"zh-CN",ja:"ja-JP",ko:"ko-KR",fr:"fr-FR",de:"de-DE"};
