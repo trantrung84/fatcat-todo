@@ -4,4 +4,7 @@
     <string name="title_activity_main">Fat Cat Todo</string>
     <string name="package_name">com.fatcat.todo</string>
     <string name="custom_url_scheme">com.fatcat.todo</string>
+    <string name="widget_large_label">Fat Cat Todo – Hôm nay</string>
+    <string name="widget_small_label">Fat Cat Todo – Nhỏ</string>
+    <string name="widget_desc">Việc cần làm hôm nay cùng mèo Mochi</string>
 </resources>

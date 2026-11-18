@@ -19,6 +19,7 @@ for fn in sorted(os.listdir(os.path.join(SRC,"sprites"))):
     buf=io.BytesIO(); im.save(buf,"WEBP",quality=88,method=6)
     spr[fn[:-4]]="data:image/webp;base64,"+base64.b64encode(buf.getvalue()).decode()
 html=open(os.path.join(SRC,"index.src.html"),encoding="utf-8").read()
+html=html.replace("/*__I18N_EXTRA__*/",open(os.path.join(SRC,"i18n-extra.js"),encoding="utf-8").read())
 html=html.replace("/*__FONTS__*/","\n".join(css)).replace("/*__SPRITES__*/{}",json.dumps(spr))
 os.makedirs(os.path.join(ROOT,"www"),exist_ok=True)
 open(os.path.join(ROOT,"www","index.html"),"w",encoding="utf-8").write(html)

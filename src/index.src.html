@@ -133,10 +133,11 @@ ul.list.dz.over{background:var(--primary-l);outline-color:var(--primary)}
 .nav{position:absolute;left:12px;right:12px;bottom:calc(10px + var(--sab));z-index:50;display:flex;background:var(--card);border:1.8px solid var(--border);border-radius:26px;padding:6px;box-shadow:0 8px 24px rgba(120,60,40,.12)}
 .nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 0 5px;border-radius:19px;color:var(--ink2);font-size:12.5px;font-weight:800;min-height:56px;justify-content:center}
 .nav button svg{width:25px;height:25px}
+.nav button span{max-width:100%;padding:0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px}
 .nav button[aria-current="page"]{background:var(--primary-l);color:var(--primary-d)}
-.fab{position:absolute;right:18px;bottom:calc(96px + var(--sab));z-index:51;width:66px;height:66px;border-radius:50%;background:var(--primary);color:var(--onp);display:grid;place-items:center;box-shadow:0 4px 0 var(--primary-d),0 10px 22px rgba(120,60,40,.25)}
-.fab svg.plus{width:32px;height:32px}
-.fab .pw{position:absolute;right:-6px;top:-8px;width:26px;height:26px;color:var(--primary)}
+.fab{position:absolute;right:14px;bottom:calc(94px + var(--sab));z-index:51;width:80px;height:74px;color:var(--primary);filter:drop-shadow(0 3px 0 var(--primary-d)) drop-shadow(0 8px 12px rgba(120,60,40,.22))}
+.fab svg.pawbg{position:absolute;inset:0;width:100%;height:100%}
+.fab svg.plus{position:absolute;width:28px;height:28px;left:50%;top:67%;transform:translate(-50%,-50%);color:var(--onp)}
 .fab:active{transform:translateY(2px)}
 /* toast */
 #toast{position:absolute;left:14px;right:14px;bottom:calc(96px + var(--sab));z-index:300;display:flex;align-items:center;gap:10px;background:#4A2C24;color:#fff;border-radius:18px;padding:6px 6px 6px 16px;min-height:52px;transform:translateY(30px);opacity:0;pointer-events:none;transition:transform .25s,opacity .2s;font-size:15px;font-weight:700}
@@ -210,6 +211,13 @@ textarea.inp{min-height:84px;resize:vertical}
 .thc .ok{position:absolute;right:9px;top:9px;width:24px;height:24px;border-radius:50%;background:var(--primary-d);display:none;place-items:center}
 .thc .ok svg{width:16px;height:16px}
 .thc[aria-pressed="true"] .ok{display:grid}
+#pvbar .pvbar{display:flex;align-items:center;gap:8px;margin:calc(6px + var(--sat)) 12px -4px;padding:6px 6px 6px 12px;border-radius:16px;background:var(--card);border:1.8px dashed var(--primary-d);font-weight:800;font-size:13px;line-height:1.2;position:relative;z-index:5}
+#pvbar .pvbar>svg{width:20px;height:20px;color:var(--primary-d);flex:none}
+#pvbar .pvbar span{flex:1;min-width:0}
+#pvbar:not(:empty)+#screen .topbar{padding-top:8px}
+.protag{position:absolute;right:9px;top:10px;display:inline-flex;align-items:center;gap:2px;font-size:11px;font-weight:900;color:var(--primary-d);background:var(--primary-l);border-radius:8px;padding:2px 6px}
+.protag svg{width:12px;height:12px}
+.thc[aria-pressed="true"] .protag{display:none}
 .pro{display:grid;grid-template-columns:1fr 60px 60px;font-size:15px}
 .pro div{padding:10px 4px;border-bottom:1.5px solid var(--border)}
 .pro .h{font-weight:800;color:var(--ink2);font-size:13px}
@@ -238,6 +246,7 @@ textarea.inp{min-height:84px;resize:vertical}
 </head>
 <body>
 <div id="app" class="anim">
+  <div id="pvbar"></div>
   <div id="screen"></div>
   <button class="fab" id="fab" data-act="fab" aria-label="Add"></button>
   <nav class="nav" id="nav" aria-label="Main"></nav>
@@ -298,7 +307,7 @@ s_look:"Giao diện",s_lang:"Ngôn ngữ",s_theme:"Chế độ",th_auto:"Hệ th
 s_data:"Dữ liệu",s_export:"Xuất dữ liệu (JSON)",s_import:"Nhập dữ liệu (JSON)",s_wipe:"Xóa toàn bộ dữ liệu",wipeQ:"Xóa toàn bộ việc và cài đặt? Không thể hoàn tác.",imported:"Đã nhập {n} việc",importErr:"Tệp không hợp lệ",
 s_pro:"Fat Cat Pro",s_about:"Giới thiệu",privacy:"Dữ liệu của bạn chỉ lưu trên máy này, không gửi lên máy chủ. Ứng dụng không có quảng cáo và không theo dõi.",version:"Phiên bản",
 pro_title:"Fat Cat Pro",pro_note:"Pro đang được phát triển. Hiện tại mọi tính năng đều miễn phí — không giới hạn số việc hay nhắc nhở.",pro_soon:"Sắp ra mắt",pro_restore:"Khôi phục giao dịch",free:"Free",pro:"Pro",
-pf1:"Việc cần làm, Today & Someday",pf2:"Lịch tuần/tháng, Timeline",pf3:"Lặp lại & nhắc nhở cơ bản",pf4:"D-Day",pf5:"10 theme màu",pf6:"Widget nâng cao",pf7:"Thống kê chuyên sâu",pf8:"Đồng bộ nhiều thiết bị",
+pf1:"Việc cần làm, Today & Someday",pf2:"Lịch tuần/tháng, Timeline",pf3:"Lặp lại & nhắc nhở cơ bản",pf4:"D-Day",pf5:"9 theme màu thêm",pf6:"Widget nâng cao",pf7:"Thống kê chuyên sâu",pf8:"Đồng bộ nhiều thiết bị",
 ob1t:"Chào bạn! Mình là Mochi",ob1p:"Chú mèo béo sẽ cùng bạn lập kế hoạch nhẹ nhàng mỗi ngày — không áp lực, không trách móc.",
 ob2t:"Today & Someday",ob2p:"Việc có ngày nằm ở Today. Việc chưa rõ ngày cứ để vào Someday, rồi kéo sang khi sẵn sàng.",
 ob3t:"Nhắc đúng lúc",ob3p:"Đặt nhắc giờ, lặp lại và đếm ngược D-Day. Mình chỉ xin quyền thông báo khi bạn bật nhắc lần đầu.",
@@ -306,7 +315,7 @@ next:"Tiếp",start:"Bắt đầu",skip:"Bỏ qua",
 seed1:"Chạm vào vòng tròn để hoàn thành",seed2:"Kéo ⋮⋮ để sắp xếp hoặc đổi ngày",seed3:"Chạm ••• để xem thêm tùy chọn",seed4:"Đọc một cuốn sách mới",
 brief:"Chào buổi sáng! Hôm nay có {n} việc{p}.",briefPin:", {p} việc ghim",remindTitle:"Đến giờ rồi nè 🐾",
 wd:["CN","T2","T3","T4","T5","T6","T7"],wdl:["Chủ nhật","Thứ 2","Thứ 3","Thứ 4","Thứ 5","Thứ 6","Thứ 7"],monthT:"Tháng {m}, {y}",
-a_check:"Đánh dấu hoàn thành: {t}",a_more:"Tùy chọn cho {t}",a_drag:"Kéo để di chuyển {t}",st_empty:"trống",st_pending:"còn việc",st_partial:"xong một phần",st_complete:"xong hết",close:"Đóng",back:"Quay lại",themes:"Chọn theme"},
+a_check:"Đánh dấu hoàn thành: {t}",a_more:"Tùy chọn cho {t}",a_drag:"Kéo để di chuyển {t}",st_empty:"trống",st_pending:"còn việc",st_partial:"xong một phần",st_complete:"xong hết",close:"Đóng",back:"Quay lại",themes:"Chọn theme",pv_on:"Đang xem trước: {t}",pv_unlock:"Mở khóa Pro",pv_exit:"Thoát xem trước",pv_locked:"Theme này thuộc bản Pro — bạn đang xem trước.",pro_active:"Bạn đang dùng Fat Cat Pro. Cảm ơn bạn! ♡",pro_unlocked:"Đã mở khóa Pro (chế độ thử nghiệm)",pro_relocked:"Đã khóa lại Pro",w_empty:"Hôm nay chưa có việc nào 🐾",w_open:"Mở app để cập nhật",lockedTheme:"Pro"},
 en:{app:"Fat Cat Todo",someday:"Someday",somedayHint:"Park tasks without a date here",today:"Today",dayTasks:"Tasks on {d}",add:"Add",done:"Done",
 todayEmpty:"Nothing here yet. Tap Add to start.",addPh:"What needs doing…",addSomePh:"Something for someday…",
 week:"Week",month:"Month",goToday:"Today",
@@ -328,7 +337,7 @@ s_look:"Appearance",s_lang:"Language",s_theme:"Mode",th_auto:"System",th_light:"
 s_data:"Data",s_export:"Export data (JSON)",s_import:"Import data (JSON)",s_wipe:"Delete all data",wipeQ:"Delete all tasks and settings? This can't be undone.",imported:"Imported {n} tasks",importErr:"Invalid file",
 s_pro:"Fat Cat Pro",s_about:"About",privacy:"Your data stays on this device and is never sent to a server. No ads, no tracking.",version:"Version",
 pro_title:"Fat Cat Pro",pro_note:"Pro is in development. For now every feature is free — no limits on tasks or reminders.",pro_soon:"Coming soon",pro_restore:"Restore purchases",free:"Free",pro:"Pro",
-pf1:"To-dos, Today & Someday",pf2:"Week/month calendar, Timeline",pf3:"Repeat & basic reminders",pf4:"D-Day",pf5:"10 color themes",pf6:"Advanced widgets",pf7:"In-depth stats",pf8:"Multi-device sync",
+pf1:"To-dos, Today & Someday",pf2:"Week/month calendar, Timeline",pf3:"Repeat & basic reminders",pf4:"D-Day",pf5:"9 extra color themes",pf6:"Advanced widgets",pf7:"In-depth stats",pf8:"Multi-device sync",
 ob1t:"Hi! I'm Mochi",ob1p:"A fat cat who plans gently with you every day — no pressure, no guilt.",
 ob2t:"Today & Someday",ob2p:"Dated tasks live in Today. Undated ones go to Someday — drag them over when you're ready.",
 ob3t:"Reminders at the right time",ob3p:"Set reminders, repeats and D-Day countdowns. I only ask for notification permission when you turn on your first reminder.",
@@ -336,7 +345,8 @@ next:"Next",start:"Get started",skip:"Skip",
 seed1:"Tap the circle to complete",seed2:"Drag ⋮⋮ to reorder or reschedule",seed3:"Tap ••• for more options",seed4:"Read a new book",
 brief:"Good morning! {n} tasks today{p}.",briefPin:", {p} pinned",remindTitle:"It's time 🐾",
 wd:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],wdl:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],monthT:"{M} {y}",
-a_check:"Mark complete: {t}",a_more:"Options for {t}",a_drag:"Drag to move {t}",st_empty:"empty",st_pending:"pending",st_partial:"partly done",st_complete:"all done",close:"Close",back:"Back",themes:"Choose theme"}};
+a_check:"Mark complete: {t}",a_more:"Options for {t}",a_drag:"Drag to move {t}",st_empty:"empty",st_pending:"pending",st_partial:"partly done",st_complete:"all done",close:"Close",back:"Back",themes:"Choose theme",pv_on:"Previewing: {t}",pv_unlock:"Unlock Pro",pv_exit:"Exit preview",pv_locked:"This theme is part of Pro — you are previewing it.",pro_active:"You are using Fat Cat Pro. Thank you! ♡",pro_unlocked:"Pro unlocked (test mode)",pro_relocked:"Pro locked again",w_empty:"No tasks today 🐾",w_open:"Open the app to refresh",lockedTheme:"Pro"}};
+/*__I18N_EXTRA__*/
 const MONTHS_EN=["January","February","March","April","May","June","July","August","September","October","November","December"];
 function t(k,p){let s=(I18N[S.settings.lang]||I18N.vi)[k];if(s==null)s=I18N.en[k]??k;if(p)for(const x in p)s=s.split("{"+x+"}").join(p[x]);return s}
 
@@ -349,18 +359,20 @@ const todayStr=()=>fmt(new Date());
 const dow=s=>parse(s).getDay();
 const diffDays=(a,b)=>Math.round((parse(b)-parse(a))/864e5);
 function weekStartOf(s){const w=S.settings.weekMon?(dow(s)+6)%7:dow(s);return addDays(s,-w)}
-function shortDate(s){const d=parse(s);return S.settings.lang==="vi"?pad(d.getDate())+"/"+pad(d.getMonth()+1):MONTHS_EN[d.getMonth()].slice(0,3)+" "+d.getDate()}
+const intl=(o,d)=>new Intl.DateTimeFormat(LOCALE[S.settings.lang]||"en-US",o).format(d);
+function shortDate(s){const d=parse(s);const L=S.settings.lang;if(L!=="vi"&&L!=="en")return intl({day:"numeric",month:"short"},d);return L==="vi"?pad(d.getDate())+"/"+pad(d.getMonth()+1):MONTHS_EN[d.getMonth()].slice(0,3)+" "+d.getDate()}
 function longDate(s){const d=parse(s);return t("wdl")[d.getDay()]+", "+shortDate(s)}
-function monthTitle(s){const d=parse(s);return t("monthT",{m:d.getMonth()+1,M:MONTHS_EN[d.getMonth()],y:d.getFullYear()})}
+function monthTitle(s){const d=parse(s);const L=S.settings.lang;if(L!=="vi"&&L!=="en")return intl({month:"long",year:"numeric"},d);return t("monthT",{m:d.getMonth()+1,M:MONTHS_EN[d.getMonth()],y:d.getFullYear()})}
 function relLabel(s){const td=todayStr();if(s===td)return t("todayL");if(s===addDays(td,1))return t("tomorrowL");return longDate(s)}
 
 /* ============ state ============ */
 const KEY="fatcat.todo.v1";
 const DEF_SETTINGS={weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:true,showBadge:true,brief:true,briefTime:"08:00",
-  lang:(navigator.language||"vi").toLowerCase().startsWith("en")?"en":"vi",theme:"auto",palette:"mochi",sound:false,haptic:true,reduceMotion:false};
-let S={tasks:[],settings:{...DEF_SETTINGS},onboarded:false};
+  lang:(()=>{const n=(navigator.language||"vi").toLowerCase().slice(0,2);return ["vi","en","zh","ja","ko","fr","de"].includes(n)?n:"vi"})(),theme:"auto",palette:"mochi",sound:false,haptic:true,reduceMotion:false};
+let S={tasks:[],settings:{...DEF_SETTINGS},onboarded:false,pro:false};
 try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);S={...S,...o,settings:{...DEF_SETTINGS,...(o.settings||{})}}}}catch(e){}
-const U={view:"home",sel:todayStr(),cursor:todayStr(),mode:"week",adding:null,tlFilter:"pending",tlDays:30,flash:null,stack:[]};
+const FREE_THEME="mochi";if(!S.pro&&S.settings.palette!==FREE_THEME)S.settings.palette=FREE_THEME;
+const U={preview:null,verTaps:0,view:"home",sel:todayStr(),cursor:todayStr(),mode:"week",adding:null,tlFilter:"pending",tlDays:30,flash:null,stack:[]};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}scheduleNotifs()}
 const uid=()=>(crypto.randomUUID?crypto.randomUUID():Date.now().toString(36)+Math.random().toString(36).slice(2));
 function newTask(o){const now=Date.now();return Object.assign({id:uid(),title:"",notes:"",date:null,pin:false,order:now,priority:"normal",
@@ -417,6 +429,8 @@ trash:`<g ${SW}><path d="M4 7h16M9 7V4h6v3M6.5 7l1 13h9l1-13"/></g>`,
 edit:`<g ${SW}><path d="M4 20h4L19 9l-4-4L4 16z"/></g>`,
 note:`<g ${SW}><path d="M5 4h10l4 4v12H5z"/><path d="M9 12h6M9 16h4"/></g>`,
 next:`<g ${SW}><path d="M4 12h14M13 6l6 6-6 6"/></g>`,
+eye:`<g ${SW}><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></g>`,
+lock:`<g ${SW}><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 018 0v2.5"/></g>`,
 star:'<path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6L12 16.4 6.7 19.4l1.2-6L3.4 9.3l6-.7z" fill="currentColor"/>',
 paw:'<g fill="currentColor"><ellipse cx="6" cy="9.5" rx="2.4" ry="3"/><ellipse cx="10.2" cy="5.5" rx="2.4" ry="3"/><ellipse cx="15.8" cy="5.5" rx="2.4" ry="3"/><ellipse cx="20" cy="9.5" rx="2.4" ry="3"/><path d="M13 10.5c3.6 0 7 4.2 7 7.4 0 2.6-2.4 3.6-4 3.2-1.2-.3-2-.8-3-.8s-1.8.5-3 .8c-1.6.4-4-.6-4-3.2 0-3.2 3.4-7.4 7-7.4z"/></g>'};
 const ic=(n,cls)=>`<svg viewBox="0 0 24 24" aria-hidden="true"${cls?` class="${cls}"`:""}>${IC[n]}</svg>`;
@@ -491,7 +505,9 @@ function addTask(title,where){title=title.trim().slice(0,160);if(!title)return f
   S.tasks.push(newTask({title,date:where==="someday"?null:U.sel,order:maxO+10}));save();return true}
 
 /* ============ theme ============ */
-const curTheme=()=>THEMES.find(x=>x.id===S.settings.palette)||THEMES[0];
+const curTheme=()=>THEMES.find(x=>x.id===(U.preview||S.settings.palette))||THEMES[0];
+const themeName=th=>(I18N[S.settings.lang]&&I18N[S.settings.lang].th&&I18N[S.settings.lang].th[th.id])||(S.settings.lang==="vi"?th.vi:th.en);
+const unlocked=id=>S.pro||id===FREE_THEME;
 function applyTheme(){const th=S.settings.theme;const dark=th==="dark"||(th==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);
   const v=themeVars(curTheme(),dark);const r=document.documentElement;for(const k in v)r.style.setProperty("--"+k,v[k]);
   r.setAttribute("data-theme",dark?"dark":"light");r.lang=S.settings.lang;
@@ -505,7 +521,7 @@ function render(){
   const V={home:homeHTML,calendar:calendarViewHTML,timeline:timelineHTML,someday:somedayViewHTML,more:settingsHTML,premium:premiumHTML};
   scr.innerHTML=(V[U.view]||homeHTML)();scr.dataset.view=U.view;
   const m2=scr.querySelector("main");if(m2&&prev===U.view)m2.scrollTop=st;
-  renderNav();
+  renderNav();$("#pvbar").innerHTML=pvbarHTML();
   if(U.adding){const inp=$("#addInput");if(inp)inp.focus({preventScroll:false})}
   if(U.pop){const r=scr.querySelector(`.row[data-key="${CSS.escape(U.pop)}"]`);if(r&&!reduced())r.classList.add("pop");U.pop=null}
   document.title=S.settings.showBadge&&remainingToday()>0?`(${remainingToday()}) Fat Cat Todo`:"Fat Cat Todo";
@@ -516,7 +532,7 @@ function renderNav(){const items=[["home","home","n_today"],["calendar","calm","
   const cur=U.view==="premium"?"more":U.view;
   $("#nav").innerHTML=items.map(([v,i,l])=>`<button data-act="view" data-v="${v}" ${cur===v?'aria-current="page"':""}>${ic(i)}<span>${t(l)}</span></button>`).join("");
   const f=$("#fab");f.style.display=(U.view==="more"||U.view==="premium")?"none":"";
-  f.innerHTML=`${ic("plus","plus")}<svg class="pw" viewBox="0 0 26 24" aria-hidden="true">${IC.paw}</svg>`;f.setAttribute("aria-label",t("add"))}
+  f.innerHTML=`<svg class="pawbg" viewBox="0 0 26 24" aria-hidden="true">${IC.paw}</svg>${ic("plus","plus")}`;f.setAttribute("aria-label",t("add"))}
 function remainingToday(){const s=dayStat(todayStr());return s.n-s.d}
 function heroState(){const ds=U.sel,st=dayStat(ds),td=todayStr();const od=ds===td?overdueTasks().length:0;
   if(U.flash==="alldone"&&st.status==="complete")return["party",t("c_all"),true];
@@ -532,11 +548,11 @@ function heroHTML(){const[s,msg,jump]=heroState();const st=dayStat(U.sel);const 
 function renderHero(){const h=$("#hero");if(h)h.outerHTML=heroHTML()}
 function plainBar(title,right){return `<div class="topbar"><div class="grow"><h1>${title}</h1></div>${right||""}</div>`}
 const backBtn=v=>`<button class="obtn" data-act="view" data-v="${v}" aria-label="${t("back")}">${ic("left")}</button>`;
-const rightBtns=()=>`<button class="obtn" data-act="themes" aria-label="${t("themes")}">${ic("palette")}</button><button class="obtn" data-act="view" data-v="more" aria-label="${t("settings")}">${ic("gear")}</button>`;
+const rightBtns=()=>`<button class="obtn" data-act="view" data-v="more" aria-label="${t("settings")}">${ic("gear")}</button>`;
 function homeHTML(){const td=todayStr();const rem=remainingToday();
   const bar=`<div class="topbar homebar">${spr("peek","","peek")}<div class="grow"><h1>${t("app")}${S.settings.showBadge&&rem>0?pawBadge(rem):""}</h1><span class="datepill">${ic("cal")}${longDate(td)}</span></div><div style="display:flex;gap:6px;padding-bottom:12px">${rightBtns()}</div></div>`;
   const some=somedaySection(true),day=daySection();
-  return bar+`<main id="main">${heroHTML()}${calendarHTML("week")}${S.settings.somedayTop?some+day:day+some}</main>`}
+  return bar+`<main id="main">${heroHTML()}${calendarHTML(U.mode)}${S.settings.somedayTop?some+day:day+some}</main>`}
 function calendarViewHTML(){return plainBar(t("calendar"),rightBtns())+`<main id="main">${calendarHTML("month")}${daySection()}</main>`}
 function somedayViewHTML(){return plainBar(t("someday"),rightBtns())+`<main id="main">${somedaySection(false)}</main>`}
 function calendarHTML(mode){
@@ -576,8 +592,7 @@ function rowHTML(x,ds){
 function addRowHTML(where){return `<div class="addrow"><input id="addInput" data-where="${where}" maxlength="160" enterkeyhint="done" autocomplete="off" placeholder="${where==="someday"?t("addSomePh"):t("addPh")}"><button class="btn" data-act="addDone">${t("done")}</button></div>`}
 function secHead(icon,title,cnt,where,deco){return `<div class="sechead"><div class="tabpill">${ic(icon)}<h2>${title}</h2>${cnt!==""?`<span class="cnt">${cnt}</span>`:""}</div><div class="sp"></div>${deco||""}<button class="addbtn" data-act="add" data-where="${where}">${ic("plus")}${t("add")}</button></div>`}
 function somedaySection(compact){const l=somedayTasks();const n=l.filter(x=>!x.done).length;
-  const deco=spr("stretch",`width:76px;right:118px;top:-42px`,"deco");
-  return `<section class="card sec" id="secSomeday" aria-label="${t("someday")}">${secHead("folder",t("someday"),n||"","someday",deco)}
+  return `<section class="card sec" id="secSomeday" aria-label="${t("someday")}">${secHead("folder",t("someday"),n||"","someday")}
   <ul class="list" data-list="someday">${l.map(x=>rowHTML(x,null)).join("")}</ul>
   ${U.adding==="someday"?addRowHTML("someday"):l.length?"":`<div class="empty">${t("somedayHint")}</div>`}</section>`}
 function daySection(){const ds=U.sel,td=todayStr();const l=tasksOn(ds);const st=dayStat(ds);
@@ -598,15 +613,15 @@ function timelineHTML(){
   const sc=somedayTasks().filter(x=>!x.done).length;
   return plainBar(t("timeline"),rightBtns())+`<main><div class="tlbar"><div class="seg">${["pending","done","all"].map(k=>`<button data-act="tlf" data-f="${k}" aria-pressed="${f===k}">${t("tl_"+k)}</button>`).join("")}</div><div style="flex:1"></div><button class="chip" data-act="view" data-v="someday">${t("someday")} (${sc})</button></div>${out}</main>`}
 const swi=(k,on)=>`<label class="sw"><input type="checkbox" data-set="${k}" ${on?"checked":""}><i></i></label>`;
-function themeGrid(){const cur=S.settings.palette,L=S.settings.lang;
-  return `<div class="themes">${THEMES.map(th=>`<button class="thc" data-act="palette" data-p="${th.id}" aria-pressed="${cur===th.id}"><span class="dots3"><i style="background:${th.p}"></i><i style="background:${th.a}"></i><i style="background:${th.d}"></i></span><b>${L==="vi"?th.vi:th.en}</b><span class="ok">${ic("check")}</span></button>`).join("")}</div>`}
+function themeGrid(){const cur=U.preview||S.settings.palette;
+  return `<div class="themes">${THEMES.map(th=>`<button class="thc" data-act="palette" data-p="${th.id}" aria-pressed="${cur===th.id}"><span class="dots3"><i style="background:${th.p}"></i><i style="background:${th.a}"></i><i style="background:${th.d}"></i></span><b>${esc(themeName(th))}</b>${unlocked(th.id)?"":`<span class="protag">${ic("lock")}PRO</span>`}<span class="ok">${ic("check")}</span></button>`).join("")}</div>`}
 function settingsHTML(){const s=S.settings;
   const line=(k,label,sub)=>`<div class="line"><div class="lt">${label}${sub?`<small>${sub}</small>`:""}</div>${swi(k,s[k])}</div>`;
   return plainBar(t("settings"))+`<main class="set">
   <h4>${t("s_theme_c")}</h4>${themeGrid()}
   <h4>${t("s_look")}</h4><div class="card">
    <div class="line"><div class="lt">${t("s_theme")}</div><div class="seg">${["auto","light","dark"].map(v=>`<button data-act="setv" data-k="theme" data-v="${v}" aria-pressed="${s.theme===v}">${t("th_"+v)}</button>`).join("")}</div></div>
-   <div class="line"><div class="lt">${t("s_lang")}</div><div class="seg"><button data-act="setv" data-k="lang" data-v="vi" aria-pressed="${s.lang==="vi"}">Tiếng Việt</button><button data-act="setv" data-k="lang" data-v="en" aria-pressed="${s.lang==="en"}">English</button></div></div>
+   <div class="line"><div class="lt">${t("s_lang")}</div><select data-set="lang" aria-label="${t("s_lang")}">${LANGS.map(([k,n])=>`<option value="${k}" ${s.lang===k?"selected":""}>${n}</option>`).join("")}</select></div>
    ${line("sound",t("s_sound"))}${line("haptic",t("s_haptic"))}${line("reduceMotion",t("s_motion"))}</div>
   <h4>${t("s_general")}</h4><div class="card">${line("weekMon",t("s_weekMon"))}${line("moveDoneDown",t("s_moveDown"))}${line("overdueRed",t("s_red"))}${line("somedayTop",t("s_somedayTop"))}${line("showBadge",t("s_badge"))}</div>
   <h4>${t("s_notif")}</h4><div class="card">${line("brief",t("s_brief"),t("s_briefSub"))}
@@ -617,10 +632,10 @@ function settingsHTML(){const s=S.settings;
    <button class="mi" data-act="import">${ic("inbox")}${t("s_import")}</button>
    <button class="mi red" data-act="wipe">${ic("trash")}${t("s_wipe")}</button><input type="file" id="impFile" accept="application/json,.json" hidden></div>
   <h4>${t("s_pro")}</h4><div class="card menu"><button class="mi" data-act="view" data-v="premium">${ic("star")}${t("pro_title")}</button></div>
-  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br>${t("version")} 1.1.0</div></main>`}
-function premiumHTML(){const rows=[["pf1",1,1],["pf2",1,1],["pf3",1,1],["pf4",1,1],["pf5",1,1],["pf6",0,1],["pf7",0,1],["pf8",0,1]];
+  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.2.0${S.pro?" · Pro":""}</button></div></main>`}
+function premiumHTML(){const rows=[["pf1",1,1],["pf2",1,1],["pf3",1,1],["pf4",1,1],["pf5",0,1],["pf6",0,1],["pf7",0,1],["pf8",0,1]];
   return `<div class="topbar">${backBtn("more")}<div class="grow"><h1>${t("pro_title")}</h1></div></div><main>
-  <div class="card" style="text-align:center">${spr("love","width:150px;margin:0 auto","bob")}<p style="margin:6px 4px 4px;color:var(--ink2)">${t("pro_note")}</p></div>
+  <div class="card" style="text-align:center">${spr("love","width:150px;margin:0 auto","bob")}<p style="margin:6px 4px 4px;color:var(--ink2)">${S.pro?t("pro_active"):t("pro_note")}</p></div>
   <div class="card"><div class="pro"><div class="h"></div><div class="h c">${t("free")}</div><div class="h c">${t("pro")}</div>
   ${rows.map(([k,a,b])=>`<div>${t(k)}</div><div class="c" style="color:var(--mint-d)">${a?"✓":"–"}</div><div class="c" style="color:var(--mint-d)">${b?"✓":"–"}</div>`).join("")}</div></div>
   <button class="btn block" disabled>${t("pro_soon")}</button><button class="btn ghost block" style="margin-top:10px" disabled>${t("pro_restore")}</button></main>`}
@@ -647,7 +662,9 @@ function choiceSheet(title,choices){const sh=openSheet(title,`<div class="menu">
   const e=U.stack[U.stack.length-1];sh.querySelectorAll("[data-i]").forEach(b=>b.onclick=()=>{closeSheet(e,true);choices[+b.dataset.i][1]()})}
 function themeSheet(){const sh=openSheet(t("s_theme_c"),themeGrid(),{img:"love"});
   sh.addEventListener("click",ev=>{const b=ev.target.closest("[data-p]");if(!b)return;ev.stopPropagation();setPalette(b.dataset.p);sh.querySelector(".sb").innerHTML=themeGrid()})}
-function setPalette(id){S.settings.palette=id;save();render();const th=curTheme();toast(t("t_theme",{t:S.settings.lang==="vi"?th.vi:th.en}))}
+function setPalette(id){if(!unlocked(id)){U.preview=id;render();toast(t("pv_locked"));return}U.preview=null;S.settings.palette=id;save();render();toast(t("t_theme",{t:themeName(curTheme())}))}
+function exitPreview(){U.preview=null;render()}
+function pvbarHTML(){if(!U.preview)return "";const th=curTheme();return `<div class="pvbar" role="status">${ic("eye")}<span>${esc(t("pv_on",{t:themeName(th)}))}</span><button class="chip" data-act="pvUnlock">${t("pv_unlock")}</button><button class="small" data-act="pvExit" aria-label="${t("pv_exit")}">${ic("close")}</button></div>`}
 function menuSheet(id,ds){const x=byId(id);if(!x)return;const inSome=!x.date;const items=[];
   if(inSome)items.push(["sun",t("m_toDay",{d:U.sel===todayStr()?t("todayL").toLowerCase():shortDate(U.sel)}),()=>doMove(id,null,U.sel)]);
   else items.push(["next",t("m_tomorrow"),()=>doMove(id,ds,addDays(ds||todayStr(),1)<todayStr()?addDays(todayStr(),1):addDays(ds,1))]);
@@ -769,6 +786,9 @@ app.addEventListener("click",ev=>{
     case"setv":S.settings[b.dataset.k]=b.dataset.v;save();render();break;
     case"palette":setPalette(b.dataset.p);break;
     case"themes":themeSheet();break;
+    case"pvExit":exitPreview();break;
+    case"pvUnlock":U.view="premium";render();break;
+    case"ver":if(++U.verTaps>=7){U.verTaps=0;S.pro=!S.pro;if(!S.pro){S.settings.palette=FREE_THEME;U.preview=null}else if(U.preview){S.settings.palette=U.preview;U.preview=null}save();render();toast(t(S.pro?"pro_unlocked":"pro_relocked"))}break;
     case"askPerm":ensurePermission(true).then(()=>updatePermState());break;
     case"export":exportData();break;
     case"import":$("#impFile").click();break;
@@ -853,7 +873,13 @@ function upcoming(){const now=new Date(),td=todayStr(),out=[];
       out.push({id:hashId("brief"+ds),title:"Fat Cat Todo 🐾",body:t("brief",{n,p:p?t("briefPin",{p}):""}),at,extra:{brief:true,date:ds}})}}
   return out.sort((a,b)=>a.at-b.at).slice(0,60)}
 let schedT,webTimers=[];
-function scheduleNotifs(){clearTimeout(schedT);schedT=setTimeout(doSchedule,600)}
+function scheduleNotifs(){clearTimeout(schedT);schedT=setTimeout(()=>{doSchedule();pushWidget()},600)}
+/* Android home-screen widget: send a 7-day snapshot to native SharedPreferences */
+function widgetPayload(){const td=todayStr(),days={};
+  for(let i=0;i<7;i++){const ds=addDays(td,i);const l=tasksOn(ds);days[ds]={label:longDate(ds),total:l.length,done:l.filter(x=>isDone(x,ds)).length,items:l.slice(0,6).map(x=>({t:x.title,d:isDone(x,ds)}))}}
+  const th=THEMES.find(x=>x.id===S.settings.palette)||THEMES[0];
+  return {v:1,emptyText:t("w_empty"),openText:t("w_open"),accent:themeVars(th,false)["primary-d"],days}}
+function pushWidget(){const W=P("WidgetBridge");if(!W)return;try{W.update({data:JSON.stringify(widgetPayload())}).catch(()=>{})}catch(e){}}
 async function doSchedule(){const list=upcoming();
   if(isNative&&LN()){try{const st=await permState();const pend=await LN().getPending();if(pend.notifications&&pend.notifications.length)await LN().cancel({notifications:pend.notifications.map(n=>({id:n.id}))});
       if(st!=="granted"||!list.length)return;
