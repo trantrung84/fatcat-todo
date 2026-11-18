@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "367506139363",
+    "project_id": "fat-cat-todo",
+    "storage_bucket": "fat-cat-todo.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:367506139363:android:2a873f6d62ffb5cb5b3dd6",
+        "android_client_info": {
+          "package_name": "com.fatcat.todo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdGbKC21WQLhw2h2UsY5RuaO8b4O9zaBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
