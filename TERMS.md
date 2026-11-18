@@ -2,7 +2,7 @@
 
 _Last updated: 18 November 2026_
 
-1. **The app.** Fat Cat Todo is made by Toon App Studio (Hanoi, Vietnam) and is provided "as is". We work hard to keep it reliable, but we can't guarantee it will be error-free. Please keep exports of anything important (Settings → Data → Export).
+1. **The app.** Fat Cat Todo is made by ToonRed Studio (Toon App Studio, Hanoi, Vietnam) and is provided "as is". We work hard to keep it reliable, but we can't guarantee it will be error-free. Please keep exports of anything important (Settings → Data → Export).
 2. **Fat Cat Pro.** Pro is offered as:
    - **Monthly** subscription (US$1.90 / month, or local equivalent),
    - **Yearly** subscription (US$15.00 / year, or local equivalent),

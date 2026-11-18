@@ -2,7 +2,7 @@
 
 _Last updated: 18 November 2026_
 
-Fat Cat Todo ("the app") is a to-do and habit app made by **Toon App Studio** (Hanoi, Vietnam – https://toonred.com). This policy explains what data the app handles.
+Fat Cat Todo ("the app") is a to-do and habit app made by **ToonRed Studio** (Toon App Studio, Hanoi, Vietnam – https://toonred.com). This policy explains what data the app handles.
 
 ## 1. Your tasks stay on your device
 Task titles, notes, dates, reminders, settings and everything else you type are stored **only on your device** (in the app's local storage). They are not uploaded to any server. The home-screen widget reads the same local data. If you uninstall the app, this data is deleted. You can export or delete it at any time in **More → Settings → Data**.
@@ -34,7 +34,7 @@ The app is not directed at children under 13 and does not knowingly collect pers
 If this policy changes, the new version will be published at this address with a new date.
 
 ## 8. Contact
-Toon App Studio, Hanoi, Vietnam
+ToonRed Studio (Toon App Studio), Hanoi, Vietnam
 Email: **nabana84@gmail.com** · Website: https://toonred.com
 
 ---

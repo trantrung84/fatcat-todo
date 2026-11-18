@@ -54,7 +54,7 @@ Mở khóa thêm 9 theme màu — gồm cả Sang trọng (đen, trắng, vàng 
 Việc của bạn chỉ lưu trên điện thoại. Không quảng cáo. Thống kê ẩn danh là tùy chọn, tắt được trong Cài đặt.
 
 ## Developer contact (Play Console → Store settings)
-- Developer name: Toon App Studio
+- Developer name: ToonRed Studio (Play Console account 6691598972869172184)
 - Email: nabana84@gmail.com
 - Website: https://toonred.com
 
