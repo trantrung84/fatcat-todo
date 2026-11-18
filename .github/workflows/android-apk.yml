@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -60,3 +63,17 @@ jobs:
             android/app/build/outputs/apk/debug/*.apk
             android/app/build/outputs/apk/release/*.apk
           if-no-files-found: warn
+
+      - name: Rename debug APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk FatCatTodo-debug.apk
+
+      - name: Publish GitHub Release (download APK straight to your phone)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: Fat Cat Todo – build ${{ github.run_number }}
+          body: |
+            APK debug để cài thử (Android 7+). Tải **FatCatTodo-debug.apk** bên dưới, mở file và cho phép "Cài ứng dụng không rõ nguồn gốc".
+            Commit: ${{ github.sha }}
+          files: FatCatTodo-debug.apk
+          make_latest: true
