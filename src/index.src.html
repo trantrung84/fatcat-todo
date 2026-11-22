@@ -380,7 +380,9 @@ wd:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],wdl:["Sunday","Monday","Tuesday",
 a_check:"Mark complete: {t}",a_more:"Options for {t}",a_drag:"Drag to move {t}",st_empty:"empty",st_pending:"pending",st_partial:"partly done",st_complete:"all done",close:"Close",back:"Back",themes:"Choose theme",t_addedN:"{n} added ✓",pv_on:"Previewing: {t}",pv_unlock:"Unlock Pro",pv_exit:"Exit preview",pv_locked:"This theme is part of Pro — you are previewing it.",pro_active:"You are using Fat Cat Pro. Thank you! ♡",pro_unlocked:"Pro unlocked (test mode)",pro_relocked:"Pro locked again",w_empty:"No tasks today 🐾",w_open:"Open the app to refresh",lockedTheme:"Pro"}};
 /*__I18N_EXTRA__*/
 const MONTHS_EN=["January","February","March","April","May","June","July","August","September","October","November","December"];
-function t(k,p){let s=(I18N[S.settings.lang]||I18N.en)[k];if(s==null)s=I18N.en[k]??k;if(p)for(const x in p)s=s.split("{"+x+"}").join(p[x]);return s}
+const IS_IOS=(()=>{try{const C=window.Capacitor;return !!(C&&C.getPlatform&&C.getPlatform()==="ios")}catch(e){return false}})();
+function t(k,p){const L=I18N[S.settings.lang]||I18N.en;if(IS_IOS&&L[k+"_ios"]!=null)k=k+"_ios";let s=L[k];if(s==null)s=I18N.en[k]??k;
+  if(IS_IOS&&typeof s==="string"&&s.indexOf("Google")>=0)s=s.replace(/Google[ -]Play/g,"App Store");if(p)for(const x in p)s=s.split("{"+x+"}").join(p[x]);return s}
 
 /* ============ dates ============ */
 const pad=n=>String(n).padStart(2,"0");
@@ -695,7 +697,7 @@ function yearlySave(){const P2=U.products||{};const m=P2[PRODUCTS.monthly],y=P2[
 function premiumHTML(){const rows=[["pf1",1,1],["pf2",1,1],["pf3",1,1],["pf4",1,1],["pf6",1,1],["pf5",0,1],["pf7",0,1]];
   const plan=(k,sub,badge)=>`<button class="plan" data-act="plan" data-k="${k}" aria-pressed="${U.plan===k}">${badge?`<span class="pbadge">${badge}</span>`:""}<span class="pr"><i></i></span><span class="pn"><b>${t("pw_"+k)}</b><small>${sub}</small></span><span class="pp">${esc(priceOf(k))}</span></button>`;
   const body=S.pro?`<div class="card" style="text-align:center">${spr("party","width:150px;margin:0 auto","bob")}<h2 style="margin:6px 0 4px;font-size:20px">${t("pw_active")}</h2><p style="color:var(--ink2);margin:0 0 12px">${t("pro_note")}</p>
-     <a class="btn ghost block" style="display:grid;place-items:center;text-decoration:none" href="https://play.google.com/store/account/subscriptions?package=com.fatcat.todo" target="_blank" rel="noopener">${t("pw_manage")}</a></div>`
+     <a class="btn ghost block" style="display:grid;place-items:center;text-decoration:none" href="${IS_IOS?"https://apps.apple.com/account/subscriptions":"https://play.google.com/store/account/subscriptions?package=com.fatcat.todo"}" target="_blank" rel="noopener">${t("pw_manage")}</a></div>`
    :`<div class="card" style="text-align:center;padding-top:6px">${spr("love","width:132px;margin:0 auto","bob")}<h2 style="margin:4px 0 4px;font-size:20px">${t("pw_head")}</h2><p style="margin:0 4px 4px;color:var(--ink2);font-size:14.5px">${t("pro_note")}</p></div>
      <div class="plans">${plan("yearly",t("pw_perYear"),`${t("pw_best")} · ${t("pw_save",{p:yearlySave()})}`)}${plan("monthly",t("pw_perMonth"))}${plan("lifetime",t("pw_once"))}</div>
      <button class="btn block" data-act="buy" ${U.buying?"disabled":""} style="height:56px;font-size:20px">${t("pw_continue")}</button>
@@ -957,13 +959,13 @@ async function doSchedule(){const list=upcoming();
   list.filter(n=>n.at-now<864e5).forEach(n=>webTimers.push(setTimeout(()=>{if(Notification.permission==="granted"){const no=new Notification(n.title,{body:n.body,tag:String(n.id)});no.onclick=()=>{window.focus();openFromNotif(n.extra)}}else toast(n.title+" "+n.body)},n.at-now)))}
 function openFromNotif(ex){if(!ex)return;closeAll();U.view="home";if(ex.date)U.sel=U.cursor=ex.date;render();if(ex.taskId&&byId(ex.taskId))setTimeout(()=>editor(ex.taskId,ex.date),300)}
 
-/* ============ Google Play Billing (native BillingPlugin) ============ */
+/* ============ Billing: Google Play (Android BillingPlugin) / StoreKit 2 (iOS BillingPlugin) ============ */
 const BILL=()=>P("Billing");
 function setPro(v){const was=S.pro;S.pro=!!v;if(!S.pro&&!unlocked(S.settings.palette))S.settings.palette=FREE_THEME;if(S.pro&&U.preview){S.settings.palette=U.preview;U.preview=null}
   save();if(was!==S.pro){analyticsSync();render()}}
 async function loadProducts(){const B=BILL();if(!B)return;try{U.products=await B.getProducts();if(U.view==="premium")render()}catch(e){console.warn("billing products",e)}}
 async function refreshPro(manual){const B=BILL();if(!B){if(manual)toast(t("pw_webonly"));return}
-  try{const r=await B.getEntitlement();setPro(r.pro);if(manual){toast(r.pro?t("pw_restored"):t("pw_none"));track("restore_purchases",{found:r.pro?1:0})}}
+  try{const r=await B.getEntitlement({sync:!!manual});setPro(r.pro);if(manual){toast(r.pro?t("pw_restored"):t("pw_none"));track("restore_purchases",{found:r.pro?1:0})}}
   catch(e){if(manual)toast(t("pw_unavail"))}}
 async function buyPro(){const B=BILL();const plan=U.plan;if(!B){toast(t("pw_webonly"));return}
   if(!U.products||!U.products[PRODUCTS[plan]])await loadProducts();

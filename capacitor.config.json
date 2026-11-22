@@ -2,10 +2,45 @@
   "appId": "com.fatcat.todo",
   "appName": "Fat Cat Todo",
   "webDir": "www",
-  "android": { "backgroundColor": "#FFF3EC" },
+  "android": {
+    "backgroundColor": "#FFF3EC"
+  },
   "plugins": {
-    "SplashScreen": { "launchShowDuration": 800, "launchAutoHide": true, "backgroundColor": "#FFF3EC", "showSpinner": false },
-    "LocalNotifications": { "smallIcon": "ic_stat_cat", "iconColor": "#E89D86" },
-    "SystemBars": { "insetsHandling": "native" }
+    "SplashScreen": {
+      "launchShowDuration": 800,
+      "launchAutoHide": true,
+      "backgroundColor": "#FFF3EC",
+      "showSpinner": false
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_cat",
+      "iconColor": "#E89D86"
+    },
+    "SystemBars": {
+      "insetsHandling": "native"
+    }
+  },
+  "ios": {
+    "path": "app_ios",
+    "backgroundColor": "#FFF3EC",
+    "contentInset": "never",
+    "scheme": "Fat Cat Todo"
+  },
+  "experimental": {
+    "ios": {
+      "spm": {
+        "swiftToolsVersion": "6.1",
+        "packageOptions": {
+          "@capacitor-firebase/analytics": {
+            "symlink": true
+          }
+        },
+        "packageTraits": {
+          "@capacitor-firebase/analytics": [
+            "AnalyticsWithoutAdIdSupport"
+          ]
+        }
+      }
+    }
   }
 }

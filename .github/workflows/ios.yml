@@ -1,0 +1,90 @@
+name: Build iOS (TestFlight)
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'src/**', 'www/**', 'app_ios/**', 'tools/**', 'capacitor.config.json', 'package.json', '.github/workflows/ios.yml' ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency: ios-${{ github.ref }}
+
+jobs:
+  ios:
+    runs-on: macos-15
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync web assets into iOS project
+        run: npx cap sync ios
+
+      - name: Wire native sources + widget extension into the Xcode project (idempotent)
+        run: |
+          gem install xcodeproj --no-document --user-install
+          export PATH="$(ruby -e 'print Gem.user_dir')/bin:$PATH"
+          MARKETING_VERSION=$(grep -m1 versionName android/app/build.gradle | sed -E 's/.*"(.*)".*/\1/') ruby tools/ios_setup.rb
+
+      - name: Commit generated Xcode project changes back to the repo
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "fatcat-ci"; git config user.email "ci@users.noreply.github.com"
+          git add app_ios/App/App.xcodeproj
+          if ! git diff --cached --quiet; then git commit -m "CI: wire iOS native sources and widget target into Xcode project [skip ci]" && git push; fi
+
+      - name: Versions
+        run: |
+          echo "MARKETING_VERSION=$(grep -m1 versionName android/app/build.gradle | sed -E 's/.*"(.*)".*/\1/')" >> $GITHUB_ENV
+          echo "BUILD_NUMBER=$((100 + GITHUB_RUN_NUMBER))" >> $GITHUB_ENV
+
+      - name: Compile check (simulator, unsigned)
+        if: ${{ env.ASC_KEY_P8 == '' }}
+        working-directory: app_ios/App
+        run: |
+          xcodebuild -project App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build | xcbeautify || exit ${PIPESTATUS[0]}
+
+      - name: Archive, sign and upload to App Store Connect / TestFlight
+        if: ${{ env.ASC_KEY_P8 != '' }}
+        working-directory: app_ios/App
+        run: |
+          mkdir -p ~/private_keys
+          echo "$ASC_KEY_P8" | (base64 -d 2>/dev/null || cat) > ~/private_keys/AuthKey_$ASC_KEY_ID.p8
+          if ! grep -q "BEGIN PRIVATE KEY" ~/private_keys/AuthKey_$ASC_KEY_ID.p8; then echo "$ASC_KEY_P8" > ~/private_keys/AuthKey_$ASC_KEY_ID.p8; fi
+          AUTH="-allowProvisioningUpdates -authenticationKeyPath $HOME/private_keys/AuthKey_$ASC_KEY_ID.p8 -authenticationKeyID $ASC_KEY_ID -authenticationKeyIssuerID $ASC_ISSUER_ID"
+          xcodebuild -project App.xcodeproj -scheme App -configuration Release -destination 'generic/platform=iOS' \
+            -archivePath $RUNNER_TEMP/FatCatTodo.xcarchive $AUTH \
+            DEVELOPMENT_TEAM=$APPLE_TEAM_ID MARKETING_VERSION=$MARKETING_VERSION CURRENT_PROJECT_VERSION=$BUILD_NUMBER \
+            archive | xcbeautify || exit ${PIPESTATUS[0]}
+          cat > $RUNNER_TEMP/ExportOptions.plist <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>teamID</key><string>$APPLE_TEAM_ID</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+            <key>uploadSymbols</key><true/>
+          </dict></plist>
+          PLIST
+          xcodebuild -exportArchive -archivePath $RUNNER_TEMP/FatCatTodo.xcarchive \
+            -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist -exportPath $RUNNER_TEMP/export $AUTH
+          echo "Uploaded build $MARKETING_VERSION ($BUILD_NUMBER) to App Store Connect"
