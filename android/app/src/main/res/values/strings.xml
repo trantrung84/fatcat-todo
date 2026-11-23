@@ -7,4 +7,6 @@
     <string name="widget_large_label">Fat Cat Todo – Today</string>
     <string name="widget_small_label">Fat Cat Todo – Small</string>
     <string name="widget_desc">Today\'s tasks with Mochi the cat</string>
+    <string name="alarm_channel_name">Alarm-style reminders</string>
+    <string name="alarm_channel_desc">Reminders ring like an alarm clock (10 s chime + vibration)</string>
 </resources>

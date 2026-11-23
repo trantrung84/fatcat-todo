@@ -576,6 +576,8 @@ pro_note:"Pro schaltet alle 10 Farbdesigns frei, auch Luxus. Danke, dass du eine
 for(const l in ADD)Object.assign(I18N[l],ADD[l]);
 const IOS_LEGAL={"en": "Payment is charged to your Apple ID at confirmation. Subscriptions renew automatically unless cancelled at least 24 hours before the end of the current period; manage or cancel anytime in your App Store account settings. Lifetime is a one-time purchase.", "vi": "Thanh toán được tính vào Apple ID khi bạn xác nhận. Gói đăng ký tự động gia hạn trừ khi bạn hủy ít nhất 24 giờ trước khi kỳ hiện tại kết thúc; quản lý hoặc hủy bất cứ lúc nào trong cài đặt tài khoản App Store. Gói Trọn đời chỉ thanh toán một lần.", "zh": "确认购买时将从你的 Apple ID 扣款。除非在当前周期结束前至少 24 小时取消，订阅将自动续订；可随时在 App Store 账户设置中管理或取消。永久版为一次性购买。", "ja": "お支払いは購入確定時に Apple ID に請求されます。現在の期間終了の 24 時間前までに解約しない限り、サブスクリプションは自動更新されます。App Store のアカウント設定からいつでも管理・解約できます。買い切りは一回のみのお支払いです。", "ko": "결제는 구매 확인 시 Apple ID로 청구돼요. 현재 기간이 끝나기 최소 24시간 전에 해지하지 않으면 구독이 자동 갱신돼요. App Store 계정 설정에서 언제든 관리하거나 해지할 수 있어요. 평생 이용권은 1회 결제예요.", "fr": "Le paiement est débité de votre identifiant Apple à la confirmation. Les abonnements se renouvellent automatiquement sauf résiliation au moins 24 h avant la fin de la période en cours ; gérez-les ou résiliez-les à tout moment dans les réglages de votre compte App Store. L’offre À vie est un achat unique.", "de": "Die Zahlung wird bei Bestätigung über deine Apple-ID abgerechnet. Abos verlängern sich automatisch, sofern sie nicht mindestens 24 Stunden vor Ende des aktuellen Zeitraums gekündigt werden; verwalte oder kündige sie jederzeit in den App-Store-Accounteinstellungen. Lebenslang ist ein Einmalkauf."};
 for(const l in IOS_LEGAL)if(I18N[l])I18N[l].pw_legal_ios=IOS_LEGAL[l];
+const ALARM_TXT={"en": {"s_alarm": "Ring like an alarm", "s_alarmSub": "Reminders play a 10-second chime and vibrate"}, "vi": {"s_alarm": "Reo như chuông báo thức", "s_alarmSub": "Nhắc việc phát chuông 10 giây và rung"}, "zh": {"s_alarm": "像闹钟一样响铃", "s_alarmSub": "提醒时播放 10 秒铃声并振动"}, "ja": {"s_alarm": "アラームのように鳴らす", "s_alarmSub": "リマインダーで 10 秒のチャイムとバイブ"}, "ko": {"s_alarm": "알람처럼 울리기", "s_alarmSub": "알림 시 10초 벨소리와 진동"}, "fr": {"s_alarm": "Sonner comme un réveil", "s_alarmSub": "Les rappels jouent un carillon de 10 s et vibrent"}, "de": {"s_alarm": "Wie ein Wecker klingeln", "s_alarmSub": "Erinnerungen spielen 10 s Glockenspiel und vibrieren"}};
+for(const l in ALARM_TXT)if(I18N[l])Object.assign(I18N[l],ALARM_TXT[l]);
 
 const MONTHS_EN=["January","February","March","April","May","June","July","August","September","October","November","December"];
 const IS_IOS=(()=>{try{const C=window.Capacitor;return !!(C&&C.getPlatform&&C.getPlatform()==="ios")}catch(e){return false}})();
@@ -600,7 +602,7 @@ function relLabel(s){const td=todayStr();if(s===td)return t("todayL");if(s===add
 /* ============ state ============ */
 function isNativeEarly(){const C=window.Capacitor;return !!(C&&C.isNativePlatform&&C.isNativePlatform())}
 const KEY="fatcat.todo.v1";
-const DEF_SETTINGS={analytics:true,somedayOpen:true,weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:false,showBadge:true,brief:true,briefTime:"08:00",
+const DEF_SETTINGS={analytics:true,somedayOpen:true,weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:false,showBadge:true,brief:true,briefTime:"08:00",alarmTone:true,
   lang:(()=>{const n=(navigator.language||"vi").toLowerCase().slice(0,2);return ["vi","en","zh","ja","ko","fr","de"].includes(n)?n:"en"})(),theme:"auto",palette:"mochi",sound:false,haptic:true,reduceMotion:false};
 let S={tasks:[],settings:{...DEF_SETTINGS},onboarded:false,pro:false};
 try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);S={...S,...o,settings:{...DEF_SETTINGS,...(o.settings||{})}}}}catch(e){}
@@ -878,7 +880,7 @@ function settingsHTML(){const s=S.settings;
    <div class="line"><div class="lt">${t("s_lang")}</div><select data-set="lang" aria-label="${t("s_lang")}">${LANGS.map(([k,n])=>`<option value="${k}" ${s.lang===k?"selected":""}>${n}</option>`).join("")}</select></div>
    ${line("sound",t("s_sound"))}${line("haptic",t("s_haptic"))}${line("reduceMotion",t("s_motion"))}</div>
   <h4>${t("s_general")}</h4><div class="card">${line("weekMon",t("s_weekMon"))}${line("moveDoneDown",t("s_moveDown"))}${line("overdueRed",t("s_red"))}${line("somedayTop",t("s_somedayTop"))}${line("showBadge",t("s_badge"))}</div>
-  <h4>${t("s_notif")}</h4><div class="card">${line("brief",t("s_brief"),t("s_briefSub"))}
+  <h4>${t("s_notif")}</h4><div class="card">${line("alarmTone",t("s_alarm"),t("s_alarmSub"))}${line("brief",t("s_brief"),t("s_briefSub"))}
    <div class="line"><div class="lt">${t("s_briefTime")}</div><input type="time" data-set="briefTime" value="${s.briefTime}" ${s.brief?"":"disabled"}></div>
    <div class="line"><div class="lt">${t("s_perm")}<small id="permState">…</small></div><button class="chip" data-act="askPerm">${t("perm_ask")}</button></div></div>
   <h4>${t("s_data")}</h4><div class="card">${line("analytics",t("s_analytics"),t("s_analyticsSub"))}</div><div class="card menu">
@@ -886,7 +888,7 @@ function settingsHTML(){const s=S.settings;
    <button class="mi" data-act="import">${ic("inbox")}${t("s_import")}</button>
    <button class="mi red" data-act="wipe">${ic("trash")}${t("s_wipe")}</button><input type="file" id="impFile" accept="application/json,.json" hidden></div>
   <h4>${t("s_pro")}</h4><div class="card menu"><button class="mi" data-act="view" data-v="premium">${ic("star")}${t("pro_title")}</button></div>
-  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><b style="color:var(--ink)">Toon App Studio</b> · <a href="https://toonred.com" target="_blank" rel="noopener" style="color:var(--primary-d)">toonred.com</a><br><a href="mailto:nabana84@gmail.com?subject=Fat%20Cat%20Todo" style="color:var(--primary-d)">nabana84@gmail.com</a> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-d)">${t("pw_privacy")}</a><br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.3${S.pro?" · Pro":""}</button></div></main>`}
+  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><b style="color:var(--ink)">Toon App Studio</b> · <a href="https://toonred.com" target="_blank" rel="noopener" style="color:var(--primary-d)">toonred.com</a><br><a href="mailto:nabana84@gmail.com?subject=Fat%20Cat%20Todo" style="color:var(--primary-d)">nabana84@gmail.com</a> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-d)">${t("pw_privacy")}</a><br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.4${S.pro?" · Pro":""}</button></div></main>`}
 const PRODUCTS={monthly:"fatcat_pro_monthly",yearly:"fatcat_pro_yearly",lifetime:"fatcat_pro_lifetime"};
 const FALLBACK_PRICE={monthly:"$1.90",yearly:"$15.00",lifetime:"$19.00"};
 const PRIVACY_URL="https://github.com/trantrung84/fatcat-todo/blob/main/PRIVACY.md",TERMS_URL="https://github.com/trantrung84/fatcat-todo/blob/main/TERMS.md";
@@ -1149,10 +1151,14 @@ function widgetPayload(){const td=todayStr(),days={};
   const th=THEMES.find(x=>x.id===S.settings.palette)||THEMES[0];
   return {v:1,emptyText:t("w_empty"),openText:t("w_open"),accent:themeVars(th,false)["primary-d"],days}}
 function pushWidget(){const W=P("WidgetBridge");if(!W)return;try{W.update({data:JSON.stringify(widgetPayload())}).catch(()=>{})}catch(e){}}
+/* task reminders ring like an alarm (10 s Fat Cat chime + vibration) unless turned off; the daily brief stays gentle */
+function notifTone(n){const alarm=S.settings.alarmTone&&!(n.extra&&n.extra.brief);
+  if(IS_IOS)return{sound:alarm?"fatcat_alarm.wav":"default"};
+  return{channelId:alarm?"fatcat_alarm":"fatcat",smallIcon:"ic_stat_cat"}}
 async function doSchedule(){const list=upcoming();
   if(isNative&&LN()){try{const st=await permState();const pend=await LN().getPending();if(pend.notifications&&pend.notifications.length)await LN().cancel({notifications:pend.notifications.map(n=>({id:n.id}))});
       if(st!=="granted"||!list.length)return;
-      await LN().schedule({notifications:list.map(n=>({id:n.id,title:n.title,body:n.body,schedule:{at:n.at,allowWhileIdle:true},extra:n.extra,channelId:"fatcat",smallIcon:"ic_stat_cat",...(IS_IOS?{sound:"default"}:{})}))})}catch(e){console.warn("notif",e)}return}
+      await LN().schedule({notifications:list.map(n=>({id:n.id,title:n.title,body:n.body,schedule:{at:n.at,allowWhileIdle:true},extra:n.extra,...notifTone(n)}))})}catch(e){console.warn("notif",e)}return}
   webTimers.forEach(clearTimeout);webTimers=[];if(!("Notification"in window))return;const now=Date.now();
   list.filter(n=>n.at-now<864e5).forEach(n=>webTimers.push(setTimeout(()=>{if(Notification.permission==="granted"){const no=new Notification(n.title,{body:n.body,tag:String(n.id)});no.onclick=()=>{window.focus();openFromNotif(n.extra)}}else toast(n.title+" "+n.body)},n.at-now)))}
 function openFromNotif(ex){if(!ex)return;closeAll();U.view="home";if(ex.date)U.sel=U.cursor=ex.date;render();if(ex.taskId&&byId(ex.taskId))setTimeout(()=>editor(ex.taskId,ex.date),300)}

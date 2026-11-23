@@ -3,4 +3,6 @@
     <string name="widget_large_label">Fat Cat Todo – Hôm nay</string>
     <string name="widget_small_label">Fat Cat Todo – Nhỏ</string>
     <string name="widget_desc">Việc cần làm hôm nay cùng mèo Mochi</string>
+    <string name="alarm_channel_name">Nhắc việc kiểu chuông báo</string>
+    <string name="alarm_channel_desc">Nhắc việc reo như đồng hồ báo thức (chuông 10 giây + rung)</string>
 </resources>

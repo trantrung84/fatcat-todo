@@ -3,4 +3,6 @@
     <string name="widget_large_label">Fat Cat Todo – Aujourd’hui</string>
     <string name="widget_small_label">Fat Cat Todo – Petit</string>
     <string name="widget_desc">Les tâches du jour avec Mochi</string>
+    <string name="alarm_channel_name">Rappels façon réveil</string>
+    <string name="alarm_channel_desc">Les rappels sonnent comme un réveil (carillon 10 s + vibration)</string>
 </resources>

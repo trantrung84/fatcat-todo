@@ -3,4 +3,6 @@
     <string name="widget_large_label">Fat Cat Todo – Heute</string>
     <string name="widget_small_label">Fat Cat Todo – Klein</string>
     <string name="widget_desc">Heutige Aufgaben mit Mochi</string>
+    <string name="alarm_channel_name">Wecker-Erinnerungen</string>
+    <string name="alarm_channel_desc">Erinnerungen klingeln wie ein Wecker (10 s Glockenspiel + Vibration)</string>
 </resources>

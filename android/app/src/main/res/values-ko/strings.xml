@@ -3,4 +3,6 @@
     <string name="widget_large_label">Fat Cat Todo – 오늘</string>
     <string name="widget_small_label">Fat Cat Todo – 작게</string>
     <string name="widget_desc">Mochi와 함께 보는 오늘 할 일</string>
+    <string name="alarm_channel_name">알람형 알림</string>
+    <string name="alarm_channel_desc">알람처럼 울려요 (10초 벨소리 + 진동)</string>
 </resources>

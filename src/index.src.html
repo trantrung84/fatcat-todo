@@ -402,7 +402,7 @@ function relLabel(s){const td=todayStr();if(s===td)return t("todayL");if(s===add
 /* ============ state ============ */
 function isNativeEarly(){const C=window.Capacitor;return !!(C&&C.isNativePlatform&&C.isNativePlatform())}
 const KEY="fatcat.todo.v1";
-const DEF_SETTINGS={analytics:true,somedayOpen:true,weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:false,showBadge:true,brief:true,briefTime:"08:00",
+const DEF_SETTINGS={analytics:true,somedayOpen:true,weekMon:true,moveDoneDown:true,overdueRed:true,somedayTop:false,showBadge:true,brief:true,briefTime:"08:00",alarmTone:true,
   lang:(()=>{const n=(navigator.language||"vi").toLowerCase().slice(0,2);return ["vi","en","zh","ja","ko","fr","de"].includes(n)?n:"en"})(),theme:"auto",palette:"mochi",sound:false,haptic:true,reduceMotion:false};
 let S={tasks:[],settings:{...DEF_SETTINGS},onboarded:false,pro:false};
 try{const raw=localStorage.getItem(KEY);if(raw){const o=JSON.parse(raw);S={...S,...o,settings:{...DEF_SETTINGS,...(o.settings||{})}}}}catch(e){}
@@ -680,7 +680,7 @@ function settingsHTML(){const s=S.settings;
    <div class="line"><div class="lt">${t("s_lang")}</div><select data-set="lang" aria-label="${t("s_lang")}">${LANGS.map(([k,n])=>`<option value="${k}" ${s.lang===k?"selected":""}>${n}</option>`).join("")}</select></div>
    ${line("sound",t("s_sound"))}${line("haptic",t("s_haptic"))}${line("reduceMotion",t("s_motion"))}</div>
   <h4>${t("s_general")}</h4><div class="card">${line("weekMon",t("s_weekMon"))}${line("moveDoneDown",t("s_moveDown"))}${line("overdueRed",t("s_red"))}${line("somedayTop",t("s_somedayTop"))}${line("showBadge",t("s_badge"))}</div>
-  <h4>${t("s_notif")}</h4><div class="card">${line("brief",t("s_brief"),t("s_briefSub"))}
+  <h4>${t("s_notif")}</h4><div class="card">${line("alarmTone",t("s_alarm"),t("s_alarmSub"))}${line("brief",t("s_brief"),t("s_briefSub"))}
    <div class="line"><div class="lt">${t("s_briefTime")}</div><input type="time" data-set="briefTime" value="${s.briefTime}" ${s.brief?"":"disabled"}></div>
    <div class="line"><div class="lt">${t("s_perm")}<small id="permState">…</small></div><button class="chip" data-act="askPerm">${t("perm_ask")}</button></div></div>
   <h4>${t("s_data")}</h4><div class="card">${line("analytics",t("s_analytics"),t("s_analyticsSub"))}</div><div class="card menu">
@@ -688,7 +688,7 @@ function settingsHTML(){const s=S.settings;
    <button class="mi" data-act="import">${ic("inbox")}${t("s_import")}</button>
    <button class="mi red" data-act="wipe">${ic("trash")}${t("s_wipe")}</button><input type="file" id="impFile" accept="application/json,.json" hidden></div>
   <h4>${t("s_pro")}</h4><div class="card menu"><button class="mi" data-act="view" data-v="premium">${ic("star")}${t("pro_title")}</button></div>
-  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><b style="color:var(--ink)">Toon App Studio</b> · <a href="https://toonred.com" target="_blank" rel="noopener" style="color:var(--primary-d)">toonred.com</a><br><a href="mailto:nabana84@gmail.com?subject=Fat%20Cat%20Todo" style="color:var(--primary-d)">nabana84@gmail.com</a> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-d)">${t("pw_privacy")}</a><br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.3${S.pro?" · Pro":""}</button></div></main>`}
+  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><b style="color:var(--ink)">Toon App Studio</b> · <a href="https://toonred.com" target="_blank" rel="noopener" style="color:var(--primary-d)">toonred.com</a><br><a href="mailto:nabana84@gmail.com?subject=Fat%20Cat%20Todo" style="color:var(--primary-d)">nabana84@gmail.com</a> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-d)">${t("pw_privacy")}</a><br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.4${S.pro?" · Pro":""}</button></div></main>`}
 const PRODUCTS={monthly:"fatcat_pro_monthly",yearly:"fatcat_pro_yearly",lifetime:"fatcat_pro_lifetime"};
 const FALLBACK_PRICE={monthly:"$1.90",yearly:"$15.00",lifetime:"$19.00"};
 const PRIVACY_URL="https://github.com/trantrung84/fatcat-todo/blob/main/PRIVACY.md",TERMS_URL="https://github.com/trantrung84/fatcat-todo/blob/main/TERMS.md";
@@ -951,10 +951,14 @@ function widgetPayload(){const td=todayStr(),days={};
   const th=THEMES.find(x=>x.id===S.settings.palette)||THEMES[0];
   return {v:1,emptyText:t("w_empty"),openText:t("w_open"),accent:themeVars(th,false)["primary-d"],days}}
 function pushWidget(){const W=P("WidgetBridge");if(!W)return;try{W.update({data:JSON.stringify(widgetPayload())}).catch(()=>{})}catch(e){}}
+/* task reminders ring like an alarm (10 s Fat Cat chime + vibration) unless turned off; the daily brief stays gentle */
+function notifTone(n){const alarm=S.settings.alarmTone&&!(n.extra&&n.extra.brief);
+  if(IS_IOS)return{sound:alarm?"fatcat_alarm.wav":"default"};
+  return{channelId:alarm?"fatcat_alarm":"fatcat",smallIcon:"ic_stat_cat"}}
 async function doSchedule(){const list=upcoming();
   if(isNative&&LN()){try{const st=await permState();const pend=await LN().getPending();if(pend.notifications&&pend.notifications.length)await LN().cancel({notifications:pend.notifications.map(n=>({id:n.id}))});
       if(st!=="granted"||!list.length)return;
-      await LN().schedule({notifications:list.map(n=>({id:n.id,title:n.title,body:n.body,schedule:{at:n.at,allowWhileIdle:true},extra:n.extra,channelId:"fatcat",smallIcon:"ic_stat_cat",...(IS_IOS?{sound:"default"}:{})}))})}catch(e){console.warn("notif",e)}return}
+      await LN().schedule({notifications:list.map(n=>({id:n.id,title:n.title,body:n.body,schedule:{at:n.at,allowWhileIdle:true},extra:n.extra,...notifTone(n)}))})}catch(e){console.warn("notif",e)}return}
   webTimers.forEach(clearTimeout);webTimers=[];if(!("Notification"in window))return;const now=Date.now();
   list.filter(n=>n.at-now<864e5).forEach(n=>webTimers.push(setTimeout(()=>{if(Notification.permission==="granted"){const no=new Notification(n.title,{body:n.body,tag:String(n.id)});no.onclick=()=>{window.focus();openFromNotif(n.extra)}}else toast(n.title+" "+n.body)},n.at-now)))}
 function openFromNotif(ex){if(!ex)return;closeAll();U.view="home";if(ex.date)U.sel=U.cursor=ex.date;render();if(ex.taskId&&byId(ex.taskId))setTimeout(()=>editor(ex.taskId,ex.date),300)}

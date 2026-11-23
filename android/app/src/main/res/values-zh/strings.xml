@@ -3,4 +3,6 @@
     <string name="widget_large_label">Fat Cat Todo – 今天</string>
     <string name="widget_small_label">Fat Cat Todo – 小</string>
     <string name="widget_desc">和 Mochi 一起看今天的待办</string>
+    <string name="alarm_channel_name">闹钟式提醒</string>
+    <string name="alarm_channel_desc">提醒像闹钟一样响起（10 秒铃声 + 振动）</string>
 </resources>
