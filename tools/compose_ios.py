@@ -6,7 +6,7 @@ b64=lambda p:"data:image/png;base64,"+base64.b64encode(open(p,'rb').read()).deco
 R="/home/claude/storeraw/";import sys
 OUT="/home/claude/fatcat-todo/store/ios/"
 import os;os.makedirs(OUT,exist_ok=True)
-W,H,Z,PHW,TAG=[(1320,2868,1320/1080,900,"iphone"),(2064,2752,2064/1080,450,"ipad")][int(sys.argv[1])]
+W,H,Z,PHW,TAG=[(1320,2868,1320/1080,900,"iphone"),(2064,2752,2064/1080,450,"ipad"),(1398,2034,1398/1080,480,"duo")][int(sys.argv[1])]
 SPR="/home/claude/fatcat-todo/src/sprites/";WP="/home/claude/fatcat-todo/android/app/src/main/res/drawable-nodpi/"
 slides=[("1-home.png","Plan gently with Mochi","Today & Someday to-dos that never nag","#FFE3D8"),
 ("2-calendar.png","Your month at a glance","A little cat face shows how each day went","#FDEBD3"),
@@ -26,7 +26,7 @@ async def main():
         for i,(img,ti,st,bg) in enumerate(slides,1):
             if img: inner=f'<div class="ph"><img src="{b64(R+img)}"></div>'
             else:
-                inner=f'''<div style="margin-top:80px;width:880px;height:{1750 if TAG=="iphone" else 1000}px;border-radius:60px;background:linear-gradient(160deg,#F9C9B6,#C7B8F0 55%,#9FC9F2);position:relative;box-shadow:0 40px 90px rgba(70,35,20,.22)">
+                inner=f'''<div style="margin-top:80px;width:880px;height:{1750 if TAG=="iphone" else 1050}px;border-radius:60px;background:linear-gradient(160deg,#F9C9B6,#C7B8F0 55%,#9FC9F2);position:relative;box-shadow:0 40px 90px rgba(70,35,20,.22)">
                  <img src="{b64(WP+'widget_preview_large.png')}" style="position:absolute;left:60px;top:90px;width:760px">
                  <img src="{b64(WP+'widget_preview_small.png')}" style="position:absolute;left:60px;top:560px;width:380px">
                  <div style="position:absolute;left:470px;top:560px;width:350px;height:380px;border-radius:44px;background:rgba(255,255,255,.35)"></div>
