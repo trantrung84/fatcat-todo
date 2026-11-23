@@ -63,3 +63,13 @@ Bump `versionCode` (+1) and `versionName` in `android/app/build.gradle`, push to
 | fatcat_pro_lifetime | One-time | `lifetime` (Buy) | $18.99 (VN 488,000₫) |
 
 Still to do by owner: add bank payout method (Payments profile → How you get paid).
+
+## iOS (App Store) – set up 2026-11-23
+- Team: Trung Sam Creative Design Co Ltd (56C733MQ63). App Store Connect app id 6838151094, bundle `com.fatcat.todo`,
+  widget `com.fatcat.todo.FatCatWidget`, App Group `group.com.fatcat.todo` (assigned to both App IDs).
+- Products: subscription group "Fat Cat Pro" – `fatcat_pro_yearly` $14.99, `fatcat_pro_monthly` $1.99; non-consumable `fatcat_pro_lifetime` $19.99.
+- CI: `.github/workflows/ios.yml` archives + uploads to TestFlight on every push to main touching iOS/web code
+  (secrets ASC_KEY_ID / ASC_ISSUER_ID / ASC_KEY_P8 / APPLE_TEAM_ID). Build number = 100 + run number.
+- Registered device: iPhone 15 (needed for Xcode automatic signing).
+- TestFlight internal group "ToonRed Team" (auto-distribution).
+- Before App Review: screenshots (6.9" + 13" iPad), privacy nutrition labels, IAP review screenshots, submit IAPs with the first version.
