@@ -890,7 +890,7 @@ function settingsHTML(){const s=S.settings;
   <h4>${t("s_pro")}</h4><div class="card menu"><button class="mi" data-act="view" data-v="premium">${ic("star")}${t("pro_title")}</button></div>
   <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><b style="color:var(--ink)">Toon App Studio</b> · <a href="https://toonred.com" target="_blank" rel="noopener" style="color:var(--primary-d)">toonred.com</a><br><a href="mailto:nabana84@gmail.com?subject=Fat%20Cat%20Todo" style="color:var(--primary-d)">nabana84@gmail.com</a> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-d)">${t("pw_privacy")}</a><br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.4${S.pro?" · Pro":""}</button></div></main>`}
 const PRODUCTS={monthly:"fatcat_pro_monthly",yearly:"fatcat_pro_yearly",lifetime:"fatcat_pro_lifetime"};
-const FALLBACK_PRICE={monthly:"$1.90",yearly:"$15.00",lifetime:"$19.00"};
+const FALLBACK_PRICE=IS_IOS?{monthly:"$1.99",yearly:"$14.99",lifetime:"$19.99"}:{monthly:"$1.89",yearly:"$14.99",lifetime:"$18.99"};
 const PRIVACY_URL="https://github.com/trantrung84/fatcat-todo/blob/main/PRIVACY.md",TERMS_URL="https://github.com/trantrung84/fatcat-todo/blob/main/TERMS.md";
 function priceOf(k){const p=U.products&&U.products[PRODUCTS[k]];return p&&p.price?p.price:FALLBACK_PRICE[k]}
 function yearlySave(){const P2=U.products||{};const m=P2[PRODUCTS.monthly],y=P2[PRODUCTS.yearly];if(m&&y&&m.micros&&y.micros)return Math.round((1-y.micros/(m.micros*12))*100);return 34}
