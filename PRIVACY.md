@@ -1,5 +1,7 @@
 # Fat Cat Todo – Privacy Policy
 
+> The official, up-to-date version is published at https://toonred.com/fatcat-todo/privacy
+
 _Last updated: 18 November 2026_
 
 Fat Cat Todo ("the app") is a to-do and habit app made by **ToonRed Studio** (Toon App Studio, Hanoi, Vietnam – https://toonred.com). This policy explains what data the app handles.

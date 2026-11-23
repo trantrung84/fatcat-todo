@@ -44,8 +44,8 @@ Still to do: upload graphics, Sign-in details (answer **Yes**: "No login. Pro co
 7. **Policy → App content**: Privacy policy URL (below), Ads: **No**, App access: all features available without login, Content rating questionnaire (Utility/Productivity → likely “Everyone”), Target audience: 13+, **Data safety**: answers in `store/listing.md`.
 8. Closed testing (12 testers × 14 days) → **Production → Create release** → roll out.
 
-Privacy policy: https://github.com/trantrung84/fatcat-todo/blob/main/PRIVACY.md
-Terms: https://github.com/trantrung84/fatcat-todo/blob/main/TERMS.md
+Privacy policy: https://toonred.com/fatcat-todo/privacy
+Terms: https://toonred.com/fatcat-todo/terms
 Support email: nabana84@gmail.com · Website: https://toonred.com (Toon App Studio). Tip: you can also host the policy at toonred.com/fatcat-todo/privacy.html next to ComicVerse's.
 
 ## D. Testing purchases

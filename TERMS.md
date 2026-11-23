@@ -1,5 +1,7 @@
 # Fat Cat Todo – Terms of Use
 
+> The official, up-to-date version is published at https://toonred.com/fatcat-todo/terms
+
 _Last updated: 18 November 2026_
 
 1. **The app.** Fat Cat Todo is made by ToonRed Studio (Toon App Studio, Hanoi, Vietnam) and is provided "as is". We work hard to keep it reliable, but we can't guarantee it will be error-free. Please keep exports of anything important (Settings → Data → Export).

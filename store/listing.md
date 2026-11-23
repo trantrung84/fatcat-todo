@@ -81,4 +81,4 @@ Productivity · Tags: To-do list, Planner, Habit tracker
   - **Device or other IDs** → Firebase app-instance ID (Analytics). Advertising ID is **not** collected.
 - Purpose: **Analytics** only. Not used for advertising, not shared with third parties beyond Google as processor.
 - Financial info: purchases are processed by Google Play; the app does not collect payment info.
-- Privacy policy URL: https://github.com/trantrung84/fatcat-todo/blob/main/PRIVACY.md
+- Privacy policy URL: https://toonred.com/fatcat-todo/privacy
