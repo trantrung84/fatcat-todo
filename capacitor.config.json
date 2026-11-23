@@ -14,7 +14,13 @@
     },
     "LocalNotifications": {
       "smallIcon": "ic_stat_cat",
-      "iconColor": "#E89D86"
+      "iconColor": "#E89D86",
+      "presentationOptions": [
+        "banner",
+        "list",
+        "sound",
+        "badge"
+      ]
     },
     "SystemBars": {
       "insetsHandling": "native"

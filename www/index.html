@@ -886,7 +886,7 @@ function settingsHTML(){const s=S.settings;
    <button class="mi" data-act="import">${ic("inbox")}${t("s_import")}</button>
    <button class="mi red" data-act="wipe">${ic("trash")}${t("s_wipe")}</button><input type="file" id="impFile" accept="application/json,.json" hidden></div>
   <h4>${t("s_pro")}</h4><div class="card menu"><button class="mi" data-act="view" data-v="premium">${ic("star")}${t("pro_title")}</button></div>
-  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><b style="color:var(--ink)">Toon App Studio</b> · <a href="https://toonred.com" target="_blank" rel="noopener" style="color:var(--primary-d)">toonred.com</a><br><a href="mailto:nabana84@gmail.com?subject=Fat%20Cat%20Todo" style="color:var(--primary-d)">nabana84@gmail.com</a> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-d)">${t("pw_privacy")}</a><br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.2${S.pro?" · Pro":""}</button></div></main>`}
+  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><b style="color:var(--ink)">Toon App Studio</b> · <a href="https://toonred.com" target="_blank" rel="noopener" style="color:var(--primary-d)">toonred.com</a><br><a href="mailto:nabana84@gmail.com?subject=Fat%20Cat%20Todo" style="color:var(--primary-d)">nabana84@gmail.com</a> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-d)">${t("pw_privacy")}</a><br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.3${S.pro?" · Pro":""}</button></div></main>`}
 const PRODUCTS={monthly:"fatcat_pro_monthly",yearly:"fatcat_pro_yearly",lifetime:"fatcat_pro_lifetime"};
 const FALLBACK_PRICE={monthly:"$1.90",yearly:"$15.00",lifetime:"$19.00"};
 const PRIVACY_URL="https://github.com/trantrung84/fatcat-todo/blob/main/PRIVACY.md",TERMS_URL="https://github.com/trantrung84/fatcat-todo/blob/main/TERMS.md";
@@ -1152,7 +1152,7 @@ function pushWidget(){const W=P("WidgetBridge");if(!W)return;try{W.update({data:
 async function doSchedule(){const list=upcoming();
   if(isNative&&LN()){try{const st=await permState();const pend=await LN().getPending();if(pend.notifications&&pend.notifications.length)await LN().cancel({notifications:pend.notifications.map(n=>({id:n.id}))});
       if(st!=="granted"||!list.length)return;
-      await LN().schedule({notifications:list.map(n=>({id:n.id,title:n.title,body:n.body,schedule:{at:n.at,allowWhileIdle:true},extra:n.extra,channelId:"fatcat",smallIcon:"ic_stat_cat"}))})}catch(e){console.warn("notif",e)}return}
+      await LN().schedule({notifications:list.map(n=>({id:n.id,title:n.title,body:n.body,schedule:{at:n.at,allowWhileIdle:true},extra:n.extra,channelId:"fatcat",smallIcon:"ic_stat_cat",...(IS_IOS?{sound:"default"}:{})}))})}catch(e){console.warn("notif",e)}return}
   webTimers.forEach(clearTimeout);webTimers=[];if(!("Notification"in window))return;const now=Date.now();
   list.filter(n=>n.at-now<864e5).forEach(n=>webTimers.push(setTimeout(()=>{if(Notification.permission==="granted"){const no=new Notification(n.title,{body:n.body,tag:String(n.id)});no.onclick=()=>{window.focus();openFromNotif(n.extra)}}else toast(n.title+" "+n.body)},n.at-now)))}
 function openFromNotif(ex){if(!ex)return;closeAll();U.view="home";if(ex.date)U.sel=U.cursor=ex.date;render();if(ex.taskId&&byId(ex.taskId))setTimeout(()=>editor(ex.taskId,ex.date),300)}
