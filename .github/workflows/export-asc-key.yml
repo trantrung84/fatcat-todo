@@ -1,0 +1,35 @@
+name: Export ASC key (encrypted)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare encryption key
+        env:
+          TRANSFER_PUBLIC_KEY_B64: LS0tLS1CRUdJTiBQVUJMSUMgS0VZLS0tLS0KTUlJQ0lqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FnOEFNSUlDQ2dLQ0FnRUEycTIxOW1CTW8wUXR4eG1BRzNUcApSWHIza3ZmRzFJYmFkTU5sMXpBNzNueEp6RkswOUhtbERVV0dyMG9hdkg1eTAyRWl6VFlPbFpac1pPMFdVMHRECklUTFFETkcrcDZHSytZcUhGVzV6Mkh1SFQ4VzVzNHQzMm4yUE9pa21nM2VyVmRGVVB6Q0dyTHdtb3VlL1oyWFkKUXFPT01YdFZIL2RJMVhjUjVJV2paTjJ4WWtCdmxNaFhVQ0lRVk9NVEtwQzFmRmxFQ3R6SEVjckV1VTU3a0Zrcgp0d3RVMFBqSFRBNlNQckxXQzNWS0Y3ZzVFRDg0Z3JzMWl6eUt3WERoTWJlbllzN01raGZuQndyc0UzK08vWng5Clp0RVFKS1ZYcmFPT2k0VTJSbGVnTm91V1cwVUJoQjhvUldhRHlLWk45RnFJWGFuUnB3UC9saEVFaTN6M1QvR2MKKzdFMEROWTBkMFFPUGlPTlU1ZFgvZThEbHlzQk13Z05TV2NFOURjTEdoWGVkczFjUlJYdmRiWVFPeFoyclZ6OApBK1JyOXNjS1Vxamk2Z0Y5ZElRNHJpR2JkMzNocE1CcUs0d1dzaERUdGU3QVdWQjNGRUFDMmw1NHNwelJ0WU95Cmw1cUwwVDdqUTgrb21qZTVvSlhIemU4anVJbkNoYmhUZTY3RkdkU2xROTJ5S3VCMnJ4UGNCcGJueDdDVkVpcmMKTFFnWFN0Y1d1UFpBeFdNQy9zOEkrZVppT2xBczNQU3czM0FXbVZLd0dGTVNoQnQ5MWVFUmQ0ZHkwb244cjk5dwpFQ3hoTjl0YXdGSDZ0VEF5bFQ1M0V0NDErTUhOODVIdVJiNzY5Q0tONERRQmlwRENTM2FvekJOd1grSDZIVHRSCk9ZalJWcWsrUjF0RzlSOFVoZmxsSm5VQ0F3RUFBUT09Ci0tLS0tRU5EIFBVQkxJQyBLRVktLS0tLQo=
+        run: printf '%s' "$TRANSFER_PUBLIC_KEY_B64" | base64 --decode > transfer-public.pem
+
+      - name: Encrypt the existing App Store Connect key
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          test -n "$ASC_KEY_P8"
+          printf '%s' "$ASC_KEY_P8" > AuthKey.p8
+          openssl pkeyutl -encrypt -pubin -inkey transfer-public.pem \
+            -pkeyopt rsa_padding_mode:oaep -pkeyopt rsa_oaep_md:sha256 \
+            -in AuthKey.p8 -out AuthKey.p8.enc
+          rm -f AuthKey.p8 transfer-public.pem
+
+      - name: Upload encrypted key
+        uses: actions/upload-artifact@v4
+        with:
+          name: asc-key-encrypted
+          path: AuthKey.p8.enc
+          retention-days: 1
+          if-no-files-found: error
