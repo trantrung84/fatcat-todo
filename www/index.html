@@ -726,7 +726,7 @@ function toggleDone(id,ds){
   else{x.done=!x.done;x.completedAt=x.done?Date.now():null;nowDone=x.done}
   touch(x);save();U.pop=id+"|"+(ds||"");
   if(nowDone){haptic();const st=ds?dayStat(ds):null;track("task_complete",{repeat:isRep(x)?1:0,list:ds?"day":"someday"});
-    if(st&&st.status==="complete"&&before!=="complete"){U.flash="alldone";track("day_complete",{tasks:st.n});setTimeout(()=>{confetti();haptic("success");meow()},120)}
+    if(st&&st.status==="complete"&&before!=="complete"){U.flash="alldone";track("day_complete",{tasks:st.n});setTimeout(()=>{confetti();haptic("success");meow()},120);maybeAskReview()}
     else U.flash="single";
     clearTimeout(U.flashT);U.flashT=setTimeout(()=>{U.flash=null;renderHero()},3500);
     toast(t("t_done",{t:x.title}),()=>restore(snap))}
@@ -766,7 +766,7 @@ function render(){
   applyTheme();
   const scr=$("#screen");const main=scr.querySelector("main");const st=main?main.scrollTop:0;const prev=scr.dataset.view;
   const V={home:homeHTML,calendar:calendarViewHTML,timeline:timelineHTML,someday:somedayViewHTML,more:settingsHTML,premium:premiumHTML};
-  scr.innerHTML=(V[U.view]||homeHTML)();if(prev!==U.view){trackScreen(U.view);if(U.view==="premium")track("paywall_view",{from:prev||"start"})}scr.dataset.view=U.view;
+  scr.innerHTML=(V[U.view]||homeHTML)();if(prev!==U.view){trackScreen(U.view);if(U.view==="premium"){U.sawPaywall=true;track("paywall_view",{from:prev||"start"})}}scr.dataset.view=U.view;
   const m2=scr.querySelector("main");if(m2&&prev===U.view)m2.scrollTop=st;
   renderNav();$("#pvbar").innerHTML=pvbarHTML();
   renderComposer();
@@ -888,7 +888,7 @@ function settingsHTML(){const s=S.settings;
    <button class="mi" data-act="import">${ic("inbox")}${t("s_import")}</button>
    <button class="mi red" data-act="wipe">${ic("trash")}${t("s_wipe")}</button><input type="file" id="impFile" accept="application/json,.json" hidden></div>
   <h4>${t("s_pro")}</h4><div class="card menu"><button class="mi" data-act="view" data-v="premium">${ic("star")}${t("pro_title")}</button></div>
-  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><b style="color:var(--ink)">Toon App Studio</b> · <a href="https://toonred.com" target="_blank" rel="noopener" style="color:var(--primary-d)">toonred.com</a><br><a href="mailto:nabana84@gmail.com?subject=Fat%20Cat%20Todo" style="color:var(--primary-d)">nabana84@gmail.com</a> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-d)">${t("pw_privacy")}</a><br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.4${S.pro?" · Pro":""}</button></div></main>`}
+  <h4>${t("s_about")}</h4><div class="card" style="padding:12px 16px;font-size:14.5px;color:var(--ink2)">${t("privacy")}<br><br><b style="color:var(--ink)">Toon App Studio</b> · <a href="https://toonred.com" target="_blank" rel="noopener" style="color:var(--primary-d)">toonred.com</a><br><a href="mailto:nabana84@gmail.com?subject=Fat%20Cat%20Todo" style="color:var(--primary-d)">nabana84@gmail.com</a> · <a href="${PRIVACY_URL}" target="_blank" rel="noopener" style="color:var(--primary-d)">${t("pw_privacy")}</a><br><br><button data-act="ver" style="color:inherit;font-weight:700">${t("version")} 1.4.5${S.pro?" · Pro":""}</button></div></main>`}
 const PRODUCTS={monthly:"fatcat_pro_monthly",yearly:"fatcat_pro_yearly",lifetime:"fatcat_pro_lifetime"};
 const FALLBACK_PRICE=IS_IOS?{monthly:"$1.99",yearly:"$14.99",lifetime:"$19.99"}:{monthly:"$1.89",yearly:"$14.99",lifetime:"$18.99"};
 const PRIVACY_URL="https://toonred.com/fatcat-todo/privacy",TERMS_URL="https://toonred.com/fatcat-todo/terms";
@@ -1150,6 +1150,15 @@ function widgetPayload(){const td=todayStr(),days={};
   for(let i=0;i<7;i++){const ds=addDays(td,i);const l=tasksOn(ds);days[ds]={label:longDate(ds),total:l.length,done:l.filter(x=>isDone(x,ds)).length,items:l.slice(0,6).map(x=>({t:x.title,d:isDone(x,ds)}))}}
   const th=THEMES.find(x=>x.id===S.settings.palette)||THEMES[0];
   return {v:1,emptyText:t("w_empty"),openText:t("w_open"),accent:themeVars(th,false)["primary-d"],days}}
+/* Store review: ask only after a win (whole day done), from the 3rd day of use, never right after the paywall,
+   at most 3 times and at least 60 days apart. The OS may still decide not to show it. */
+const RV_KEY="fatcat_rv";
+function rvGet(){try{return JSON.parse(localStorage.getItem(RV_KEY))||{}}catch(e){return {}}}
+function rvSet(o){try{localStorage.setItem(RV_KEY,JSON.stringify(o))}catch(e){}}
+function rvTouchDay(){const r=rvGet(),d=todayStr();if(r.day!==d){r.day=d;r.days=(r.days||0)+1;rvSet(r)}}
+function maybeAskReview(){rvTouchDay();const W=P("WidgetBridge");if(!W||!W.requestReview||U.sawPaywall)return;
+  const r=rvGet(),now=Date.now();if((r.days||0)<3||(r.n||0)>=3||(r.last&&now-r.last<60*864e5))return;
+  setTimeout(()=>{if(U.view==="premium")return;r.n=(r.n||0)+1;r.last=Date.now();rvSet(r);track("review_prompt",{n:r.n});try{W.requestReview().catch(()=>{})}catch(e){}},2600)}
 function pushWidget(){const W=P("WidgetBridge");if(!W)return;try{W.update({data:JSON.stringify(widgetPayload())}).catch(()=>{})}catch(e){}}
 /* task reminders ring like an alarm (10 s Fat Cat chime + vibration) unless turned off; the daily brief stays gentle */
 function notifTone(n){const alarm=S.settings.alarmTone&&!(n.extra&&n.extra.brief);
@@ -1192,7 +1201,7 @@ function importData(file){const r=new FileReader();r.onload=()=>{try{const o=JSO
   if(o.settings)S.settings={...S.settings,...o.settings};save();render();toast(t("imported",{n}))}catch(e){toast(t("importErr"))}};r.readAsText(file)}
 
 /* ============ boot ============ */
-async function boot(){
+async function boot(){rvTouchDay();
   render();
   if(isNative){
     const A=P("App");if(A){A.addListener("backButton",()=>{if($(".onb"))return;if(U.stack.length)closeSheet();else if(U.adding){U.adding=null;render()}else if(U.view!=="home"){U.view=U.view==="premium"?"more":"home";render()}else A.minimizeApp?A.minimizeApp():A.exitApp()});
