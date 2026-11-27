@@ -1,0 +1,24 @@
+name: App Store Connect metadata / submit
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "meta | submit | status"
+        required: true
+        default: status
+      version:
+        description: "App version, e.g. 1.4.5"
+        required: true
+
+jobs:
+  asc:
+    runs-on: ubuntu-latest
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install pyjwt cryptography requests
+      - run: python tools/asc_meta.py "${{ inputs.action }}" "${{ inputs.version }}"
