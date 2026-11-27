@@ -118,6 +118,21 @@ def submit(vs):
     print("SUBMITTED for review:", vs, "build", b["attributes"]["version"])
 
 
+def certs(_):
+    for c in call("GET", "/v1/certificates?limit=200")["data"]:
+        a = c["attributes"]
+        print(c["id"], "|", a.get("certificateType"), "|", a.get("name"), "|", a.get("displayName"), "|", a.get("expirationDate"))
+
+
+def revoke_ci_dev_certs(_):
+    """Revoke Apple Development certs that CI runners created (keeps distribution certs and certs from real Macs)."""
+    for c in call("GET", "/v1/certificates?limit=200")["data"]:
+        a = c["attributes"]
+        if a.get("certificateType") in ("DEVELOPMENT", "IOS_DEVELOPMENT") and "Created via API" in (a.get("displayName") or a.get("name") or ""):
+            call("DELETE", f"/v1/certificates/{c['id']}")
+            print("revoked", c["id"], a.get("displayName"))
+
+
 def status(vs):
     v = version(vs)
     print("version", vs, v["attributes"].get("appStoreState"))
@@ -132,6 +147,6 @@ def status(vs):
 
 
 if __name__ == "__main__":
-    {"meta": meta, "submit": submit, "status": status}[sys.argv[1]](sys.argv[2])
+    {"meta": meta, "submit": submit, "status": status, "certs": certs, "revoke": revoke_ci_dev_certs}[sys.argv[1]](sys.argv[2])
     if sys.argv[1] == "meta":
         status(sys.argv[2])
