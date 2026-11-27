@@ -88,3 +88,9 @@ jobs:
           xcodebuild -exportArchive -archivePath $RUNNER_TEMP/FatCatTodo.xcarchive \
             -exportOptionsPlist $RUNNER_TEMP/ExportOptions.plist -exportPath $RUNNER_TEMP/export $AUTH
           echo "Uploaded build $MARKETING_VERSION ($BUILD_NUMBER) to App Store Connect"
+
+      - name: Revoke the throwaway Apple Development certificate this runner created
+        if: ${{ always() && env.ASC_KEY_P8 != '' }}
+        run: |
+          pip3 install --break-system-packages -q pyjwt cryptography requests || pip3 install -q pyjwt cryptography requests
+          python3 tools/asc_meta.py revoke - || true
